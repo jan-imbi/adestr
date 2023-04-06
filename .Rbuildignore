@@ -1,0 +1,17 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+^meta/$
+^\.github$
+^_pkgdown\.yml$
+^data$
+^docs$
+^pkgdown$
+^README.html$
+^misc$
+^paper$
+^codecov\.yml$
+^.vscode$
+^.lintr$
+^vignettes/presentation_onearm$
+^README\.Rmd$

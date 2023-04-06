@@ -1,0 +1,54 @@
+Package: adestr
+Type: Package
+Title: Adaptive Design Estimation in R
+Version: 0.0.1
+Authors@R: c(person("Jan", "Meis", role = c("aut", "cre"), email="meis@imbi.uni-heidelberg.de", comment = c(ORCID = "0000-0001-5407-7220")))
+Description:
+  This package implements methods to evaluate the performance characteristics of
+  various point and interval estimators for adaptive two-stage designs with
+  prespecified sample-size recalculation rules. Further, it allows for
+  evaluation of these estimators on real datasets, and it implements methods
+  to calculate p-values.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+VignetteBuilder: knitr
+RoxygenNote: 7.2.3
+Depends:
+    R (>= 4.0.0),
+    adoptr
+Imports: 
+    methods,
+    stats,
+    grDevices,
+    cubature,
+    ggplot2,
+    ggpubr,
+    scales,
+    latex2exp,
+    forcats,
+    future.apply
+Suggests: 
+    covr,
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0), 
+    microbenchmark
+Config/testthat/edition: 3
+Collate: 
+    'adestr_package.R'
+    'analyze.R'
+    'estimators.R'
+    'densities.R'
+    'evaluate_estimator.R'
+    'fastmonoHFC.R'
+    'fisher_information.R'
+    'hcubature.R'
+    'helper_functions.R'
+    'integrate_over_sample_space.R'
+    'mle_distribution.R'
+    'mlmse_score.R'
+    'n2c2_helpers.R'
+    'neyman_pearson.R'
+    'plot_design.R'
+    'print.R'

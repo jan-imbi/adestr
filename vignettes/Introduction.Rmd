@@ -1,0 +1,68 @@
+---
+title: "Introduction to adestr"
+author: "Jan Meis"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to adestr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# [This documentation is work in progress]
+
+This package implements methods to evaluate the performance characteristics
+of various point and interval estimators for adaptive two-stage designs with 
+prespecified sample-size recalculation rules. Further, it allows for
+evaluation of these estimators on real datasets, and it implements methods
+to calculate p-values.
+
+Currently, it works for designs objects which were produced by the
+R-package `adoptr`, which calculates optimal design parameters for
+adaptive two-stage designs. You can learn about adoptr here:
+[kkmann.github.io/adoptr/](https://kkmann.github.io/adoptr/).
+
+
+## Examples
+### Evaluating the mean squared error of an estimator
+
+```{r}
+library(adestr)
+evaluate_estimator(
+ score = MSE(),
+ estimator = SampleMean(),
+ data_distribution = Normal(TRUE),
+ design = get_example_design(),
+ mu = c(0.3),
+ sigma = 1
+)
+```
+
+
+### Analyzing datasets
+```{r}
+set.seed(321)
+dat <- data.frame(
+ endpoint = c(rnorm(28, .2, 1), rnorm(28, 0, 1),
+              rnorm(23, .2, 1), rnorm(23, 0, 1)),
+ group = factor(rep(c("ctl", "trt", "ctl", "trt"),
+                    c(28,28,23,23))),
+ stage = rep(c(1L, 2L), c(56, 46))
+)
+analyze(
+ data = dat,
+ estimator = c(get_example_estimators()),
+ data_distribution = Normal(),
+ sigma = 1,
+ design = get_example_design()
+)
+```
+
+
