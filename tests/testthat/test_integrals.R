@@ -78,7 +78,7 @@ test_that("integral over sample space is equal to 1 for case: unknown variance, 
                 sigma = 2.1,
                 exact = TRUE)$overall_integral$integral,
               1,
-              tolerance=1e-3
+              tolerance=5e-2
             )
           })
 

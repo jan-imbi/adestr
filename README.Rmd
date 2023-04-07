@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# adestr
+# adestr <a href='https://github.com/jan-imbi/adestr'><img src='man/figures/sticker.png' align="right" height="170" /></a>
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/jan-imbi/adestr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jan-imbi/adestr/actions/workflows/R-CMD-check.yaml)
