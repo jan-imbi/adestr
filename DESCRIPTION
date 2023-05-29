@@ -52,4 +52,5 @@ Collate:
     'neyman_pearson.R'
     'plot_design.R'
     'print.R'
+    'priors.R'
 URL: https://jan-imbi.github.io/adestr/

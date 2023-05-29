@@ -34,21 +34,39 @@ setMethod("integrate_over_sample_space", signature = signature("Normal"),
             if (use_full_twoarm_sampling_distribution & !(data_distribution@two_armed))
               stop("data_distribution is one-armed but use_full_twoarm_sampling_distribution is true.")
             if (!use_full_twoarm_sampling_distribution) {
-              return(
-                int_kv(design,
-                             g1,
-                             g2,
-                             mu,
-                             sigma,
-                             data_distribution@two_armed,
-                             tol,
-                             maxEval,
-                             absError,
-                             exact,
-                             early_futility_part,
-                             continuation_part,
-                             early_efficacy_part,
-                             conditional_integral))
+              if (is(mu, "Prior")){
+                return(
+                  int_kv_prior(design,
+                         g1,
+                         g2,
+                         mu,
+                         sigma,
+                         data_distribution@two_armed,
+                         tol,
+                         maxEval,
+                         absError,
+                         exact,
+                         early_futility_part,
+                         continuation_part,
+                         early_efficacy_part,
+                         conditional_integral))
+              } else {
+                return(
+                  int_kv(design,
+                         g1,
+                         g2,
+                         mu,
+                         sigma,
+                         data_distribution@two_armed,
+                         tol,
+                         maxEval,
+                         absError,
+                         exact,
+                         early_futility_part,
+                         continuation_part,
+                         early_efficacy_part,
+                         conditional_integral))
+              }
             } else {
               return(
                 int_kv_full(design,
@@ -835,4 +853,176 @@ int_uv_full <- function(design,
     )
   }
 }
+
+# integrate distribution of statistic for 1 unknown parameter (mu) over adoptr design
+#' @importFrom cubature hcubature
+int_kv_prior <- function(design,
+                   g1 = \(...) 1L,
+                   g2 = \(...) 1L,
+                   mu,
+                   sigma,
+                   two_armed,
+                   tol = getOption("adestr_tol_outer", default = .adestr_options[["adestr_tol_outer"]]),
+                   maxEval = getOption("adestr_maxEval_outer", default = .adestr_options[["adestr_maxEval_outer"]]),
+                   absError = getOption("adestr_absError_outer", default = .adestr_options[["adestr_absError_outer"]]),
+                   exact = FALSE,
+                   early_futility_part = TRUE,
+                   continuation_part = TRUE,
+                   early_efficacy_part = TRUE,
+                   conditional_integral = FALSE) {
+  n1 <- n1(design, round = FALSE)
+  if (exact){
+    n1 <- ceiling(n1)
+  }
+  n2tmp <- n2_extrapol(design, seq(design@c1f, design@c1e, length.out=100))
+  n2_min <- min(n2tmp)
+  n2_max <- max(n2tmp)
+  if (exact){
+    n2_min <- ceiling(min(n2tmp))
+    n2_max <- ceiling(max(n2tmp))
+  }
+  se1 <- sigma * sqrt((1L + two_armed) / n1)
+  se2_n2min <- sigma * sqrt((1L + two_armed) / n2_min)
+  se2_n2max <- sigma * sqrt((1L + two_armed) / n2_max)
+  se2s <- c(se2_n2min, se2_n2max)
+  infq <- if (absError==0) min(1e-6, tol) else min(1e-6, absError)
+  minusinf_norm_1 <- get_norm_inf(infq, means = get_mean(mu)/se1, left = TRUE)
+  plusinf_norm_1 <- get_norm_inf(infq, means = get_mean(mu)/se1, left = FALSE)
+  minusinf_norm_2 <- get_norm_inf(infq, means = get_mean(mu)/se2s, left = TRUE)
+  plusinf_norm_2 <- get_norm_inf(infq, means = get_mean(mu)/se2s, left = FALSE)
+  prior_bounds <- get_bounds(mu, infq)
+  minusinf_prior <- prior_bounds[1]
+  plusinf_prior <- prior_bounds[2]
+  mu_density <- get_logpdf(mu)
+
+  futility_integral <- continuation_integral <- efficacy_integral <- NULL
+  denom <- 1L
+  if (conditional_integral) {
+    stop("Not implemented.")
+  }
+  if (early_futility_part || early_efficacy_part) {
+    mint1 <- \(x) {
+      n2 <- n2_extrapol(design, x[1L, ])
+      g1val <- g1(
+        design = design,
+        smean1 = x[1L, ] * se1,
+        n1 = n1,
+        mu = x[2L,],
+        sigma = sigma,
+        two_armed = two_armed
+      )
+      sign(g1val) * exp(mlogf1_kv_prior(x, n1, sigma, two_armed) +
+                          mu_density(x[2L,]) +
+                          log(abs(g1val)))
+    }
+    if (early_futility_part) {
+      futility_integral <- .hcubature(
+        f = mint1,
+        lowerLimit = c(min(minusinf_norm_1, design@c1f), minusinf_prior),
+        upperLimit = c(design@c1f, plusinf_prior),
+        tol = tol,
+        maxEval = maxEval,
+        absError = absError,
+        vectorInterface = TRUE)
+    }
+    if (early_efficacy_part) {
+      efficacy_integral <- .hcubature(
+        f = mint1,
+        lowerLimit = c(design@c1e, minusinf_prior),
+        upperLimit = c(max(plusinf_norm_1, design@c1e), plusinf_prior),
+        tol = tol,
+        maxEval = maxEval,
+        absError = absError,
+        vectorInterface = TRUE)
+    }
+  }
+  if (continuation_part) {
+    if (!exact){
+      mint2 <- \(x) {
+        n2 <- n2_extrapol(design, x[1L, ])
+        g2val <- g2(
+          design = design,
+          smean1 = x[1L, ] * se1,
+          smean2 = x[2L, ] * sigma * sqrt((1L + two_armed) / n2),
+          n1 = n1,
+          n2 = n2,
+          mu = x[3L,],
+          sigma = sigma,
+          two_armed = two_armed)
+        sign(g2val) * exp(mlogf2_kv_prior(x, n1, n2, sigma, two_armed) +
+                            mu_density(x[3L,]) +
+                            log(abs(g2val)))
+      }
+      continuation_integral <- .hcubature(
+        f = mint2,
+        lowerLimit = c(design@c1f, minusinf_norm_2, minusinf_prior),
+        upperLimit = c(design@c1e, plusinf_norm_2, plusinf_prior),
+        tol = tol,
+        maxEval = maxEval,
+        absError = absError,
+        vectorInterface = TRUE)
+    } else {
+      mint2_exact <- \(x, n2, preimage) {
+        g2val <- g2(
+          design = design,
+          smean1 = x[1L, ] * se1,
+          smean2 = x[2L, ] * sigma * sqrt((1L + two_armed) / n2),
+          n1 = n1,
+          n2 = n2,
+          mu = x[3L,],
+          sigma = sigma,
+          two_armed = two_armed,
+          sample_space = sample_space,
+          preimage = preimage)
+        sign(g2val) * exp(mlogf2_kv_prior(x, n1, n2, sigma, two_armed) +
+                            mu_density(x[3L,]) +
+                            log(abs(g2val)))
+      }
+      sample_space <- n2_preimage(design = design, sigma = sigma, two_armed = two_armed, smean_scale = FALSE)
+      intexact <- function(region) {
+        .hcubature(
+          f = mint2_exact,
+          lowerLimit = c(region$preimage[1L], minusinf_norm_2, minusinf_prior),
+          upperLimit = c(region$preimage[2L], plusinf_norm_2, plusinf_prior),
+          tol = tol,
+          maxEval = maxEval,
+          absError = absError,
+          vectorInterface = TRUE,
+          n2 = region$n2,
+          preimage = region$preimage
+        )
+      }
+      continuation_integral_list <- lapply(sample_space, intexact)
+      continuation_integral <-
+        as.list(sapply(X = names(continuation_integral_list[[1L]]), USE.NAMES = TRUE,
+                       FUN = \(x) sum(sapply(continuation_integral_list, \(y)y[[x]]))))
+    }
+  }
+  if (!early_efficacy_part && !early_futility_part && !continuation_part)
+    return(list(overall_integral = list(integral = 0)))
+  else {
+    integrals <- list(futility_integral, continuation_integral, efficacy_integral)
+    integrals <- integrals[lengths(integrals)!=0L]
+    overall_integral <- as.list(sapply(X = names(integrals[[1L]]), USE.NAMES = TRUE,
+                                       FUN = \(x) sum(sapply(integrals, \(y)y[[x]]))))
+    overall_integral$integral <- overall_integral$integral / denom
+    return(
+      list(
+        futility_integral = futility_integral,
+        continuation_integral = continuation_integral,
+        efficacy_integral = efficacy_integral,
+        overall_integral = overall_integral
+      )
+    )
+  }
+}
+
+
+
+
+
+
+
+
+
 

@@ -16,7 +16,7 @@ setClass("EstimatorScore", slots = c(label = "character"))
 setClass("PointEstimatorScore", contains = "EstimatorScore")
 setClass("IntervalEstimatorScore", contains = "EstimatorScore")
 EstimatorScoreResult <- setClass("EstimatorScoreResult", slots = c(score = "list", estimator = "Estimator", data_distribution = "DataDistribution",
-                                                                   design = "TwoStageDesign", mu = "numeric", sigma = "numeric",
+                                                                   design = "TwoStageDesign", mu = "ANY", sigma = "numeric",
                                                                    results = "list", integrals = "list"))
 setClass("EstimatorScoreResultList", contains = "list")
 
@@ -224,6 +224,63 @@ setMethod("evaluate_estimator", signature("list", "Estimator"),
     )
   )
 }
+
+.evaluate_estimator_prior <- function(score,
+                                estimator,
+                                data_distribution,
+                                use_full_twoarm_sampling_distribution,
+                                design,
+                                g1,
+                                g2,
+                                true_parameter,
+                                mu,
+                                sigma,
+                                tol,
+                                maxEval,
+                                absError,
+                                exact,
+                                early_futility_part,
+                                continuation_part,
+                                early_efficacy_part,
+                                conditional_integral){
+  two_armed <- data_distribution@two_armed
+  integrals <- list(
+    integrate_over_sample_space(
+      data_distribution,
+      use_full_twoarm_sampling_distribution,
+      design,
+      g1,
+      g2,
+      mu,
+      sigma,
+      tol,
+      maxEval,
+      absError,
+      exact,
+      early_futility_part,
+      continuation_part,
+      early_efficacy_part,
+      conditional_integral
+    )
+  )
+  results <- list(sapply(integrals, \(x)x$overall_integral$integral))
+  names(results) <- score@label
+  integrals <- integrals
+  names(integrals) <- score@label
+  return(
+    EstimatorScoreResult(
+      score = list(score),
+      estimator = estimator,
+      data_distribution = data_distribution,
+      design = design,
+      mu = mu,
+      sigma = sigma,
+      results = results,
+      integrals = integrals
+    )
+  )
+}
+
 setClass("Expectation", contains = "PointEstimatorScore")
 #' @rdname EstimatorScore-class
 #' @export
@@ -409,35 +466,64 @@ setMethod("evaluate_estimator", signature("MSE", "PointEstimator"),
                    continuation_part,
                    early_efficacy_part,
                    conditional_integral) {
-            res <- evaluate_estimator(Variance(),
-                                      estimator,
-                                      data_distribution,
-                                      use_full_twoarm_sampling_distribution,
-                                      design,
-                                      true_parameter,
-                                      mu,
-                                      sigma,
-                                      tol,
-                                      maxEval,
-                                      absError,
-                                      exact,
-                                      early_futility_part,
-                                      continuation_part,
-                                      early_efficacy_part,
-                                      conditional_integral)
-            res@results$Bias <- res@results$Expectation - true_parameter
-            res@results$MSE <- res@results$Bias^2 + res@results$Variance
-            res@results <- res@results[c(1,3,2,4)]
-            res@integrals$Bias <- res@integrals$Expectation
-            res@integrals$MSE <- lapply(names(res@integrals$Expectation), \(x){
-              lapply(names(res@integrals$Expectation[[x]]), \(y) res@integrals$Expectation[[x]][[y]] + res@integrals$Variance[[x]][[y]])
-            })
-            names(res@integrals$MSE) <- names(res@integrals$Expectation)
-            for (i in seq_along(res@integrals$MSE))
-              names(res@integrals$MSE[[i]]) <- names(res@integrals$Variance[[i]])
-            res@integrals <- res@integrals[c(1,3,2,4)]
-            res@score <- list(MSE())
-            return(res)
+            if (is(mu, "Prior")) {
+              stagewise_estimators <- get_stagewise_estimators(estimator = estimator,
+                                                               data_distribution =  data_distribution,
+                                                               use_full_twoarm_sampling_distribution = use_full_twoarm_sampling_distribution,
+                                                               design = design, sigma = sigma, exact = exact)
+              g1 <- stagewise_estimators[[1L]]
+              g2 <- stagewise_estimators[[2L]]
+              res <- .evaluate_estimator_prior(
+                score,
+                estimator,
+                data_distribution,
+                use_full_twoarm_sampling_distribution,
+                design,
+                g1 = \(mu, ...)(g1(...)-mu)^2,
+                g2 = \(mu, ...)(g2(...)-mu)^2,
+                true_parameter,
+                mu,
+                sigma,
+                tol,
+                maxEval,
+                absError,
+                exact,
+                early_futility_part,
+                continuation_part,
+                early_efficacy_part,
+                conditional_integral)
+              return(res)
+            } else {
+              res <- evaluate_estimator(Variance(),
+                                        estimator,
+                                        data_distribution,
+                                        use_full_twoarm_sampling_distribution,
+                                        design,
+                                        true_parameter,
+                                        mu,
+                                        sigma,
+                                        tol,
+                                        maxEval,
+                                        absError,
+                                        exact,
+                                        early_futility_part,
+                                        continuation_part,
+                                        early_efficacy_part,
+                                        conditional_integral)
+              res@results$Bias <- res@results$Expectation - true_parameter
+              res@results$MSE <- res@results$Bias^2 + res@results$Variance
+              res@results <- res@results[c(1,3,2,4)]
+              res@integrals$Bias <- res@integrals$Expectation
+              res@integrals$MSE <- lapply(names(res@integrals$Expectation), \(x){
+                lapply(names(res@integrals$Expectation[[x]]), \(y) res@integrals$Expectation[[x]][[y]] + res@integrals$Variance[[x]][[y]])
+              })
+              names(res@integrals$MSE) <- names(res@integrals$Expectation)
+              for (i in seq_along(res@integrals$MSE))
+                names(res@integrals$MSE[[i]]) <- names(res@integrals$Variance[[i]])
+              res@integrals <- res@integrals[c(1,3,2,4)]
+              res@score <- list(MSE())
+              return(res)
+            }
           })
 setClass("OverestimationProbability", contains = "PointEstimatorScore")
 #' @rdname EstimatorScore-class
