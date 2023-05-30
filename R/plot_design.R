@@ -48,19 +48,19 @@ plot_design <- function(design, data_distribution = Normal(two_armed = FALSE)){
     geom_line(aes(x = x2, y = cp, color = .data$`label`), linewidth=1) +
     geom_line(aes(x = x2, y = cp, color = .data$`label`), linewidth=1)
   pltn <- pltn +
-    scale_x_continuous(name = z1tex) +
+    scale_x_continuous(name = z1tex, breaks = unique(round(x2)) ) +
     scale_y_continuous(name = "Overall sample size", limits = c(0, 10*ceiling(max((dat$n2+dat$n1) /10)) + 10 * (1L + two_armed)) ) +
     theme_pubr() +
     theme(text = element_text(size=15)) +
     labs(color = "Type of design")
   pltc2 <- pltc2 +
-    scale_x_continuous(name = z1tex)+
+    scale_x_continuous(name = z1tex, breaks = unique(round(x2)))+
     scale_y_continuous(name = c2tex) +
     theme_pubr() +
     theme(text = element_text(size=15)) +
     labs(color = "Type of design")
   pltcp <- pltcp +
-    scale_x_continuous(name = z1tex)+
+    scale_x_continuous(name = z1tex, breaks = unique(round(x2)))+
     scale_y_continuous(name = "Conditional power",
                        labels = scales::percent) +
     theme_pubr() +
