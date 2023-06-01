@@ -165,11 +165,12 @@ int_kv <- function(design,
   se2_n2min <- sigma * sqrt((1L + two_armed) / n2_min)
   se2_n2max <- sigma * sqrt((1L + two_armed) / n2_max)
   se2s <- c(se2_n2min, se2_n2max)
-  infq <- if (absError==0) min(1e-6, tol) else min(1e-6, absError)
+  infq <- tol*1e-1
+  # infq <- if (absError==0) min(1e-6, tol) else min(1e-6, absError)
   minusinf_norm_1 <- get_norm_inf(infq, means = mu/se1, left = TRUE)
   plusinf_norm_1 <- get_norm_inf(infq, means = mu/se1, left = FALSE)
-  minusinf_norm_2 <- get_norm_inf(infq, means = mu/se2s, left = TRUE)
-  plusinf_norm_2 <- get_norm_inf(infq, means = mu/se2s, left = FALSE)
+  minusinf_norm_2 <- get_norm_inf(1-(1-infq)^(1/2), means = mu/se2s, left = TRUE)
+  plusinf_norm_2 <- get_norm_inf(1-(1-infq)^(1/2), means = mu/se2s, left = FALSE)
 
   futility_integral <- continuation_integral <- efficacy_integral <- NULL
   denom <- 1L
@@ -334,15 +335,16 @@ int_uv <- function(design,
   se2_n2min <- sigma * sqrt((1L + two_armed) / n2_min)
   se2_n2max <- sigma * sqrt((1L + two_armed) / n2_max)
   se2s <- c(se2_n2min, se2_n2max)
-  infq <- if (absError==0) min(1e-6, tol) else min(1e-6, absError)
-  minusinf_t_1 <- get_t_inf(infq, dfs = df1, means = mu/se1, left = TRUE)
-  plusinf_t_1 <- get_t_inf(infq, dfs = df1, means = mu/se1, left = FALSE)
-  minusinf_t_2 <- get_t_inf(infq, dfs = df2s, means = mu/se2s, left = TRUE)
-  plusinf_t_2 <- get_t_inf(infq, dfs = df2s, means = mu/se2s, left = FALSE)
-  minusinf_chi_1 <- get_chi_inf(infq, dfs = df1, variance = v, left = TRUE)
-  plusinf_chi_1 <- get_chi_inf(infq, dfs = df1, variance = v, left = FALSE)
-  minusinf_chi_2 <- get_chi_inf(infq, dfs = df2s, variance = v, left = TRUE)
-  plusinf_chi_2 <- get_chi_inf(infq, dfs = df2s, variance = v, left = FALSE)
+  infq <- tol * 1e-1
+  # infq <- if (absError==0) min(1e-6, tol) else min(1e-6, absError)
+  minusinf_t_1 <- get_t_inf(1-(1-infq)^(1/2), dfs = df1, means = mu/se1, left = TRUE)
+  plusinf_t_1 <- get_t_inf(1-(1-infq)^(1/2), dfs = df1, means = mu/se1, left = FALSE)
+  minusinf_t_2 <- get_t_inf(1-(1-infq)^(1/4), dfs = df2s, means = mu/se2s, left = TRUE)
+  plusinf_t_2 <- get_t_inf(1-(1-infq)^(1/4), dfs = df2s, means = mu/se2s, left = FALSE)
+  minusinf_chi_1 <- get_chi_inf(1-(1-infq)^(1/2), dfs = df1, variance = v, left = TRUE)
+  plusinf_chi_1 <- get_chi_inf(1-(1-infq)^(1/2), dfs = df1, variance = v, left = FALSE)
+  minusinf_chi_2 <- get_chi_inf(1-(1-infq)^(1/4), dfs = df2s, variance = v, left = TRUE)
+  plusinf_chi_2 <- get_chi_inf(1-(1-infq)^(1/4), dfs = df2s, variance = v, left = FALSE)
 
   futility_integral <- continuation_integral <- efficacy_integral <- NULL
   denom <- 1L
