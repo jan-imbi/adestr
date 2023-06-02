@@ -17,5 +17,3 @@ designgs <- adoptr::GroupSequentialDesign(
   7
 ) |>
   cache_design_splines()
-
-

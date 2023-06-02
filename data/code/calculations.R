@@ -16,6 +16,11 @@ library(adestr)
 # Next, we will enable parallel execution
 library(future)
 
+# Enable progress bars.
+library(progressr)
+handlers(global = TRUE)
+handlers("progress")
+
 ## If you want to reproduce calculations on your local machine
 ## with lower accuracy, do this
 plan(multisession, workers = parallelly::availableCores()-1L)

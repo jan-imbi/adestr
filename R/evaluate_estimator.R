@@ -1150,6 +1150,7 @@ setMethod("plot_sample_mean", signature("DataDistribution", "TwoStageDesign"),
 #' )
 #'
 #' @importFrom future.apply future_apply
+#' @importFrom progressr progressor
 evaluate_scenarios_parallel <- function(score_lists,
                                         estimator_lists,
                                         data_distribution_lists,
@@ -1193,12 +1194,15 @@ evaluate_scenarios_parallel <- function(score_lists,
   }
   scenarios <- do.call("rbind", scenarios)
   adestrOpts <- options()[startsWith(names(options()), "adestr_")]
+  prog <- progressor(steps = nrow(scenarios))
   reslist <- future_apply(
     scenarios,
     MARGIN = 1L,
     FUN = \(x) {
       options(adestrOpts)
-      do.call(evaluate_estimator, unlist(x))
+      res <- do.call(evaluate_estimator, unlist(x))
+      prog(sprintf("Evaluating %s on %s for mu= %s.", toString(x$score), toString(x$estimator), format(x$mu)))
+      res
     },
     future.seed = TRUE)
   res_split <- split(reslist, factor(rep(seq_along(scenario_idx), scenario_idx)))
