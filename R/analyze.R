@@ -108,7 +108,6 @@ summarize_data <- function(data, reference_value = 0, endpoint_name = "endpoint"
       stop(sprintf("no variable with the name %s is present in data.", nm))
     }
   }
-  names(data)[names(data) %in% c(endpoint_name, group_name, stage_name)] <- c(endpoint_name, group_name, stage_name)
   if (!is.factor(data$group))
     stop("group needs to be a factor.")
   if (length(levels(data$group)) > 2L )
