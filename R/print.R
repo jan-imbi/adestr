@@ -61,6 +61,10 @@ setMethod("toString", signature("Results"),
             right <- substr(.tmp <- capture.output(print(x@data_distribution)), 1L, nchar(.tmp)-1L)
             lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
 
+            left <- "Observed number of stages:"
+            right <- x@summary_data$n_stages
+            lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
+
             test_str <- if (is(x@data_distribution, "Normal")) "Z1" else "T1"
             if (x@summary_data$n_groups == 2L)
               n1 <- c(x@summary_data$n_s1_g1, x@summary_data$n_s1_g2)
@@ -81,9 +85,42 @@ setMethod("toString", signature("Results"),
             right <- format(test_val, digits=3)
             lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
 
-            left <- "Actual number of stages:"
-            right <- x@summary_data$n_stages
-            lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
+            if (x@summary_data$n_stages==2L){
+              test_str <- if (is(x@data_distribution, "Normal")) "Z2" else "T2"
+              if (x@summary_data$n_groups == 2L)
+                n2 <- c(x@summary_data$n_s2_g1, x@summary_data$n_s2_g2)
+              else
+                n2 <- x@summary_data$n2
+              test_val2 <-
+                if (is(x@data_distribution, "Normal"))
+                  z_test(x@summary_data$smean2,
+                         n2,
+                         x@sigma,
+                         x@data_distribution@two_armed)
+              else
+                t_test(x@summary_data$smean2,
+                       x@summary_data$svar2,
+                       n2,
+                       x@data_distribution@two_armed)
+              left <- test_str
+              right <- format(test_val2, digits=3)
+              lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
+
+              left <- "c2(Z1)"
+              cval2 <- c2(x@design, test_val)
+              right <- format(cval2, digits=3)
+              lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
+
+              left <- "Test decision:"
+              if (test_val2 > cval2) {
+                right <- "reject null"
+              } else {
+                right <- "accept null"
+              }
+              lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
+            }
+
+
 
             print_header <- TRUE
             for (res in x@results){

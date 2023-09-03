@@ -140,8 +140,8 @@ get_example_design <- function() {
     ),
     7
   )
+  d <- TwoStageDesignWithCache(d)
   attr(d, "label") <- "adaptive"
-  d <- cache_design_splines(d)
   d
 }
 #' Generate a list of estimators and p-values to use in examples

@@ -53,6 +53,33 @@ cache_design_splines <- function(design, force = TRUE) {
   }
   design
 }
+get_n2_coefficients <- function(design){
+  h <- (design@c1e - design@c1f) / 2
+  return(fastmonoH.FC_coefficients(
+    h * design@x1_norm_pivots + (h + design@c1f),
+    design@n2_pivots
+  ))
+}
+get_c2_coefficients <- function(design){
+  h <- (design@c1e - design@c1f) / 2
+  return(fastmonoH.FC_coefficients(
+    h * design@x1_norm_pivots + (h + design@c1f),
+    design@c2_pivots
+  ))
+}
+n2_extrapol <- function(design, x1) {
+  if (length(design@n2_pivots > 1L)){
+    fastmonoH.FC_evaluate(x1, design@n2_coefficients)
+  } else {
+    design@n2_pivots
+  }
+}
+c2_extrapol <- function(design, x1) {
+  fastmonoH.FC_evaluate(x1, design@c2_coefficients)
+}
+
+
+## Old
 get_fast_c2 <- function(design){
   h <- (design@c1e - design@c1f) / 2
   return(fastmonoH.FC(
@@ -71,10 +98,10 @@ get_fast_n2 <- function(design){
     return(\(x) design@n2_pivots)
   }
 }
-n2_extrapol <- function(design, x1) {
+n2_extrapol_old <- function(design, x1) {
   attr(design, "n2_cache")(x1)
 }
-c2_extrapol <- function(design, x1) {
+c2_extrapol_old <- function(design, x1) {
   attr(design, "c2_cache")(x1)
 }
 # n2_extrapol <- function(design, x1) {

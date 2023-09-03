@@ -46,6 +46,7 @@ Collate:
     'hcubature.R'
     'helper_functions.R'
     'integrate_over_sample_space.R'
+    'reference_implementation.R'
     'mle_distribution.R'
     'mlmse_score.R'
     'n2c2_helpers.R'
@@ -53,4 +54,5 @@ Collate:
     'plot_design.R'
     'print.R'
     'priors.R'
+    'TwoStageDesignWithCache.R'
 URL: https://jan-imbi.github.io/adestr/

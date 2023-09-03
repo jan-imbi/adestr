@@ -491,10 +491,10 @@ setMethod("get_stagewise_estimators", signature("BiasReduced", "Normal"),
                    design,
                    sigma,
                    exact) {
-            bias_est <- Vectorize(\(design, mu_plugin, sigma, two_armed, ...) {
+            mle_expectation <- Vectorize(\(design, mu_plugin, sigma, two_armed, ...) {
               int_kv(design = design,
-                     g1 = \(smean1, ...) smean1 - mu_plugin,
-                     g2 = \(smean1, smean2, n1, n2, ...) (n1 * smean1 + n2 * smean2) / (n1 + n2) - mu_plugin,
+                     g1 = \(smean1, ...) smean1,
+                     g2 = \(smean1, smean2, n1, n2, ...) (n1 * smean1 + n2 * smean2) / (n1 + n2),
                      mu = mu_plugin,
                      sigma = sigma,
                      two_armed = two_armed,
@@ -525,7 +525,7 @@ setMethod("get_stagewise_estimators", signature("BiasReduced", "Normal"),
               estimate <- estimate0
               for (i in seq_len(estimator@iterations)){
                 denom <- 1 + diff(design, mu_plugin = estimate, sigma, two_armed, ...)
-                estimate <- estimate + ((estimate0 - estimate) -  bias_est(design, mu_plugin = estimate, sigma, two_armed, ...)) / denom
+                estimate <- estimate + ((estimate0 - estimate) -  (mle_expectation(design, mu_plugin = estimate, sigma, two_armed, ...) - estimate0) ) / denom
               }
               return(estimate)
             }
@@ -534,7 +534,7 @@ setMethod("get_stagewise_estimators", signature("BiasReduced", "Normal"),
               estimate <- estimate0
               for (i in seq_len(estimator@iterations)){
                 denom <- 1 + diff(design, mu_plugin = estimate, sigma, two_armed, ...)
-                estimate <- estimate + ((estimate0 - estimate) -  bias_est(design, mu_plugin = estimate, sigma, two_armed, ...)) / denom
+                estimate <- estimate + ((estimate0 - estimate) -  (mle_expectation(design, mu_plugin = estimate, sigma, two_armed, ...) - estimate0)) / denom
               }
               return(estimate)
             }
