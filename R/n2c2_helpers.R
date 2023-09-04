@@ -82,7 +82,7 @@ c2_extrapol <- function(design, x1) {
 ## Old
 get_fast_c2 <- function(design){
   h <- (design@c1e - design@c1f) / 2
-  return(fastmonoH.FC(
+  return(fastmonoH.FC_function(
     h * design@x1_norm_pivots + (h + design@c1f),
     design@c2_pivots
   ))
@@ -90,7 +90,7 @@ get_fast_c2 <- function(design){
 get_fast_n2 <- function(design){
   if (length(design@n2_pivots)>1){
     h <- (design@c1e - design@c1f) / 2
-    return(fastmonoH.FC(
+    return(fastmonoH.FC_function(
       h * design@x1_norm_pivots + (h + design@c1f),
       design@n2_pivots
     ))
