@@ -354,7 +354,6 @@
     0
   int + second_part
 }
-
 .mle_expectation <- function(mu, mu0, sigma, design){
   n1 <- design@n1
   futility <- hcubature(
@@ -429,6 +428,22 @@
   )$integral
   efficacy + futility + continuation
 }
+
+.adaptively_weighted <- function(){
+  n1 <- design@n1
+  c1f <- design@c1f
+  c1e <- design@c1e
+  z1 <- .x_to_z(x = x1, n = n1, mu0 = mu0, sigma = sigma)
+  if ((z1 < c1f || z1 > c1e) && (x2 != -Inf)) {
+    stop("z1 suggests early stopping but x2 is not -Inf.")
+  }
+  if ((z1 >= c1f && z1 <= c1e) && (x2 == -Inf)) {
+    stop("z1 suggests continuation but x2 is -Inf.")
+  }
+
+}
+
+
 .bias_reduced <- function(mle, mu, mu0, sigma, iterations, design){
   estimate <- mle
   for (i in seq_len(iterations)) {
@@ -438,7 +453,6 @@
   }
   estimate
 }
-
 .pseudo_rao_blackwell <- function(x1, x2, mu0, sigma, design) {
   n1 <- design@n1
   c1f <- design@c1f
