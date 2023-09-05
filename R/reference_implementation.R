@@ -31,7 +31,6 @@
   n1 <- design@n1
   c1f <- design@c1f
   c1e <- design@c1e
-  z1 <- .x_to_z(x = x1, n = n1, mu0 = mu0, sigma = sigma)
   if ((z1 < c1f || z1 > c1e) && (z2 != -Inf)) {
     stop("z1 suggests early stopping but z2 is not -Inf.")
   }
@@ -42,6 +41,7 @@
     if (z1 < c1f || z1 > c1e) {
       .f1(z1 = z1, n1 = n1, mu = mu, mu0 = mu0, sigma = sigma)
     } else {
+      n2 <- n2_extrapol(design, z1)
       .f2(z1 = z1, z2 = z2, n1 = n1, n2 = n2, mu = mu, mu0 = mu0, sigma = sigma)
     }
   ret
@@ -486,10 +486,10 @@
   ret <-
     if (y < c1f * sigma / sqrt(n1)) {
       pnorm(c1f - mu * sqrt(n1)/sigma) -
-        pnorm(y * sqrt(n1) / sigma) +
+        pnorm(y * sqrt(n1) / sigma - mu * sqrt(n1)/sigma) +
         1 - pnorm(c1e - mu*sqrt(n1)/sigma)
     } else if (y > c1e * sigma / sqrt(n1)) {
-      1 - pnorm(y * sqrt(n1) / sigma)
+      1 - pnorm(y * sqrt(n1) / sigma - mu * sqrt(n1)/sigma)
     } else {
       1 -  pnorm(c1e - mu*sqrt(n1)/sigma)
     }
@@ -568,7 +568,7 @@
       n2 <- n2_extrapol(design, z1)
       .rho_lr2(x1 = x1, x2 = x2, n1 = n1, n2 = n2, mu = mu)
     }
-  y <- .rho_lr_y(rho_lr = rho)
+  y <- .rho_lr_y(rho_lr = rho, n1 = n1, mu = mu)
   A <- .calculate_A(y = y, n1 = n1, mu = mu, sigma = sigma, design = design)
   int <- hcubature(
     f = \(z_) {
@@ -758,6 +758,19 @@
 .confidence_interval_swcf <- function(alpha, x1, x2, mu0, sigma, design){
   c(.rho_swcf_root(gamma = alpha/2, x1 = x1, x2 = x2, mu0 = mu0, sigma = sigma, design = design),
     .rho_swcf_root(gamma = 1-alpha/2, x1 = x1, x2 = x2, mu0 = mu0, sigma = sigma, design = design))
+}
+
+
+### Naive CI
+.naive_confidence_interval <- function(alpha, x1, x2, n1, n2, sigma){
+  ret <-
+    if (x2 == -Inf) {
+      c(x1 - qnorm(1 - alpha/2)* sigma/sqrt(n1), x1 + qnorm(1 - alpha/2)* sigma/sqrt(n1))
+    } else {
+      x <- .x1_x2_to_x(x1 = x1, x2 = x2, n1 = n1, n2 = n2)
+      c(x - qnorm(1 - alpha/2)* sigma/sqrt(n1 + n2), x + qnorm(1 - alpha/2)* sigma/sqrt(n1 + n2))
+    }
+  ret
 }
 
 ### Repeated confidence interval.
