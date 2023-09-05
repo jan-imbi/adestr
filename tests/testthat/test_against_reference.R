@@ -53,6 +53,9 @@ prb$g2(design, .4, .4, design@n1, n2_extrapol(design, smean_to_z(.4, design@n1, 
 
 
 
+awsm <- get_stagewise_estimators(MinimizePeakVariance(), Normal(FALSE), FALSE, design, 1, FALSE)
+
+
 
 
 
