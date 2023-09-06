@@ -48,11 +48,15 @@ n2_preimage <- function(design, sigma = 1, two_armed = FALSE, smean_scale = FALS
   ret
 }
 get_n2_coefficients <- function(design){
-  h <- (design@c1e - design@c1f) / 2
-  return(fastmonoH.FC_coefficients(
-    h * design@x1_norm_pivots + (h + design@c1f),
-    design@n2_pivots
-  ))
+  if (is(design, "GroupSequentialDesign")) {
+    return(list())
+  } else {
+    h <- (design@c1e - design@c1f) / 2
+    return(fastmonoH.FC_coefficients(
+      h * design@x1_norm_pivots + (h + design@c1f),
+      design@n2_pivots
+    ))
+  }
 }
 get_c2_coefficients <- function(design){
   h <- (design@c1e - design@c1f) / 2

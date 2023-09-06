@@ -5,7 +5,7 @@ p_np <- function(design, smean, n, mu, mu0, mu1, sigma, two_armed, tol = getOpti
   muse1 <- mu/se1
   smean1_sol <- (2L*smean*n + mu0*(n1 - n) + mu1*(n1 - n))/(2L*n1)
   z1 <- smean_to_z(smean1_sol, n1, sigma, two_armed)
-  # browser()
+  browser()
   if (z1 < design@c1f) {
     p_part_first_stage <- pnorm(design@c1f, mean = muse1) - pnorm(z1, mean = muse1) + pnorm(design@c1e, mean = muse1, lower.tail = FALSE)
   } else if (z1 > design@c1e) {

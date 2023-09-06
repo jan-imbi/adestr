@@ -474,13 +474,13 @@
   (rho_st - n1 * x1 + mu * (n1 + n2))/n2
 }
 .rho_np1 <- function(x1, n1, mu0, mu1) {
-  (2*x1*(mu0 - mu1) - mu0 - mu1)*n1
+  (2*x1*(mu0 - mu1) - mu0^2 + mu1^2)*n1
 }
 .rho_np2 <- function(x1, x2, n1, n2, mu0, mu1) {
-  (2*.x1_x2_to_x(x1 = x1, x2 = x2, n1 = n1, n2 = n2)*(mu0 - mu1) - mu0 - mu1)*(n1 + n2)
+  (2*.x1_x2_to_x(x1 = x1, x2 = x2, n1 = n1, n2 = n2)*(mu0 - mu1) - mu0^2 + mu1^2)*(n1 + n2)
 }
 .rho_np_y <- function(rho_np, n1, mu0, mu1){
-  (rho_np + (mu0 + mu1)*n1) / (2*n1)
+  (rho_np + (mu0 + mu1)*n1) / (2*n1) # rho_np sollte nicht mit mu0+mu1 multipliziert werden? morgen checken
 }
 .rho_np_B <- function(rho_np, x1, n1, n2, mu0, mu1){
   (rho_np - 2 * n1 * x1 + (mu0 + mu1)*(n1 + n2)) / (2*n1)
@@ -640,7 +640,7 @@
       n2 <- n2_extrapol(design, z1)
       .rho_st2(x1 = x1, x2 = x2, n1 = n1, n2 = n2, mu = mu)
     }
-  y <- .rho_st_y(rho_st = rho)
+  y <- .rho_st_y(rho_st = rho, n1 = n1, mu = mu)
   A <- .calculate_A(y = y, n1 = n1, mu = mu, sigma = sigma, design = design)
   int <- hcubature(
     f = \(z_) {
@@ -694,7 +694,8 @@
       n2 <- n2_extrapol(design, z1)
       .rho_np2(x1 = x1, x2 = x2, n1 = n1, n2 = n2, mu0 = mu0, mu1 = mu1)
     }
-  y <- .rho_np_y(rho_np = rho)
+  y <- .rho_np_y(rho_np = rho, n1 = n1, mu0 = mu0, mu1 = mu1)
+  # browser()
   A <- .calculate_A(y = y, n1 = n1, mu = mu, sigma = sigma, design = design)
   int <- hcubature(
     f = \(z_) {
@@ -752,7 +753,7 @@
         f = \(z_) {
           n2_ <- n2_extrapol(design, z_)
           x1_ <- .z_to_x(z_, n = n1, mu0 = mu0, sigma = sigma)
-          (1 - pnorm((.rho_swcf_B(cf_value = cf_value, x1 = x1_, n1 = n1, n2 = n2_, mu = mu) - mu) * sqrt(n2_) / sigma)) *
+          (1 - pnorm((.rho_swcf_B(cf_value = cf_value, x1 = x1_, n1 = n1, n2 = n2_, mu = mu, sigma = sigma, design = design) - mu) * sqrt(n2_) / sigma)) *
             .f1(z1 = z_, n1 = n1, mu = mu, mu0 = mu0, sigma = sigma)
         },
         lowerLimit = c1f,

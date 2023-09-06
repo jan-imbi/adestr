@@ -506,12 +506,12 @@ setMethod("get_stagewise_estimators", signature("BiasReduced", "Normal"),
               int_kv(design = design,
                      g1 = \(smean1, n1, sigma, two_armed, ...) {
                        se1sq <- sigma^2 * (1L + two_armed) / n1
-                       (smean1 - mu_plugin) * ( (smean1 - mu_plugin) /se1sq) - 1
+                       (smean1) * ( (smean1 - mu_plugin) /se1sq)
                      },
                      g2 = \(smean1, smean2, n1, n2, sigma, two_armed, ...) {
                        se1sq <- sigma^2 * (1L + two_armed) / n1
                        se2sq <- sigma^2 * (1L + two_armed) / n2
-                       ((n1 * smean1 + n2 * smean2) / (n1 + n2) - mu_plugin) * ( (smean1 - mu_plugin) /se1sq + (smean2 - mu_plugin) /se2sq ) - 1
+                       ((n1 * smean1 + n2 * smean2) / (n1 + n2)) * ( (smean1 - mu_plugin) /se1sq + (smean2 - mu_plugin) /se2sq )
                      },
                      mu = mu_plugin,
                      sigma = sigma,

@@ -167,11 +167,12 @@ int_kv <- function(design,
   se2_n2max <- sigma * sqrt((1L + two_armed) / n2_max)
   se2s <- c(se2_n2min, se2_n2max)
   infq <- tol*1e-1
-  # infq <- if (absError==0) min(1e-6, tol) else min(1e-6, absError)
+  infq <- if (absError==0) min(1e-6, tol) else min(1e-6, absError)
   minusinf_norm_1 <- get_norm_inf(infq, means = mu/se1, left = TRUE)
   plusinf_norm_1 <- get_norm_inf(infq, means = mu/se1, left = FALSE)
   minusinf_norm_2 <- get_norm_inf(1-(1-infq)^(1/2), means = mu/se2s, left = TRUE)
   plusinf_norm_2 <- get_norm_inf(1-(1-infq)^(1/2), means = mu/se2s, left = FALSE)
+
 
   futility_integral <- continuation_integral <- efficacy_integral <- NULL
   denom <- 1L
