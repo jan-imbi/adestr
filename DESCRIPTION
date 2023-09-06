@@ -27,7 +27,8 @@ Imports:
     scales,
     latex2exp,
     forcats,
-    future.apply
+    future.apply,
+    progressr
 Suggests: 
     covr,
     knitr,
@@ -52,7 +53,7 @@ Collate:
     'n2c2_helpers.R'
     'neyman_pearson.R'
     'plot_design.R'
-    'print.R'
     'priors.R'
+    'print.R'
     'TwoStageDesignWithCache.R'
 URL: https://jan-imbi.github.io/adestr/

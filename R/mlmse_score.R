@@ -21,7 +21,6 @@ MLMSE <- function(mu = 0, sigma = 1, two_armed = FALSE, tol = 1e-5, maxEval = 1e
 setMethod("evaluate",
           signature("MLMSE", "TwoStageDesign"),
           function(s, design, ...) {
-            design <- cache_design_splines(design)
             mean(
               evaluate_estimator(
                 score = MSE(),

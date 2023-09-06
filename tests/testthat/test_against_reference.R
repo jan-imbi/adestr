@@ -1,22 +1,14 @@
-design <- get_example_design()
-n2_extrapol(design, 1.4)
-n2(design, 1.4, round = FALSE)
-integrate(.f1, lower = -Inf, upper = Inf, n1 = 30, mu = 0, mu0 = 0, sigma = 1)
-hcubature(
-  \(x, n1, n2, mu, mu0, sigma, design) {
-    .f2(x[1,,drop=FALSE], x[2,,drop=FALSE],
-        n1 = n1, n2 = n2, mu = mu, mu0 = mu0, sigma = sigma)
-    },
-  vectorInterface = TRUE,
-  lowerLimit = c(-Inf, -Inf),
-  upperLimit = c(Inf, Inf),
-  n1 = 30,
-  n2 = 30,
-  mu = 0,
-  mu0 = 0,
-  sigma = 1,
-  design = design
-)$integral
+test_that("densities agree with reference implementation.",
+{
+  expect_equal(.f1(z1 = 1.5, n1 = 30, mu = 0, mu0 = 0, sigma = 1),
+               f1_kv(z1 = 1.5, n1 = 30, mu = 0, sigma = 1, two_armed = FALSE))
+  expect_equal(.f2(z1 = 1.5, z2 = 1, n1 = 30, n2 = 45, mu = 0, mu0 = 0, sigma = 1),
+               f2_kv(z1 = 1.5, z2 = 1, n1 = 30, n2 = 45, mu = 0, sigma = 1, two_armed = FALSE))
+
+})
+
+
+
 
 
 .mle_pdf(0.5, 0, 0, 1, design)

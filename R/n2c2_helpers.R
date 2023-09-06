@@ -1,11 +1,12 @@
 n2_preimage <- function(design, sigma = 1, two_armed = FALSE, smean_scale = FALSE){
+  design <- TwoStageDesignWithCache(design)
   zf <- design@c1f
   ze <- design@c1e
   n1 <- ceiling(n1(design, round = FALSE))
   se1 <- sigma * sqrt((1L + two_armed) / n1)
   x_candidates <- seq(design@c1f, design@c1e, length.out = 1e4)
   stepsize <- x_candidates[2L]-x_candidates[1L]
-  n_candidates <- n2(design, x_candidates, round = FALSE)
+  n_candidates <- n2_extrapol(design, x_candidates)
   n_rle <- rle(ceiling(n_candidates))
   csum <- cumsum(n_rle$lengths)
   ns <- n_rle$values
@@ -18,7 +19,7 @@ n2_preimage <- function(design, sigma = 1, two_armed = FALSE, smean_scale = FALS
       if (sgn>0){
         root <- uniroot(
           function(x) {
-            (ns[i] - 1L + sgn * .Machine$double.eps^.6) - n2(design, x, round = FALSE)
+            (ns[i] - 1L + sgn * .Machine$double.eps^.6) - n2_extrapol(design, x)
           },
           c(x_candidates[csum[i-1L]], x_candidates[csum[i-1L]] + stepsize),
           tol = .Machine$double.eps^.6
@@ -26,7 +27,7 @@ n2_preimage <- function(design, sigma = 1, two_armed = FALSE, smean_scale = FALS
       } else {
         root <- uniroot(
           function(x) {
-            (ns[i] + sgn * .Machine$double.eps^.6) - n2(design, x, round = FALSE)
+            (ns[i] + sgn * .Machine$double.eps^.6) - n2_extrapol(design, x)
           },
           c(x_candidates[csum[i-1L]], x_candidates[csum[i-1L]] + stepsize),
           tol = .Machine$double.eps^.6
@@ -46,13 +47,6 @@ n2_preimage <- function(design, sigma = 1, two_armed = FALSE, smean_scale = FALS
   names(ret) <- as.character(ns)
   ret
 }
-cache_design_splines <- function(design, force = TRUE) {
-  if (force | is.null(attr(design, "n2_cache")) | is.null("c2_cache")){
-    attr(design, "n2_cache") <- get_fast_n2(design)
-    attr(design, "c2_cache") <- get_fast_c2(design)
-  }
-  design
-}
 get_n2_coefficients <- function(design){
   h <- (design@c1e - design@c1f) / 2
   return(fastmonoH.FC_coefficients(
@@ -67,6 +61,16 @@ get_c2_coefficients <- function(design){
     design@c2_pivots
   ))
 }
+
+
+#' Calculate the second-stage sample size for a design with cached spline parameters
+#'
+#' Also extrapolates results for values outside of [c1f, c1e].
+#'
+#' @param design an object of class \code{\link{TwoStageDesignWithCache}}.
+#' @param x1 first-stage test statistic
+#'
+#' @seealso \link[adoptr]{n2}
 n2_extrapol <- function(design, x1) {
   if (length(design@n2_pivots > 1L)){
     fastmonoH.FC_evaluate(x1, design@n2_coefficients)
@@ -74,20 +78,26 @@ n2_extrapol <- function(design, x1) {
     design@n2_pivots
   }
 }
+#' Calculate the second-stage critical value for a design with cached spline parameters
+#'
+#' Also extrapolates results for values outside of [c1f, c1e].
+#'
+#' @param design an object of class \code{\link{TwoStageDesignWithCache}}.
+#' @param x1 first-stage test statistic
+#'
+#' @seealso \link[adoptr]{c2}
 c2_extrapol <- function(design, x1) {
   fastmonoH.FC_evaluate(x1, design@c2_coefficients)
 }
 
-
-## Old
-get_fast_c2 <- function(design){
+get_c2_extrapol_function <- function(design){
   h <- (design@c1e - design@c1f) / 2
   return(fastmonoH.FC_function(
     h * design@x1_norm_pivots + (h + design@c1f),
     design@c2_pivots
   ))
 }
-get_fast_n2 <- function(design){
+get_n2_extrapol_function <- function(design){
   if (length(design@n2_pivots)>1){
     h <- (design@c1e - design@c1f) / 2
     return(fastmonoH.FC_function(
@@ -98,29 +108,3 @@ get_fast_n2 <- function(design){
     return(\(x) design@n2_pivots)
   }
 }
-n2_extrapol_old <- function(design, x1) {
-  attr(design, "n2_cache")(x1)
-}
-c2_extrapol_old <- function(design, x1) {
-  attr(design, "c2_cache")(x1)
-}
-# n2_extrapol <- function(design, x1) {
-#   if (length(design@n2_pivots)>1){
-#     h <- (design@c1e - design@c1f) / 2
-#     return(stats::splinefun(
-#       h * design@x1_norm_pivots + (h + design@c1f),
-#       design@n2_pivots,
-#       method = "monoH.FC"
-#     )(x1))
-#   } else{
-#     return(design@n2_pivots)
-#   }
-# }
-# c2_extrapol <- function(design, x1) {
-#   h <- (design@c1e - design@c1f) / 2
-#   return(stats::splinefun(
-#     h * design@x1_norm_pivots + (h + design@c1f),
-#     design@c2_pivots,
-#     method = "monoH.FC"
-#   )(x1))
-# }

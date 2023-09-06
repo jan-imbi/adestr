@@ -679,38 +679,6 @@ pseudorb2_kv <- function(design, smean1, smean2, n1, n2, mu, sigma, two_armed,
     absError = absError,
     vectorInterface = TRUE)$integral / denom
 }
-# newpseudorb2_kv <- function(design, smean1, smean2, n1, n2, mu, sigma, two_armed,
-#                          tol = getOption("adestr_tol_inner", default = .adestr_options[["adestr_tol_inner"]]),
-#                          maxEval = getOption("adestr_maxEval_inner", default = .adestr_options[["adestr_maxEval_inner"]]),
-#                          absError = getOption("adestr_absError_inner", default = .adestr_options[["adestr_absError_inner"]])){
-#   smean <- (smean1*n1 + smean2 * n2) / (n1 + n2)
-#   denom <- .hcubature(
-#     \(x) {
-#       smean1_prime <- z_to_smean(x[1L,,drop=FALSE], n1, sigma, two_armed)
-#       n2 <- n2_extrapol(design, x[1L,,drop=FALSE])
-#       z <- rbind(x[1L,,drop=FALSE], smean_to_z((smean * (n1 + n2) - smean1_prime * n1) / n2, n2, sigma, two_armed))
-#       mf2_kv(z, n1, n2, mu, sigma, two_armed)
-#     },
-#     lowerLimit = design@c1f,
-#     upperLimit = design@c1e,
-#     tol = tol,
-#     maxEval = maxEval,
-#     absError = absError,
-#     vectorInterface = TRUE)$integral
-#   .hcubature(
-#     \(x) {
-#       smean1_prime <- z_to_smean(x[1L,,drop=FALSE], n1, sigma, two_armed)
-#       n2 <- n2_extrapol(design, x[1L,,drop=FALSE])
-#       z <- rbind(x[1L,,drop=FALSE], smean_to_z((smean * (n1 + n2) - smean1_prime * n1) / n2, n2, sigma, two_armed))
-#       smean1_prime*mf2_kv(z, n1, n2, mu, sigma, two_armed)
-#     },
-#     lowerLimit = design@c1f,
-#     upperLimit = design@c1e,
-#     tol = tol,
-#     maxEval = maxEval,
-#     absError = absError,
-#     vectorInterface = TRUE)$integral / denom
-# }
 
 setClass("RaoBlackwell", contains = "VirtualPointEstimator")
 #' @rdname PointEstimator-class
@@ -829,6 +797,7 @@ rciu2_kv <- function(design, smean1, smean2, n1, n2, sigma, two_armed, tol = get
 
 
 adoptr_alpha_shifted_design_kv <- function(design, shiftc1f, shiftc1e, shiftc2){
+  design <- TwoStageDesignWithCache(design)
   pr_es1 <- pnorm(design@c1e + shiftc1e, mean = 0, sd = 1, lower.tail = FALSE)
   if (design@c1e + shiftc1e > design@c1f + shiftc1f + .Machine$double.eps){
     pr_es2 <-  .hcubature(f = \(x) matrix(pnorm(c2_extrapol(design, x[1L,]) + shiftc2, lower.tail = FALSE)*dnorm(x[1L,]), nrow=1L),
@@ -879,6 +848,7 @@ rp2_kv <- function(design, smean1, smean2, n1, n2, sigma, two_armed, wc1f=0, wc1
 }
 
 p_ml <- function(design, smean, n, mu, sigma, two_armed, tol = getOption("adestr_tol_inner", default = .adestr_options[["adestr_tol_inner"]]), maxEval = getOption("adestr_maxEval_inner", default = .adestr_options[["adestr_maxEval_inner"]]), absError = getOption("adestr_absError_inner", default = .adestr_options[["adestr_absError_inner"]]), ...) {
+  design <- TwoStageDesignWithCache(design)
   n1 <- n1(design, round=FALSE)
   se1 <- sigma_to_se(sigma, n1, two_armed)
   muse1 <- mu/se1
@@ -911,6 +881,7 @@ p1_ml <- function(design, smean1, n1, mu, sigma, two_armed, ...) p_ml(design, sm
 p2_ml <- function(design, smean1, smean2, n1, n2, mu, sigma, two_armed, ...) p_ml(design, smeans_to_smean(smean1, smean2, n1, n2), (n1 + n2), mu, sigma, two_armed, ...)
 
 p_lr <- function(design, smean, n, mu, sigma, two_armed, tol = getOption("adestr_tol_inner", default = .adestr_options[["adestr_tol_inner"]]), maxEval = getOption("adestr_maxEval_inner", default = .adestr_options[["adestr_maxEval_inner"]]), absError = getOption("adestr_absError_inner", default = .adestr_options[["adestr_absError_inner"]]), ...) {
+  design <- TwoStageDesignWithCache(design)
   n1 <- n1(design, round=FALSE)
   se1 <- sigma_to_se(sigma, n1, two_armed)
   muse1 <- mu/se1
@@ -944,6 +915,7 @@ p1_lr <- function(design, smean1, n1, mu, sigma, two_armed, ...) p_lr(design, sm
 p2_lr <- function(design, smean1, smean2, n1, n2, mu, sigma, two_armed, ...) p_lr(design, smeans_to_smean(smean1, smean2, n1, n2), (n1 + n2), mu, sigma, two_armed, ...)
 
 p_st <- function(design, smean, n, mu, sigma, two_armed, tol = getOption("adestr_tol_inner", default = .adestr_options[["adestr_tol_inner"]]), maxEval = getOption("adestr_maxEval_inner", default = .adestr_options[["adestr_maxEval_inner"]]), absError = getOption("adestr_absError_inner", default = .adestr_options[["adestr_absError_inner"]]), ...) {
+  design <- TwoStageDesignWithCache(design)
   n1 <- n1(design, round=FALSE)
   se1 <- sigma_to_se(sigma, n1, two_armed)
   muse1 <- mu/se1
@@ -980,6 +952,7 @@ p1_sw <- function(smean1, n1, mu, sigma, two_armed, ...) {
   return(pnorm(smean_to_z(smean1, n1, sigma, two_armed), mean = mu/se1, lower.tail=FALSE))
 }
 p2_sw <- function(design, smean1, smean2, n1, n2, mu, sigma, two_armed, tol = getOption("adestr_tol_inner", default = .adestr_options[["adestr_tol_inner"]]), maxEval = getOption("adestr_maxEval_inner", default = .adestr_options[["adestr_maxEval_inner"]]), absError = getOption("adestr_absError_inner", default = .adestr_options[["adestr_absError_inner"]]), ...) {
+  design <- TwoStageDesignWithCache(design)
   se1 <- sigma_to_se(sigma, n1, two_armed)
   CZ1Z2_shifted <- combf_kv(design, smean1, smean2, n1, n2, mu, sigma, two_armed)
   return(.hcubature(f = \(x) {
@@ -1495,6 +1468,7 @@ setMethod("get_stagewise_estimators", signature("MedianUnbiasedScoreTestOrdering
           })
 
 implied_c2 <- function(design, z1, p2, sigma, two_armed, alpha, tol_root = getOption("adestr_tol_roots", default = .adestr_options[["adestr_tol_roots"]]), tol = getOption("adestr_tol_inner", default = .adestr_options[["adestr_tol_inner"]]), maxEval = getOption("adestr_maxEval_inner", default = .adestr_options[["adestr_maxEval_inner"]]), absError = getOption("adestr_absError_inner", default = .adestr_options[["adestr_absError_inner"]]), ...){
+  design <- TwoStageDesignWithCache(design)
   n1 <- n1(design, round=FALSE)
   initialz <- qnorm(alpha/2, lower.tail = FALSE)
   z1_ord <- order(z1)

@@ -63,6 +63,12 @@ microbenchmark(
   newspline(a1000)
 )
 
+design <- get_example_design()
+
+microbenchmark(
+  d <- TwoStageDesignWithCache(design)
+)
+
 
 
 

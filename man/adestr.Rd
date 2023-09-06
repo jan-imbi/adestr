@@ -3,6 +3,7 @@
 \docType{package}
 \name{adestr}
 \alias{adestr}
+\alias{adestr-package}
 \title{adestr}
 \description{
 Adaptive Design Estimation in R
@@ -25,4 +26,15 @@ power requirements under a specified hypothesis. Although optimal adaptive desig
 guidance on estimation in this novel kind of designs is still scarce. We compare classical and recently developed point
 estimators as well as estimation methods for confidence intervals and p-values regarding various performance criteria such
 as bias, variance, mean squared error, coverage, and consistency with test decisions.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://jan-imbi.github.io/adestr/}
+}
+
+}
+\author{
+\strong{Maintainer}: Jan Meis \email{meis@imbi.uni-heidelberg.de} (\href{https://orcid.org/0000-0001-5407-7220}{ORCID})
+
 }

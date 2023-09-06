@@ -7,6 +7,7 @@ setGeneric("dsmean", \(data_distribution, design, smean, mu, sigma, combine_comp
 #' @importFrom cubature hcubature
 setMethod("dsmean", signature("Normal"),
           function(data_distribution, design, smean, mu, sigma, combine_components, tol, maxEval, absError, exact, ...){
+            design <- TwoStageDesignWithCache(design)
             two_armed <- data_distribution@two_armed
             n1 <- n1(design, round = FALSE)
             if (exact){
@@ -90,6 +91,7 @@ setMethod("dsmean", signature("Normal"),
 #' @importFrom cubature hcubature
 setMethod("dsmean", signature("Student"),
           function(data_distribution, design, smean, mu, sigma, combine_components, tol, maxEval, absError, exact, ...){
+            design <- TwoStageDesignWithCache(design)
             two_armed <- data_distribution@two_armed
             n1 <- n1(design, round = FALSE)
             if (exact){
@@ -261,6 +263,7 @@ setMethod("dsmeanT", signature("Normal"),
                     maxEval = getOption("adestr_maxEval_outer", default = .adestr_options[["adestr_maxEval_outer"]]),
                     absError = getOption("adestr_absError_outer", default = .adestr_options[["adestr_absError_outer"]]),
                     exact = FALSE, ...) {
+  design <- TwoStageDesignWithCache(design)
   if (!data_distribution@two_armed) {
     warning(paste0("dsmeanT calculates the density function of the overall sample mean for the treatment group in a two-armed trial. ",
                    "The specified data_distribution object is one-armed, which will be ignored. Use dsmean if you want to calculate the density for a one-armed trial."))
@@ -418,6 +421,7 @@ setMethod("dsmeanT", signature("Student"),
                     maxEval = getOption("adestr_maxEval_outer", default = .adestr_options[["adestr_maxEval_outer"]]),
                     absError = getOption("adestr_absError_outer", default = .adestr_options[["adestr_absError_outer"]]),
                     exact = FALSE, ...) {
+  design <- TwoStageDesignWithCache(design)
   if (!data_distribution@two_armed) {
     warning(paste0("dsmeanT calculates the density function of the overall sample mean for the treatment group in a two-armed trial. ",
             "The specified data_distribution object is one-armed, which will be ignored. Use dsmean if you want to calculate the density for a one-armed trial."))

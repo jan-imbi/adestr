@@ -3,17 +3,51 @@ setGeneric("get_logpdf", function(prior) standardGeneric("get_logpdf"))
 setGeneric("get_bounds", function(prior, infq) standardGeneric("get_bounds"))
 setGeneric("get_mean", function(prior, infq) standardGeneric("get_mean"))
 
+setClass("NormalPrior", contains = "Prior", slots = c(mu = "numeric", sigma = "numeric"))
+#' Normal prior distribution for the parameter mu
+#'
+#' @param mu mean of prior distribution.
+#' @param sigma standard deviation of the prior distribution.
+#'
+#' @return An object of class \code{NormalPrior}.
+#'
 #' @export
-NormalPrior <- setClass("NormalPrior", contains = "Prior", slots = c(mu = "numeric", sigma = "numeric"))
+#'
+#' @examples
+#' NormalPrior(mu = 0, sigma = 1)
+NormalPrior <- function(mu = 0, sigma = 1) {
+ new("NormalPrior",
+     mu = mu,
+     sigma = sigma
+     )
+}
+
+setClass("UniformPrior", contains = "Prior", slots = c(min = "numeric", max = "numeric"))
+#' Uniform prior distribution for the parameter mu
+#'
+#' @param min minimum of support interval.
+#' @param max maximum of support interval.
+#'
+#' @return An object of class \code{UniformPrior}.
+#'
 #' @export
-UniformPrior <- setClass("UniformPrior", contains = "Prior", slots = c(min = "numeric", max = "numeric"))
+#'
+#' @examples
+#' UniformPrior(min = -1, max = 1)
+UniformPrior <- function(min = -1, max = 1) {
+  new("UniformPrior",
+      min = min,
+      max = max
+  )
+}
 
 setMethod("get_pdf", signature = "NormalPrior",
           function(prior) function(x) dnorm(x, mean = prior@mu, sd = prior@sigma))
 
+#' @importFrom stats dunif
 setMethod("get_pdf", signature = "UniformPrior",
           function(prior) function(x) dunif(x, min = prior@min, max = prior@max))
-
+#' @importFrom stats dnorm
 setMethod("get_logpdf", signature = "NormalPrior",
           function(prior) function(x) dnorm(x, mean = prior@mu, sd = prior@sigma, log = TRUE))
 

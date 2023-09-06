@@ -202,5 +202,17 @@ format.EstimatorScoreResultList <- function(x, ...) rep("<EstimatorScoreResult>"
   x
 }
 
+setMethod("toString", "NormalPrior",
+          \(x, ...) {
+            sprintf("NormalPrior<mu=%s;sigma=%s>", format(x@mu), format(x@sigma))
+          })
+setMethod("show", signature("NormalPrior"), \(object)cat(c(toString(object), "\n"), sep=""))
+
+setMethod("toString", "UniformPrior",
+          \(x, ...) {
+            sprintf("UniformPrior<min=%s;max=%s>", format(x@min), format(x@max))
+          })
+setMethod("show", signature("UniformPrior"), \(object)cat(c(toString(object), "\n"), sep=""))
+
 
 

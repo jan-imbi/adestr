@@ -27,7 +27,7 @@
 ## usethis namespace: start
 #' @useDynLib adestr, .registration = TRUE
 ## usethis namespace: end
-NULL
+"_PACKAGE"
 
 .adestr_options <- list(
   # Root finding inside estimators

@@ -150,6 +150,7 @@ int_kv <- function(design,
                    continuation_part = TRUE,
                    early_efficacy_part = TRUE,
                    conditional_integral = FALSE) {
+  design <- TwoStageDesignWithCache(design)
   n1 <- n1(design, round = FALSE)
   if (exact){
     n1 <- ceiling(n1)
@@ -315,6 +316,7 @@ int_uv <- function(design,
                    continuation_part = TRUE,
                    early_efficacy_part = TRUE,
                    conditional_integral = FALSE) {
+  design <- TwoStageDesignWithCache(design)
   n1 <- n1(design, round = FALSE)
   if (exact){
     n1 <- ceiling(n1)
@@ -489,6 +491,7 @@ int_kv_full <- function(design,
                         continuation_part = TRUE,
                         early_efficacy_part = TRUE,
                         conditional_integral = FALSE) {
+  design <- TwoStageDesignWithCache(design)
   n1 <- n1(design, round = FALSE)
   if (exact){
     n1 <- ceiling(n1)
@@ -671,6 +674,7 @@ int_uv_full <- function(design,
                         continuation_part = TRUE,
                         early_efficacy_part = TRUE,
                         conditional_integral = FALSE) {
+  design <- TwoStageDesignWithCache(design)
   n1 <- n1(design, round = FALSE)
   if (exact){
     n1 <- ceiling(n1)
@@ -872,6 +876,7 @@ int_kv_prior <- function(design,
                    continuation_part = TRUE,
                    early_efficacy_part = TRUE,
                    conditional_integral = FALSE) {
+  design <- TwoStageDesignWithCache(design)
   n1 <- n1(design, round = FALSE)
   if (exact){
     n1 <- ceiling(n1)

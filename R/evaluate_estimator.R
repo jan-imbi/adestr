@@ -753,6 +753,7 @@ setMethod("evaluate_estimator", signature("TestAgreement", "IntervalEstimator"),
                    continuation_part,
                    early_efficacy_part,
                    conditional_integral) {
+            design <- TwoStageDesignWithCache(design)
             stagewise_estimators <- get_stagewise_estimators(estimator = estimator,
                                                              data_distribution =  data_distribution,
                                                              use_full_twoarm_sampling_distribution = use_full_twoarm_sampling_distribution,
@@ -816,6 +817,7 @@ setMethod("evaluate_estimator", signature("TestAgreement", "IntervalEstimator"),
 
 #' @importFrom latex2exp TeX
 plot_rejection_regions <- function(estimators, data_distribution, design, mu, sigma,  subdivisions = 100, ...){
+  design <- TwoStageDesignWithCache(design)
   two_armed <- data_distribution@two_armed
   n1 <- n1(design, round = FALSE)
   se1 <- sigma_to_se(sigma, n1, two_armed)
@@ -906,6 +908,7 @@ setGeneric("plot_p", \(estimator, data_distribution, design, mu = 0, sigma, boun
 #' @import ggplot2 ggpubr latex2exp
 setMethod("plot_p", signature("PValue"),
           function(estimator, data_distribution, design, mu, sigma, boundary_color, subdivisions, ...){
+            design <- TwoStageDesignWithCache(design)
             two_armed <- data_distribution@two_armed
             n1 <- n1(design, round = FALSE)
             se1 <- sigma_to_se(sigma, n1, two_armed)

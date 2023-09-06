@@ -19,6 +19,26 @@
   x2 <- .z_to_x(z = z2, n = n2, mu0 = mu0, sigma = sigma)
   (n1 * x1 + n2 * x2) / (n1 + n2)
 }
+# n2_extrapol <- function(design, x1) {
+#   if (length(design@n2_pivots)>1){
+#     h <- (design@c1e - design@c1f) / 2
+#     return(stats::splinefun(
+#       h * design@x1_norm_pivots + (h + design@c1f),
+#       design@n2_pivots,
+#       method = "monoH.FC"
+#     )(x1))
+#   } else{
+#     return(design@n2_pivots)
+#   }
+# }
+# c2_extrapol <- function(design, x1) {
+#   h <- (design@c1e - design@c1f) / 2
+#   return(stats::splinefun(
+#     h * design@x1_norm_pivots + (h + design@c1f),
+#     design@c2_pivots,
+#     method = "monoH.FC"
+#   )(x1))
+# }
 
 ## The densities for integration.
 .f1 <- function(z1, n1, mu, mu0, sigma) {
@@ -466,18 +486,18 @@
   (rho_np - 2 * n1 * x1 + (mu0 + mu1)*(n1 + n2)) / (2*n1)
 }
 .rho_swcf1 <- function(x1, n1, mu0, sigma){
-  pnorm(.x_to_z(x = x1, n = n1, mu0 = mu0, simga = sigma))
+  pnorm(.x_to_z(x = x1, n = n1, mu0 = mu0, sigma = sigma))
 }
 .rho_swcf2 <- function(x1, x2, n1, n2, mu, sigma, design){
   1 + pnorm(.swcf(x1 = x1, x2 = x2, n1 = n1, n2 = n2, mu = mu, sigma = sigma, design = design))
 }
 .rho_swcf3 <- function(x1, n1, mu0, sigma){
-  2 + pnorm(.x_to_z(x = x1, n = n1, mu0 = mu0, simga = sigma))
+  2 + pnorm(.x_to_z(x = x1, n = n1, mu0 = mu0, sigma = sigma))
 }
 .swcf <- function(x1, x2, n1, n2, mu, sigma, design){
   .x_to_z(x = x2, n = n2, mu0 = mu, sigma = sigma) - c2_extrapol(design, .x_to_z(x = x1, n = n1, mu0 = mu, sigma = sigma))
 }
-.rho_swcf_B <- function(cf_value, x1, n1, n2, mu, design){
+.rho_swcf_B <- function(cf_value, x1, n1, n2, mu, sigma, design){
   sigma / sqrt(n2) * (cf_value + c2_extrapol(design, (x1 - mu)*sqrt(n1)/sigma)) + mu
 }
 .calculate_A <- function(y, n1, mu, sigma, design){
@@ -697,15 +717,15 @@
   )$root
 }
 #### (Median unbiased point estimator) (NP ordering).
-.median_unbiased_st <- function(x1, x2, mu0, mu1, sigma, design){
+.median_unbiased_np <- function(x1, x2, mu0, mu1, sigma, design){
   # (This should not really be used.)
-  .rho_st_root(gamma = 0.5, x1 = x1, x2 = x2, mu0 = mu0, mu1 = mu1, sigma = sigma, design = design)
+  .rho_np_root(gamma = 0.5, x1 = x1, x2 = x2, mu0 = mu0, mu1 = mu1, sigma = sigma, design = design)
 }
 #### (Confidence interval) (NP ordering).
-.confidence_interval_st <- function(alpha, x1, x2, mu0, sigma, design){
+.confidence_interval_np <- function(alpha, x1, x2, mu0, mu1, sigma, design){
   # This should not really be used.
-  c(.rho_st_root(gamma = alpha/2, x1 = x1, x2 = x2, mu0 = mu0, mu1 = mu1, sigma = sigma, design = design),
-    .rho_st_root(gamma = 1-alpha/2, x1 = x1, x2 = x2, mu0 = mu0, mu1 = mu1, sigma = sigma, design = design))
+  c(.rho_np_root(gamma = alpha/2, x1 = x1, x2 = x2, mu0 = mu0, mu1 = mu1, sigma = sigma, design = design),
+    .rho_np_root(gamma = 1-alpha/2, x1 = x1, x2 = x2, mu0 = mu0, mu1 = mu1, sigma = sigma, design = design))
 }
 
 ### Stage-wise combination function ordering

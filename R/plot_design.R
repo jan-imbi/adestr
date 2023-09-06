@@ -1,6 +1,7 @@
 # Helper function to plot designs
 #' @importFrom scales percent
 plot_design <- function(design, data_distribution = Normal(two_armed = FALSE)){
+  design <- TwoStageDesignWithCache(design)
   two_armed <- data_distribution@two_armed
   if (is(data_distribution, "Student")) {
     z1tex <- TeX("$t_1$")
@@ -21,9 +22,9 @@ plot_design <- function(design, data_distribution = Normal(two_armed = FALSE)){
     x2 <- seq(d@c1f, d@c1e, length.out = 200)
     x3 <- seq(d@c1e, maxc1e + const * contl, length.out = 200)
     n1 <- n1(d, round=FALSE) + n1_dodge[[i]]
-    n2 <- n2(d, x2, round=FALSE)
-    c2 <- c2(d, x2)
-    cp <- pnorm(c2(d, x2), mean = 0.4*sqrt(n2(d, x2, round=FALSE) / (1L + two_armed)), lower.tail = FALSE)
+    n2 <- n2_extrapol(d, x2)
+    c2 <- c2_extrapol(d, x2)
+    cp <- pnorm(c2_extrapol(d, x2), mean = 0.4*sqrt(n2_extrapol(d, x2) / (1L + two_armed)), lower.tail = FALSE)
     plotdata[[length(plotdata) + 1L]] <- data.frame(
       x1 = x1,
       x2 = x2,
