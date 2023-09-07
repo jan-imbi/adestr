@@ -4,7 +4,7 @@
 \alias{get_example_design}
 \title{Generate an exemplary adaptive design}
 \usage{
-get_example_design()
+get_example_design(label = NULL)
 }
 \value{
 an exmplary design of class \code{TwoStageDesign}.

@@ -6,7 +6,6 @@ test_that("densities agree with reference implementation.",
                f2_kv(z1 = 1.5, z2 = 1, n1 = 30, n2 = 45, mu = 0, sigma = 1, two_armed = FALSE))
 
 })
-
 test_that("MLE densities agree with reference implementation.",
 {
   expect_equal(.mle_pdf(0.5, 0, 0, 1, designad),
@@ -30,7 +29,6 @@ test_that("MLE densities agree with reference implementation.",
                  combine_components = TRUE
                ))
 })
-
 test_that("pseudo Rao-Blackwell estimator agrees with reference implementation.",
           {
             prb <- get_stagewise_estimators(PseudoRaoBlackwell(), Normal(FALSE), FALSE, designad, 1, FALSE)
@@ -50,7 +48,6 @@ test_that("AWSM (min peak var) estimator agrees with reference implementation.",
                                  sigma = 1, two_armed = FALSE),
                          tolerance = 1e-2)
           })
-
 test_that("bias reduced estimator agrees with reference implementation.",
           {
             sw <-  get_stagewise_estimators(BiasReduced(), Normal(FALSE), FALSE, designad, 1, FALSE)
@@ -86,8 +83,6 @@ test_that("median unbiased (SWCF ordering) estimator agrees with reference imple
                          med$g2(designad, .2, .2, designad@n1, n2(designad, smean_to_z(.2, designad@n1, 1, FALSE), round = FALSE), 1, FALSE),
                          tolerance = 1e-3)
           })
-
-
 test_that("median unbiased (SWCF ordering) estimator agrees with reference implementation.",
           {
             p <- get_stagewise_estimators(NeymanPearsonOrderingPValue(0, 0.4), Normal(FALSE), FALSE, designad, 1, FALSE)
@@ -95,20 +90,13 @@ test_that("median unbiased (SWCF ordering) estimator agrees with reference imple
                          p$g2(designad, .2, .2, designad@n1, n2(designad, smean_to_z(.2, designad@n1, 1, FALSE), round = FALSE), 1, FALSE),
                          tolerance = 1e-3)
           })
-
-
-pml <- get_stagewise_estimators(MLEOrderingPValue(), Normal(FALSE), FALSE, design, 1, FALSE)
-pml$g2(design, .2, .5, design@n1, n2(design, smean_to_z(.2, design@n1, 1, FALSE), round = FALSE), 1, FALSE)
-.p_ml(.2, .5, 0, 0, 1, design)
-
-
-
-
-
-
-
-
-
+test_that("P-value (Neyman-Pearson ordering) agrees with reference implementation.",
+          {
+            p <- get_stagewise_estimators(NeymanPearsonOrderingPValue(0, 0.4), Normal(FALSE), FALSE, designad, 1, FALSE)
+            expect_equal(.p_np(x1 = .2, x2 = .2, mu = 0, mu0 = 0, mu1 = .4, sigma = 1, design = designad),
+                         p$g2(designad, .2, .2, designad@n1, n2(designad, smean_to_z(.2, designad@n1, 1, FALSE), round = FALSE), 1, FALSE),
+                         tolerance = 1e-3)
+          })
 
 
 

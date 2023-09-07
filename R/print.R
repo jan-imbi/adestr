@@ -54,11 +54,11 @@ setMethod("toString", signature("Results"),
           function(x, ...) {
             lines <- list()
             left <- "Design:"
-            right <- substr(.tmp <- capture.output(print(x@design)), 1L, nchar(.tmp)-1L)
+            right <- toString(x@design)
             lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
 
             left <- "Data Distribution:"
-            right <- substr(.tmp <- capture.output(print(x@data_distribution)), 1L, nchar(.tmp)-1L)
+            right <- toString(x@data_distribution)
             lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
 
             left <- "Observed number of stages:"
@@ -120,8 +120,6 @@ setMethod("toString", signature("Results"),
               lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
             }
 
-
-
             print_header <- TRUE
             for (res in x@results){
               if ("stage1" %in% names(res)){
@@ -162,7 +160,7 @@ setMethod("show", signature("Results"), \(object) cat(c(toString(object), "\n"),
 setMethod("toString", signature("DataDistribution"),
           function(x, ...) {
             str <- capture.output(print(x))
-            substr(str, 1, nchar(str)-1L)
+            substr(str, 1, nchar(str))
 })
 setMethod("toString", signature("EstimatorScore"),
           function(x, ...) {
@@ -173,8 +171,8 @@ setMethod("toString", signature("TwoStageDesign"),
           function(x, ...) {
             if (!is.null(attr(x, "label")))
               return(attr(x, "label"))
-            str <- capture.output(print(x))
-            substr(str, 1, nchar(str)-1L)
+            str <- print(x)
+            str
           })
 
 setGeneric("toTeX", \(x, ...) standardGeneric("toTeX"))

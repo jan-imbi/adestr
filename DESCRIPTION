@@ -51,7 +51,6 @@ Collate:
     'mle_distribution.R'
     'mlmse_score.R'
     'n2c2_helpers.R'
-    'neyman_pearson.R'
     'plot_design.R'
     'priors.R'
     'print.R'

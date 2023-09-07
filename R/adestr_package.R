@@ -1,23 +1,7 @@
 #' adestr
-#' @description Adaptive Design Estimation in R
+#' @description Point Estimates, Confidence Intervals, and P-Values for Optimal Adaptive Two-Stage Designs
 #'
-#' @details The flexibility of adaptive clinical trial designs can offer significant advantages over fixed designs.
-#' If design parameters are chosen appropriately, adaptive designs can decrease the expected sample size and
-#' save resources in cases with early evidence that the continuation of a trial may be futile. A known issue with adaptive
-#' designs is that estimators appropriate in a single-stage fixed design, such as the maximum likelihood estimator, can be
-#' biased due to the dependence structure in the data introduced by adaptivity. This problem affects point estimators as well
-#' as confidence intervals and p-values. Regulatory agencies such as the EMA or FDA recognize this problem and urge researchers
-#' that "the extent of bias should be evaluated, and estimates should be presented with appropriate cautions regarding
-#' their interpretation". Over the years, various methods have been proposed to mitigate the bias introduced by adaptive designs.
-#' However, estimators often need to fulfill other requirements to be useful in practice, such as having an acceptable variance.
-#' In this work, we provide results on the operating characteristics of different estimators in optimal adaptive two-stage design
-#' with normally distributed outcome. In optimal designs, design parameters such as the sample sizes, decision boundaries,
-#' and adaptation rules are chosen as the result of an optimization process. The goal of the optimization process is to
-#' maximize some metric of design quality, a typical example being the expected sample size required to fulfill certain
-#' power requirements under a specified hypothesis. Although optimal adaptive designs have been a topic of recent research,
-#' guidance on estimation in this novel kind of designs is still scarce. We compare classical and recently developed point
-#' estimators as well as estimation methods for confidence intervals and p-values regarding various performance criteria such
-#' as bias, variance, mean squared error, coverage, and consistency with test decisions.
+#' @details Adaptive two-stage designs
 #'
 #' @docType package
 #' @name adestr

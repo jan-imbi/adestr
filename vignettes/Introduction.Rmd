@@ -58,7 +58,7 @@ dat <- data.frame(
 )
 analyze(
  data = dat,
- estimator = c(get_example_estimators()),
+ estimator = get_example_estimators(),
  data_distribution = Normal(),
  sigma = 1,
  design = get_example_design()

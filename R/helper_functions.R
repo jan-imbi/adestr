@@ -115,7 +115,7 @@ get_overall_svar_twoarm <- function(smean1, smean1T, svar1, smean2, smean2T, sva
 #' evaluate(ExpectedSampleSize(Normal(FALSE), PointMassPrior(.4, 1)), design)
 #' # Expected sample size under the null
 #' evaluate(ExpectedSampleSize(Normal(FALSE), PointMassPrior(0, 1)), design)
-get_example_design <- function() {
+get_example_design <- function(label = NULL) {
   d <- TwoStageDesign(
     n1 = 28.16834031633078083701,
     c1f = 0.7907304707554818623549,
@@ -141,7 +141,7 @@ get_example_design <- function() {
     7
   )
   d <- TwoStageDesignWithCache(d)
-  attr(d, "label") <- "adaptive"
+  attr(d, "label") <- label
   d
 }
 #' Generate a list of estimators and p-values to use in examples

@@ -1,4 +1,4 @@
-# TODO: remove dots with this regex
+# TODO: think about removing dots with this regex
 # \.(?=[a-z|A-Z])
 
 ## Some helper functions.
@@ -474,16 +474,16 @@
   (rho_st - n1 * x1 + mu * (n1 + n2))/n2
 }
 .rho_np1 <- function(x1, n1, mu0, mu1) {
-  (2*x1*(mu0 - mu1) - mu0^2 + mu1^2)*n1
+  (2*x1*(mu0 - mu1) + mu1^2 - mu0^2)*n1
 }
 .rho_np2 <- function(x1, x2, n1, n2, mu0, mu1) {
-  (2*.x1_x2_to_x(x1 = x1, x2 = x2, n1 = n1, n2 = n2)*(mu0 - mu1) - mu0^2 + mu1^2)*(n1 + n2)
+  (2*.x1_x2_to_x(x1 = x1, x2 = x2, n1 = n1, n2 = n2)*(mu0 - mu1) + mu1^2 - mu0^2)*(n1 + n2)
 }
 .rho_np_y <- function(rho_np, n1, mu0, mu1){
-  (rho_np + (mu0 + mu1)*n1) / (2*n1) # rho_np sollte nicht mit mu0+mu1 multipliziert werden? morgen checken
+  (rho_np + (mu0^2 - mu1^2)*n1) / (2*n1*(mu0 - mu1))
 }
 .rho_np_B <- function(rho_np, x1, n1, n2, mu0, mu1){
-  (rho_np - 2 * n1 * x1 + (mu0 + mu1)*(n1 + n2)) / (2*n1)
+  (rho_np - 2*n1 * (mu0 - mu1) * x1 + (mu0^2 - mu1^2) * (n1 + n2)  ) / (2*n2*(mu0-mu1))
 }
 .rho_swcf1 <- function(x1, n1, mu0, sigma){
   pnorm(.x_to_z(x = x1, n = n1, mu0 = mu0, sigma = sigma))
@@ -695,7 +695,7 @@
       .rho_np2(x1 = x1, x2 = x2, n1 = n1, n2 = n2, mu0 = mu0, mu1 = mu1)
     }
   y <- .rho_np_y(rho_np = rho, n1 = n1, mu0 = mu0, mu1 = mu1)
-  # browser()
+
   A <- .calculate_A(y = y, n1 = n1, mu = mu, sigma = sigma, design = design)
   int <- hcubature(
     f = \(z_) {
@@ -780,7 +780,6 @@
   c(.rho_swcf_root(gamma = alpha/2, x1 = x1, x2 = x2, mu0 = mu0, sigma = sigma, design = design),
     .rho_swcf_root(gamma = 1-alpha/2, x1 = x1, x2 = x2, mu0 = mu0, sigma = sigma, design = design))
 }
-
 
 ### Naive CI
 .naive_confidence_interval <- function(alpha, x1, x2, n1, n2, sigma){
