@@ -46,7 +46,8 @@ with the full sampling distribution in a two-armed trial}
 when applied to data.
 }
 \description{
-Analyze a dataset
+The \code{analyze} function can be used calculate the values of a list of
+\link[adestr:PointEstimator]{point estimators}
 }
 \examples{
 set.seed(321)

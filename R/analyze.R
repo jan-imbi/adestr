@@ -6,6 +6,11 @@ Results <- setClass("Results", slots = c(data ="data.frame",
                                          results = "list"))
 #' Analyze a dataset
 #'
+#' The \code{analyze} function can be used calculate the values of a list of
+#' \link[adestr:PointEstimator]{point estimators},
+#' \link[adestr:ConfidenceInterval]{confidence intervals},
+#' and \link[adestr:PValue]{p-values} for a given dataset.
+#'
 #' @param data a data.frame containing the data to be analyzed
 #' @inheritParams evaluate_estimator
 #'

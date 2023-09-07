@@ -1,13 +1,23 @@
 #' adestr
-#' @description Point Estimates, Confidence Intervals, and P-Values for Optimal Adaptive Two-Stage Designs
+#' @description Point estimates, confidence intervals, and p-values for optimal adaptive two-stage designs
 #'
-#' @details Adaptive two-stage designs
+#' @details This package implements methods to evaluate the performance characteristics of
+#' various point and interval estimators for optimal adaptive two-stage designs.
+#' Specifically, this package is written to interface with trial designs created by the \code{\link{adoptr}} package
+#' \insertCite{kunzmann2021adoptr,pilz2021optimal}{adestr}.
+#' Apart from the a priori evaluation of performance characteristics, this package also allows for the
+#' evaluation of the implemented estimators on real datasets, and it implements methods
+#' to calculate p-values.
 #'
 #' @docType package
 #' @name adestr
 #' @import adoptr methods
 #' @importFrom stats dnorm pnorm qnorm dt pt qt dchisq pchisq qchisq integrate uniroot var
 #' @importFrom cubature hcubature
+#' @importFrom Rdpack reprompt
+#'
+#' @references
+#' \insertAllCited{}
 ## usethis namespace: start
 #' @useDynLib adestr, .registration = TRUE
 ## usethis namespace: end
