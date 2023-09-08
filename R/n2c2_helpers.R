@@ -76,7 +76,7 @@ get_c2_coefficients <- function(design){
 #'
 #' @seealso \link[adoptr]{n2}
 n2_extrapol <- function(design, x1) {
-  if (length(design@n2_pivots > 1L)){
+  if (length(design@n2_pivots) > 1L){
     fastmonoH.FC_evaluate(x1, design@n2_coefficients)
   } else {
     design@n2_pivots

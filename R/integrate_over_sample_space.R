@@ -173,7 +173,6 @@ int_kv <- function(design,
   minusinf_norm_2 <- get_norm_inf(1-(1-infq)^(1/2), means = mu/se2s, left = TRUE)
   plusinf_norm_2 <- get_norm_inf(1-(1-infq)^(1/2), means = mu/se2s, left = FALSE)
 
-
   futility_integral <- continuation_integral <- efficacy_integral <- NULL
   denom <- 1L
   if (conditional_integral) {

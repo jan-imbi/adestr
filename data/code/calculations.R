@@ -193,7 +193,7 @@ fix_bad_convergence <-
     tol = 1e-8
   )
 tmp <- tab_list_main[[2L]][,-length(tab_list_main[[2L]])]
-tmp[abs(tmp$mu - .15) < .0001 &
+tmp[abs(tmp$mu - 0.15) < .0001 &
       tmp$design == "Group-sequential" & tmp$estimator == "Naive CI",
     c(
       "Agreement with test decision",

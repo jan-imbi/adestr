@@ -12,11 +12,11 @@ setMethod("toString", signature("EstimatorScoreResult"),
           function(x, maxlen = 80L, ...){
             lines <- list()
             left <- "Design:"
-            right <- substr(.tmp <- capture.output(print(x@design)), 1L, nchar(.tmp)-1L)
+            right <- toString(x@design)
             lines[[length(lines)+1L]] <- paste0(pad_middle(left, right, maxlen = maxlen), "\n")
 
             left <- "Data Distribution:"
-            right <- substr(.tmp <- capture.output(print(x@data_distribution)), 1L, nchar(.tmp)-1L)
+            right <- toString(x@data_distribution)
             lines[[length(lines)+1L]] <- paste0(pad_middle(left, right, maxlen = maxlen), "\n")
 
             left <- "Estimator:"
