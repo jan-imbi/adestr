@@ -12,12 +12,11 @@ setClass(
 #'
 #' @param design an object of class TwoStageDesign
 #'
-TwoStageDesignWithCache <- function(design){
-  if (attr(design, "class")=="TwoStageDesignWithCache")
+TwoStageDesignWithCache <- function(design) {
+  if (attr(design, "class") == "TwoStageDesignWithCache") {
     return(design)
-  else
-    return(
-  new("TwoStageDesignWithCache",
+  } else {
+    d <- new("TwoStageDesignWithCache",
       n1 = design@n1,
       c1f = design@c1f,
       c1e = design@c1e,
@@ -28,12 +27,15 @@ TwoStageDesignWithCache <- function(design){
       tunable = design@tunable,
       n2_coefficients = get_n2_coefficients(design),
       c2_coefficients = get_c2_coefficients(design)
-      )
     )
+    attr(d, "label") <- attr(design, "label")
+    return(d)
+  }
 }
 forget_cache <- function(design){
+  label <- attr(design, "label")
   if (length(design@n2_pivots)==1) {
-    new("GroupSequentialDesign",
+    d <- new("GroupSequentialDesign",
         n1 = design@n1,
         c1f = design@c1f,
         c1e = design@c1e,
@@ -44,7 +46,7 @@ forget_cache <- function(design){
         tunable = design@tunable
     )
   } else {
-    new("TwoStageDesign",
+    d <- new("TwoStageDesign",
         n1 = design@n1,
         c1f = design@c1f,
         c1e = design@c1e,
@@ -55,6 +57,8 @@ forget_cache <- function(design){
         tunable = design@tunable
     )
   }
+  attr(d, "label") <- label
+  d
 }
 setMethod("print", signature("TwoStageDesignWithCache"), function(x, ...){
   print(forget_cache(x))

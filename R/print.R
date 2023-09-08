@@ -174,6 +174,14 @@ setMethod("toString", signature("TwoStageDesign"),
             str <- print(x)
             str
           })
+#' @importFrom utils capture.output
+setMethod("toString", signature("TwoStageDesignWithCache"),
+          function(x, ...) {
+            if (!is.null(attr(x, "label")))
+              return(attr(x, "label"))
+            str <- print(x)
+            str
+          })
 
 setGeneric("toTeX", \(x, ...) standardGeneric("toTeX"))
 
