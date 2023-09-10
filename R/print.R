@@ -43,11 +43,11 @@ setMethod("toString", signature("EstimatorScoreResult"),
           })
 setMethod("show", signature("EstimatorScoreResult"), \(object) cat(c(toString(object), "\n"), sep=""))
 
-setMethod("toString", signature("Estimator"),
+setMethod("toString", signature("Statistic"),
           function(x, ...){
             return(paste0(x@label))
           })
-setMethod("show", signature("Estimator"), \(object)cat(c(toString(object), "\n"), sep=""))
+setMethod("show", signature("Statistic"), \(object)cat(c(toString(object), "\n"), sep=""))
 
 #' @importFrom utils capture.output
 setMethod("toString", signature("Results"),
@@ -142,7 +142,7 @@ setMethod("toString", signature("Results"),
                     lines[[length(lines)+1L]] <- paste0("Stage 2 results:\n")
                     print_header <- FALSE
                   }
-                  left <- paste0(" ", res$estimator@label, collapse="")
+                  left <- paste0(" ", res$statistic@label, collapse="")
                   if (length(res$stage2) > 1L){
                     right <- paste0("[",paste0(format(res$stage2, ...), collapse = ", "), "]")
                   } else {

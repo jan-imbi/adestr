@@ -1,4 +1,5 @@
-setClass("Estimator", slots = c(label = "character"))
+setClass("Statistic", slots = c(label = "character"))
+setClass("Estimator", contains = "Statistic")
 
 #' Point estimators
 #'
@@ -36,7 +37,7 @@ VirtualPointEstimator <- function() stop("Cannot create instance of class Virtua
 #'   g1 = \(smean1, ...) runif(length(smean1)),
 #'   g2 = \(smean2, ...) runif(length(smean2)),
 #'   label="My custom p-value")
-setClass("PValue", slots = c(g1 = "function", g2 = "function"),  contains = "PointEstimator")
+setClass("PValue", slots = c(g1 = "function", g2 = "function"),  contains = "Statistic")
 #' @rdname PValue-class
 #' @export
 PValue <- function(g1, g2, label) new("PValue", g1 = g1, g2 = g2, label = label)

@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# [This documentation is work in progress]
+# Introduction
 
 This package implements methods to evaluate the performance characteristics
 of various point and interval estimators for adaptive two-stage designs with 
@@ -29,25 +29,107 @@ R-package `adoptr`, which calculates optimal design parameters for
 adaptive two-stage designs. You can learn about adoptr here:
 [kkmann.github.io/adoptr/](https://kkmann.github.io/adoptr/).
 
+# Fitting a design with adoptr
+In order to showcase the capabilities of this package, we need a trial design first.
+Following [the example from the adoptr documentation](https://kkmann.github.io/adoptr/articles/adoptr.html),
+such a design can be fitted like this:
 
-## Examples
-### Evaluating the mean squared error of an estimator
+```{r}
+library(adoptr)
+H_0 <- PointMassPrior(.0, 1)
+H_1 <- PointMassPrior(.4, 1)
+datadist <- Normal(two_armed = TRUE)
+ess <- ExpectedSampleSize(datadist, H_1)
+power <- Power(datadist, H_1)
+toer  <- Power(datadist, H_0)
+initial_design <- get_initial_design(
+  theta = .4,
+  alpha = .025,
+  beta  = .2,
+  type_design  = "two-stage",
+  dist  = datadist,
+  order = 7L
+)
+opt_res <- minimize(
+  ess,
+  subject_to(
+    power >= 0.8,
+    toer  <= .025
+  ),
+  initial_design
+)
+design <- opt_res$design
+plot(design)
+```
+
+You can read more about optimal adaptive designs fitted via the adoptr package here:
+[kkmann.github.io/adoptr/articles/adoptr_jss.html](https://kkmann.github.io/adoptr/articles/adoptr_jss.html).
+
+
+# An introductory example
+## Evaluating the mean squared of an estimator
+Now that we have created an optimal adaptive design, we can investigate the performance
+characteristics of various estimators for the mean in that design.
+To this end, the `evaluate_estimator` function can be used.
 
 ```{r}
 library(adestr)
 evaluate_estimator(
  score = MSE(),
  estimator = SampleMean(),
- data_distribution = Normal(TRUE),
- design = get_example_design(),
- mu = c(0.3),
+ data_distribution = Normal(two_armed = TRUE),
+ design = design,
+ mu = 0.3,
  sigma = 1
 )
 ```
 
+The mean squared error of the sample mean depends on the true underlying value of the
+paramter $\mu$, which of course is unknown. Therefore, it may be
+advisable to use the `evaluate_estimator` function on an array of values for $\mu$
+to investigate the distributional properties of an estimator.
 
-### Analyzing datasets
+In the following, the MSE of the sample mean vs. a weighted sample mean with fixed weights
+will be plotted.
+
 ```{r}
+mse_mle <- evaluate_estimator(
+  score = MSE(),
+  estimator = SampleMean(),
+  data_distribution = Normal(two_armed = TRUE),
+  design = design,
+  mu = seq(-0.75, 1.32, .03),
+  sigma = 1
+)
+mse_weighted_sample_means <- evaluate_estimator(
+  score = MSE(),
+  estimator = WeightedSampleMean(w1 = .5),
+  data_distribution = Normal(two_armed = TRUE),
+  design = design,
+  mu = seq(-0.75, 1.32, .03),
+  sigma = 1
+)
+plot_data <- data.frame(
+  MSE = c(mse_mle@results$MSE, mse_weighted_sample_means@results$MSE),
+  estimator = rep(
+    c(
+      mse_mle@estimator@label,
+      mse_weighted_sample_means@estimator@label
+    ),
+    each = length(mse_mle@results$MSE)
+  ),
+  mu = seq(-0.75, 1.32, .03)
+)
+library(ggplot2)
+ggplot(plot_data, aes(x = mu, y = MSE, color = estimator)) +
+  geom_line()
+```
+
+## Analyzing datasets
+Next, let us look at how to the package can be used to calculate estimates
+after data has been collected.
+
+The first stage data of a trial might look like this:
 set.seed(321)
 dat <- data.frame(
  endpoint = c(rnorm(28, .2, 1), rnorm(28, 0, 1),
@@ -56,12 +138,87 @@ dat <- data.frame(
                     c(28,28,23,23))),
  stage = rep(c(1L, 2L), c(56, 46))
 )
+
+
+
+```{r}
+set.seed(321)
+dat <- data.frame(
+ endpoint = c(rnorm(56, .3, 1), rnorm(56, 0, 1)),
+ group = factor(rep(c("trt", "ctl"),
+                    c(56,56)), levels = c("trt", "ctl")),
+ stage = rep(1, 112)
+)
+head(dat)
+```
+The first stage test Z-test statistic is:
+
+```{r}
+Z <- (mean(dat$endpoint[1:56]) - mean(dat$endpoint[57:112])) * sqrt(56) / sqrt(2 * 1)
+Z
+```
+
+The value of that statistic is inside the continuation region:
+
+```{r}
+c(design@c1f, design@c1e)
+```
+The second stage sample size function of the design can be queried to find the sample size for the
+second batch of patients (per group):
+
+```{r}
+n2(design, Z)
+```
+We will simulate 47 more patients per group:
+
+```{r}
+dat <- rbind(dat,
+             data.frame(
+               endpoint = c(rnorm(47, .3, 1), rnorm(47, 0, 1)),
+               group = factor(rep(c("trt", "ctl"),
+                                  c(47, 47)), levels = c("trt", "ctl")),
+               stage = rep(2, 94)
+             ))
+```
+
+Now, we can use the `analyze` function to evaluate a selection of estimators on the complete dataset:
+
+```{r}
 analyze(
  data = dat,
- estimator = get_example_estimators(),
- data_distribution = Normal(),
+ statistics = c(
+   SampleMean(),
+   BiasReduced(),
+   MedianUnbiasedStagewiseCombinationFunctionOrdering(),
+   StagewiseCombinationFunctionOrderingCI(),
+   StagewiseCombinationFunctionOrderingPValue()
+   ),
+ data_distribution = Normal(two_armed = TRUE),
  sigma = 1,
- design = get_example_design()
+ design = design
 )
 ```
+
+The estimates presented here are for the difference in means of the two normal distributions.
+Keep in mind that a difference of $\mu=0.3$ was used in the simulation.
+
+Note that while the median unbiased estimator performs well in this particular example, this
+is not universally true.
+
+
+# More details on the evaluation of performance characteristics
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

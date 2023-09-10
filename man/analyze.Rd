@@ -7,7 +7,7 @@
 \usage{
 analyze(
   data,
-  estimator,
+  statistics,
   data_distribution,
   use_full_twoarm_sampling_distribution = FALSE,
   design,
@@ -17,7 +17,7 @@ analyze(
 
 \S4method{analyze}{data.frame}(
   data,
-  estimator,
+  statistics,
   data_distribution,
   use_full_twoarm_sampling_distribution = FALSE,
   design,
@@ -26,9 +26,10 @@ analyze(
 )
 }
 \arguments{
-\item{data}{a data.frame containing the data to be analyzed}
+\item{data}{a data.frame containing the data to be analyzed.}
 
-\item{estimator}{object of class \code{PointEstimator}, \code{IntervalEstimator} or \code{PValue}.}
+\item{statistics}{a list of objects of class \code{\link{PointEstimator}}, \code{\link{ConfidenceInterval}} or
+\code{\link{PValues}}.}
 
 \item{data_distribution}{object of class \code{Normal} or \code{Student}.}
 
@@ -42,12 +43,14 @@ with the full sampling distribution in a two-armed trial}
 \item{exact}{logical indicating usage of exact n2 function.}
 }
 \value{
-\code{Results} object containing the values of the estimators
+\code{Results} object containing the values of the statistics
 when applied to data.
 }
 \description{
 The \code{analyze} function can be used calculate the values of a list of
-\link[adestr:PointEstimator]{point estimators}
+\link[adestr:PointEstimator]{point estimators},
+\link[adestr:ConfidenceInterval]{confidence intervals},
+and \link[adestr:PValue]{p-values} for a given dataset.
 }
 \examples{
 set.seed(321)
@@ -60,7 +63,7 @@ dat <- data.frame(
 )
 analyze(
   data = dat,
-  estimator = c(get_example_estimators()),
+  statistics = c(get_example_statistics()),
   data_distribution = Normal(),
   sigma = 1,
   design = get_example_design()

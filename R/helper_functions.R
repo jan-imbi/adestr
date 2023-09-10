@@ -154,7 +154,7 @@ get_example_design <- function(label = NULL) {
 #' @export
 #'
 #' @inherit analyze examples
-get_example_estimators <- function(point_estimators = TRUE,
+get_example_statistics <- function(point_estimators = TRUE,
                                    interval_estimators = TRUE,
                                    p_values = TRUE) {
   point <- list(SampleMean(), PseudoRaoBlackwell(), MedianUnbiasedLikelihoodRatioOrdering(), BiasReduced())
@@ -169,3 +169,61 @@ get_example_estimators <- function(point_estimators = TRUE,
     ret <- c(ret, p)
   return(ret)
 }
+
+#' Generate a list of estimators and p-values to use in examples
+#'
+#' @param point_estimators logical indicating whether point estimators should be included in output list
+#' @param interval_estimators logical indicating whether interval estimators should be included in output list
+#' @param p_values logical indicating whether p-values should be included in output list
+#'
+#' @return a list of estimators and pvalues.
+#' @export
+#'
+#' @inherit analyze examples
+get_statistics_from_paper <- function(point_estimators = TRUE,
+                                   interval_estimators = TRUE,
+                                   p_values = TRUE) {
+  point <- list(
+    SampleMean(),
+    FirstStageSampleMean(),
+    MinimizePeakVariance(),
+    PseudoRaoBlackwell(),
+    BiasReduced(),
+    MedianUnbiasedMLEOrdering(),
+    MedianUnbiasedLikelihoodRatioOrdering(),
+    MedianUnbiasedScoreTestOrdering(),
+    MedianUnbiasedStagewiseCombinationFunctionOrdering()
+  )
+  interval <- list(
+    NaiveCI(),
+    MLEOrderingCI(),
+    LikelihoodRatioOrderingCI(),
+    ScoreTestOrderingCI(),
+    StagewiseCombinationFunctionOrderingCI(),
+    RepeatedCI()
+  )
+  p <- list(
+    MLEOrderingPValue(),
+    ScoreTestOrderingPValue(),
+    #NeymanPearsonOrderingPValue(),
+    StagewiseCombinationFunctionOrderingPValue(),
+    LikelihoodRatioOrderingPValue())
+  ret <- list()
+  if (point_estimators)
+    ret <- c(ret, point)
+  if (interval_estimators)
+    ret <- c(ret, interval)
+  if (p_values)
+    ret <- c(ret, p)
+  return(ret)
+}
+
+
+
+
+
+
+
+
+
+

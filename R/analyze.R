@@ -11,10 +11,12 @@ Results <- setClass("Results", slots = c(data ="data.frame",
 #' \link[adestr:ConfidenceInterval]{confidence intervals},
 #' and \link[adestr:PValue]{p-values} for a given dataset.
 #'
-#' @param data a data.frame containing the data to be analyzed
+#' @param data a data.frame containing the data to be analyzed.
+#' @param statistics a list of objects of class \code{\link{PointEstimator}}, \code{\link{ConfidenceInterval}} or
+#' \code{\link{PValues}}.
 #' @inheritParams evaluate_estimator
 #'
-#' @return \code{Results} object containing the values of the estimators
+#' @return \code{Results} object containing the values of the statistics
 #' when applied to data.
 #' @export
 #'
@@ -29,13 +31,13 @@ Results <- setClass("Results", slots = c(data ="data.frame",
 #' )
 #' analyze(
 #'   data = dat,
-#'   estimator = c(get_example_estimators()),
+#'   statistics = c(get_example_statistics()),
 #'   data_distribution = Normal(),
 #'   sigma = 1,
 #'   design = get_example_design()
 #' )
 setGeneric("analyze", function(data,
-                               estimator,
+                               statistics,
                                data_distribution,
                                use_full_twoarm_sampling_distribution = FALSE,
                                design,
@@ -43,7 +45,7 @@ setGeneric("analyze", function(data,
                                exact = FALSE) standardGeneric("analyze"))
 #' @rdname analyze
 setMethod("analyze", signature("data.frame"),
-          function(data, estimator, data_distribution, use_full_twoarm_sampling_distribution, design, sigma, exact){
+          function(data, statistics, data_distribution, use_full_twoarm_sampling_distribution, design, sigma, exact){
             if (missing(data))
               stop("data argument may not be ommited.")
             if (is(data_distribution, "Student") && !missing(sigma)){
@@ -58,10 +60,10 @@ setMethod("analyze", signature("data.frame"),
               }
             }
             arglist <- c(sdata, design = design, sigma = sigma, two_armed = data_distribution@two_armed)
-            if (!is.list(estimator)){
-              estimator <- list(estimator)
+            if (!is.list(statistics)){
+              statistics <- list(statistics)
             }
-            results <- lapply(estimator, .analzye,
+            results <- lapply(statistics, .analzye,
                               data_distribution = data_distribution,
                               use_full_twoarm_sampling_distribution = use_full_twoarm_sampling_distribution,
                               design = design,
@@ -77,14 +79,14 @@ setMethod("analyze", signature("data.frame"),
                       results = results)
               )
   })
-.analzye <- function(estimator, data_distribution, use_full_twoarm_sampling_distribution, design, sigma, exact, arglist){
-  stagewise_estimators <- get_stagewise_estimators(estimator = estimator,
+.analzye <- function(statistic, data_distribution, use_full_twoarm_sampling_distribution, design, sigma, exact, arglist){
+  stagewise_estimators <- get_stagewise_estimators(estimator = statistic,
                                                    data_distribution =  data_distribution,
                                                    use_full_twoarm_sampling_distribution = use_full_twoarm_sampling_distribution,
                                                    design = design, sigma = sigma, exact = exact)
-  ret <- list(estimator = estimator)
+  ret <- list(statistic = statistic)
   if (arglist$n_stages==2L){
-    if (is(estimator, "IntervalEstimator")) {
+    if (is(statistic, "IntervalEstimator")) {
       resl <- do.call(stagewise_estimators[[3L]], arglist)
       resr <- do.call(stagewise_estimators[[4L]], arglist)
       res <- list(lower = resl, upper = resr)
@@ -93,7 +95,7 @@ setMethod("analyze", signature("data.frame"),
     }
     ret[["stage2"]] <- res
   } else{
-    if (is(estimator, "IntervalEstimator")) {
+    if (is(statistic, "IntervalEstimator")) {
       resl <- do.call(stagewise_estimators[[1L]], arglist)
       resr <- do.call(stagewise_estimators[[2L]], arglist)
       res <- list(lower = resl, upper = resr)
@@ -164,7 +166,7 @@ summarize_data <- function(data, reference_value = 0, endpoint_name = "endpoint"
     ret <- cbind(ret, n_s2_g1 = n_s2_g1)
     smean2T <- mean(data_s2_g1$endpoint, na.rm=TRUE)
     if (n_groups == 2L){
-      data_s2_g2 <- data_s1[data_s2$group==2L,]
+      data_s2_g2 <- data_s2[data_s2$group==2L,]
       n_s2_g2 <- sum(!is.na(data_s2_g2$endpoint))
       n2 <- n2 + n_s2_g2
       smean2C <- mean(data_s2_g2$endpoint, na.rm=TRUE)
