@@ -29,7 +29,7 @@ analyze(
 \item{data}{a data.frame containing the data to be analyzed.}
 
 \item{statistics}{a list of objects of class \code{\link{PointEstimator}}, \code{\link{ConfidenceInterval}} or
-\code{\link{PValues}}.}
+\code{\link{PValue}}.}
 
 \item{data_distribution}{object of class \code{Normal} or \code{Student}.}
 

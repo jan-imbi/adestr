@@ -4,7 +4,6 @@
 \name{PValue-class}
 \alias{PValue-class}
 \alias{PValue}
-\alias{VirtualPValue}
 \alias{LinearShiftRepeatedPValue}
 \alias{MLEOrderingPValue}
 \alias{LikelihoodRatioOrderingPValue}
@@ -14,8 +13,6 @@
 \title{P-values}
 \usage{
 PValue(g1, g2, label)
-
-VirtualPValue()
 
 LinearShiftRepeatedPValue(wc1f = 0, wc1e = 1/2, wc2 = 1/2)
 

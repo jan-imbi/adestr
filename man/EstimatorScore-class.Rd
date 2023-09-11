@@ -3,6 +3,7 @@
 \docType{class}
 \name{EstimatorScore-class}
 \alias{EstimatorScore-class}
+\alias{EstimatorScore}
 \alias{Expectation}
 \alias{Bias}
 \alias{Variance}

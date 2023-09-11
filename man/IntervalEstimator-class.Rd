@@ -3,8 +3,9 @@
 \docType{class}
 \name{IntervalEstimator-class}
 \alias{IntervalEstimator-class}
+\alias{ConfidenceInterval}
+\alias{ConfidenceInterval-class}
 \alias{IntervalEstimator}
-\alias{VirtualIntervalEstimator}
 \alias{RepeatedCI}
 \alias{StagewiseCombinationFunctionOrderingCI}
 \alias{MLEOrderingCI}
@@ -15,8 +16,6 @@
 \title{Interval estimators}
 \usage{
 IntervalEstimator(two_sided, l1, u1, l2, u2, label)
-
-VirtualIntervalEstimator()
 
 RepeatedCI(two_sided = TRUE)
 

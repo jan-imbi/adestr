@@ -102,6 +102,8 @@ get_overall_svar_twoarm <- function(smean1, smean1T, svar1, smean2, smean2T, sva
 #' for a normally distributed test statistic (i.e. known variance).
 #' For an alternative hypothesis of mu=0.4, the overall power is 80\%.
 #'
+#' @param label (optional) label to be assigned to the design.
+#'
 #' @return an exmplary design of class \code{TwoStageDesign}.
 #' @export
 #'

@@ -19,26 +19,26 @@
   x2 <- .z_to_x(z = z2, n = n2, mu0 = mu0, sigma = sigma)
   (n1 * x1 + n2 * x2) / (n1 + n2)
 }
-# n2_extrapol <- function(design, x1) {
-#   if (length(design@n2_pivots)>1){
-#     h <- (design@c1e - design@c1f) / 2
-#     return(stats::splinefun(
-#       h * design@x1_norm_pivots + (h + design@c1f),
-#       design@n2_pivots,
-#       method = "monoH.FC"
-#     )(x1))
-#   } else{
-#     return(design@n2_pivots)
-#   }
-# }
-# c2_extrapol <- function(design, x1) {
-#   h <- (design@c1e - design@c1f) / 2
-#   return(stats::splinefun(
-#     h * design@x1_norm_pivots + (h + design@c1f),
-#     design@c2_pivots,
-#     method = "monoH.FC"
-#   )(x1))
-# }
+.n2_extrapol <- function(design, x1) {
+  if (length(design@n2_pivots)>1){
+    h <- (design@c1e - design@c1f) / 2
+    return(stats::splinefun(
+      h * design@x1_norm_pivots + (h + design@c1f),
+      design@n2_pivots,
+      method = "monoH.FC"
+    )(x1))
+  } else{
+    return(design@n2_pivots)
+  }
+}
+.c2_extrapol <- function(design, x1) {
+  h <- (design@c1e - design@c1f) / 2
+  return(stats::splinefun(
+    h * design@x1_norm_pivots + (h + design@c1f),
+    design@c2_pivots,
+    method = "monoH.FC"
+  )(x1))
+}
 
 ## The densities for integration.
 .f1 <- function(z1, n1, mu, mu0, sigma) {
@@ -61,7 +61,7 @@
     if (z1 < c1f || z1 > c1e) {
       .f1(z1 = z1, n1 = n1, mu = mu, mu0 = mu0, sigma = sigma)
     } else {
-      n2 <- n2_extrapol(design, z1)
+      n2 <- .n2_extrapol(design, z1)
       .f2(z1 = z1, z2 = z2, n1 = n1, n2 = n2, mu = mu, mu0 = mu0, sigma = sigma)
     }
   ret
@@ -115,7 +115,7 @@
   # Cannot use 2d integral because boundaries of integral are function of z1
   continuation_int <- hcubature(
     \(z1) {
-       n2 <- n2_extrapol(design, z1)
+       n2 <- .n2_extrapol(design, z1)
        x1 <- .z_to_x(z = z1, n = n1, mu0 = mu0, sigma = sigma)
        .f1(z1 = z1, n1 = n1, mu = mu, mu0 = mu0, sigma = sigma) *
        hcubature(
@@ -136,7 +136,7 @@
   n1 <- design@n1
   int <- hcubature(
     \(x, n1, mu, mu0, sigma, design) {
-      n2 <- n2_extrapol(design, x[1,,drop=FALSE])
+      n2 <- .n2_extrapol(design, x[1,,drop=FALSE])
       z2 <- ( ((n1 + n2) * y - n1 * .z_to_x(z = x[1,,drop=FALSE], n = n1, mu0 = mu0, sigma = sigma)) /n2 - mu0) * sqrt(n2)/sigma
       (n1 + n2)/n2 * sqrt(n2)/sigma * .f2(z1 = x[1,,drop=FALSE], z2 = z2, n1 = n1, n2 = n2, mu = mu, mu0 = mu0, sigma = sigma)
     },
@@ -177,7 +177,7 @@
   )$integral
   continuation <- hcubature(
     f = \(x, n1, mu, mu0, sigma, design){
-      n2 <- n2_extrapol(design, x[1,,drop=FALSE])
+      n2 <- .n2_extrapol(design, x[1,,drop=FALSE])
       .z1_z2_to_x(z1 = x[1, , drop = FALSE], z2 = x[2, , drop = FALSE], n1 = n1, n2 = n2, mu0 = mu0, sigma = sigma ) *
         .f2(z1 = x[1, , drop = FALSE], z2 = x[2, , drop = FALSE], n1 = n1, n2 = n2, mu = mu, mu0 = mu0, sigma = sigma)
     },
@@ -221,7 +221,7 @@
   )$integral
   continuation <- hcubature(
     f = \(x, n1, mu, mu0, sigma, design){
-      n2 <- n2_extrapol(design, x[1,,drop=FALSE])
+      n2 <- .n2_extrapol(design, x[1,,drop=FALSE])
       x1 <- .z_to_x(z = x[1,,drop=FALSE], n = n1, mu0 = mu0, sigma = sigma)
       x2 <- .z_to_x(z = x[2,,drop=FALSE], n = n2, mu0 = mu0, sigma = sigma)
       .adaptively_weighted_mle(x1 = x1, x2 = x2, n1 = n1, n2 = n2, sigma = sigma, w = w) *
@@ -259,7 +259,7 @@
   )$integral
   continuation <- hcubature(
     f = \(x, n1, mu, mu0, sigma, design){
-      n2 <- n2_extrapol(design, x[1,,drop=FALSE])
+      n2 <- .n2_extrapol(design, x[1,,drop=FALSE])
       x1 <- .z_to_x(x[1,,drop=FALSE], n = n1, mu0 = mu0, sigma = sigma)
       x2 <- .z_to_x(x[2,,drop=FALSE], n = n2, mu0 = mu0, sigma = sigma)
       (.adaptively_weighted_mle(x1 = x1, x2 = x2, n1 = n1, n2 = n2, sigma = sigma, w = w) - E)^2 *
@@ -283,8 +283,8 @@
     sigma = sigma,
     design = design
   )$minimum
-  max_n2 <- n2_extrapol(design, design@c1f)
-  min_n2 <- n2_extrapol(design, design@c1e)
+  max_n2 <- .n2_extrapol(design, design@c1f)
+  min_n2 <- .n2_extrapol(design, design@c1e)
   max_tau <- (minw * sqrt(design@n1) / sigma) / (minw * sqrt(design@n1) / sigma + sqrt(1 - minw^2) * sqrt(min_n2) / sigma)
   min_tau <- (minw * sqrt(design@n1) / sigma) / (minw * sqrt(design@n1) / sigma + sqrt(1 - minw^2) * sqrt(max_n2) / sigma)
   message(sprintf("Minimum weight w = %.3f, which means tau ranges from %.3f to %.3f.", minw, min_tau, max_tau))
@@ -307,7 +307,7 @@
     if (z1 < c1f || z1 > c1e) {
       x1
     } else {
-      n2 <- n2_extrapol(design, z1)
+      n2 <- .n2_extrapol(design, z1)
       x <- .x1_x2_to_x(x1 = x1, x2 = x2, n1 = n1, n2 = n2)
       numerator <-
         hcubature(
@@ -353,9 +353,9 @@
       # The difference between the pseudo Rao-Blackwell and the Rao-Blackwell
       # estimator is that the (normal) Rao-Blackwell estimator uses the actual
       # n2 preimage.
-      n2 <- ceiling(n2_extrapol(design, z1))
-      lower_z1 <- uniroot(\(x) n2_extrapol(design, x) - n2 - -2, c(c1f, c1e))$root
-      upper_z1 <- uniroot(\(x) n2_extrapol(design, x) - n2 - -1, c(c1f, c1e))$root
+      n2 <- ceiling(.n2_extrapol(design, z1))
+      lower_z1 <- uniroot(\(x) .n2_extrapol(design, x) - n2 - -2, c(c1f, c1e))$root
+      upper_z1 <- uniroot(\(x) .n2_extrapol(design, x) - n2 - -1, c(c1f, c1e))$root
       x <- .x1_x2_to_x(x1 = x1, x2 = x2, n1 = n1, n2 = n2)
       numerator <-
         hcubature(
@@ -412,7 +412,7 @@
   )$integral
   continuation <- hcubature(
     f = \(x, n1, mu, mu0, sigma, design){
-      n2 <- n2_extrapol(design, x[1,,drop=FALSE])
+      n2 <- .n2_extrapol(design, x[1,,drop=FALSE])
       .z1_z2_to_x(z1 = x[1, , drop = FALSE], z2 = x[2, , drop = FALSE], n1 = n1, n2 = n2, mu0 = mu0, sigma = sigma) *
         ((x[1,,drop=FALSE] + (mu0 - mu) * sqrt(n1)/sigma) * sqrt(n1)/sigma +
            (x[2,,drop=FALSE] + (mu0 - mu) * sqrt(n2)/sigma) * sqrt(n2)/sigma) *
@@ -495,10 +495,10 @@
   2 + pnorm(.x_to_z(x = x1, n = n1, mu0 = mu0, sigma = sigma))
 }
 .swcf <- function(x1, x2, n1, n2, mu, sigma, design){
-  .x_to_z(x = x2, n = n2, mu0 = mu, sigma = sigma) - c2_extrapol(design, .x_to_z(x = x1, n = n1, mu0 = mu, sigma = sigma))
+  .x_to_z(x = x2, n = n2, mu0 = mu, sigma = sigma) - .c2_extrapol(design, .x_to_z(x = x1, n = n1, mu0 = mu, sigma = sigma))
 }
 .rho_swcf_B <- function(cf_value, x1, n1, n2, mu, sigma, design){
-  sigma / sqrt(n2) * (cf_value + c2_extrapol(design, (x1 - mu)*sqrt(n1)/sigma)) + mu
+  sigma / sqrt(n2) * (cf_value + .c2_extrapol(design, (x1 - mu)*sqrt(n1)/sigma)) + mu
 }
 .calculate_A <- function(y, n1, mu, sigma, design){
   c1f <- design@c1f
@@ -533,14 +533,14 @@
     if (z1 < c1f || z1 > c1e) {
       .rho_ml1(x1 = x1)
     } else {
-      n2 <- n2_extrapol(design, z1)
+      n2 <- .n2_extrapol(design, z1)
       .rho_ml2(x1 = x1, x2 = x2, n1 = n1, n2 = n2)
     }
   y <- .rho_ml_y(rho_ml = rho)
   A <- .calculate_A(y = y, n1 = n1, mu = mu, sigma = sigma, design = design)
   int <- hcubature(
     f = \(z_) {
-      n2_ <- n2_extrapol(design, z_)
+      n2_ <- .n2_extrapol(design, z_)
       x1_ <- .z_to_x(z_, n = n1, mu0 = mu0, sigma = sigma)
       (1 - pnorm((.rho_ml_B(rho_ml = rho, x1 = x1_, n1 = n1, n2 = n2_, mu = mu) - mu) * sqrt(n2_) / sigma)) *
         .f1(z1 = z_, n1 = n1, mu = mu, mu0 = mu0, sigma = sigma)
@@ -585,14 +585,14 @@
     if (z1 < c1f || z1 > c1e) {
       .rho_lr1(x1 = x1, n1 = n1, mu = mu)
     } else {
-      n2 <- n2_extrapol(design, z1)
+      n2 <- .n2_extrapol(design, z1)
       .rho_lr2(x1 = x1, x2 = x2, n1 = n1, n2 = n2, mu = mu)
     }
   y <- .rho_lr_y(rho_lr = rho, n1 = n1, mu = mu)
   A <- .calculate_A(y = y, n1 = n1, mu = mu, sigma = sigma, design = design)
   int <- hcubature(
     f = \(z_) {
-      n2_ <- n2_extrapol(design, z_)
+      n2_ <- .n2_extrapol(design, z_)
       x1_ <- .z_to_x(z_, n = n1, mu0 = mu0, sigma = sigma)
       (1 - pnorm((.rho_lr_B(rho_lr = rho, x1 = x1_, n1 = n1, n2 = n2_, mu = mu) - mu) * sqrt(n2_) / sigma)) *
         .f1(z1 = z_, n1 = n1, mu = mu, mu0 = mu0, sigma = sigma)
@@ -637,14 +637,14 @@
     if (z1 < c1f || z1 > c1e) {
       .rho_st1(x1 = x1, n1 = n1, mu = mu)
     } else {
-      n2 <- n2_extrapol(design, z1)
+      n2 <- .n2_extrapol(design, z1)
       .rho_st2(x1 = x1, x2 = x2, n1 = n1, n2 = n2, mu = mu)
     }
   y <- .rho_st_y(rho_st = rho, n1 = n1, mu = mu)
   A <- .calculate_A(y = y, n1 = n1, mu = mu, sigma = sigma, design = design)
   int <- hcubature(
     f = \(z_) {
-      n2_ <- n2_extrapol(design, z_)
+      n2_ <- .n2_extrapol(design, z_)
       x1_ <- .z_to_x(z_, n = n1, mu0 = mu0, sigma = sigma)
       (1 - pnorm((.rho_st_B(rho_st = rho, x1 = x1_, n1 = n1, n2 = n2_, mu = mu) - mu) * sqrt(n2_) / sigma)) *
         .f1(z1 = z_, n1 = n1, mu = mu, mu0 = mu0, sigma = sigma)
@@ -691,7 +691,7 @@
     if (z1 < c1f || z1 > c1e) {
       .rho_np1(x1 = x1, n1 = n1, mu0 = mu0, mu1 = mu1)
     } else {
-      n2 <- n2_extrapol(design, z1)
+      n2 <- .n2_extrapol(design, z1)
       .rho_np2(x1 = x1, x2 = x2, n1 = n1, n2 = n2, mu0 = mu0, mu1 = mu1)
     }
   y <- .rho_np_y(rho_np = rho, n1 = n1, mu0 = mu0, mu1 = mu1)
@@ -699,7 +699,7 @@
   A <- .calculate_A(y = y, n1 = n1, mu = mu, sigma = sigma, design = design)
   int <- hcubature(
     f = \(z_) {
-      n2_ <- n2_extrapol(design, z_)
+      n2_ <- .n2_extrapol(design, z_)
       x1_ <- .z_to_x(z_, n = n1, mu0 = mu0, sigma = sigma)
       (1 - pnorm((.rho_np_B(rho_np = rho, x1 = x1_, n1 = n1, n2 = n2_, mu0 = mu0, mu1 = mu1) - mu) * sqrt(n2_) / sigma)) *
         .f1(z1 = z_, n1 = n1, mu = mu, mu0 = mu0, sigma = sigma)
@@ -746,12 +746,12 @@
     if (z1 < c1f || z1 > c1e) {
       1 - pnorm( (x1 - mu)*sqrt(n1)/sigma )
     } else {
-      n2 <- n2_extrapol(design, z1)
-      cf_value <- (x2 - mu) * sqrt(n2) / sigma - c2_extrapol(design, (x1 - mu) * sqrt(n1) / sigma)
+      n2 <- .n2_extrapol(design, z1)
+      cf_value <- (x2 - mu) * sqrt(n2) / sigma - .c2_extrapol(design, (x1 - mu) * sqrt(n1) / sigma)
       A <- 1 - pnorm(c1e -mu*sqrt(n1)/sigma)
       int <- hcubature(
         f = \(z_) {
-          n2_ <- n2_extrapol(design, z_)
+          n2_ <- .n2_extrapol(design, z_)
           x1_ <- .z_to_x(z_, n = n1, mu0 = mu0, sigma = sigma)
           (1 - pnorm((.rho_swcf_B(cf_value = cf_value, x1 = x1_, n1 = n1, n2 = n2_, mu = mu, sigma = sigma, design = design) - mu) * sqrt(n2_) / sigma)) *
             .f1(z1 = z_, n1 = n1, mu = mu, mu0 = mu0, sigma = sigma)
@@ -802,20 +802,20 @@
   c1f <- design@c1f
   c1e <- design@c1e
   z1 <- .x_to_z(x = x1, n = n1, mu0 = mu0, sigma = sigma)
-  n2 <- n2_extrapol(design, z1)
+  n2 <- .n2_extrapol(design, z1)
   lower_l <- x1 - c1e * sigma / sqrt(n1)
   upper_l <- x1 - c1f * sigma / sqrt(n1)
   lower_z2 <- (x2 - lower_l) * sqrt(n2) / sigma
   upper_z2 <- (x2 - upper_l) * sqrt(n2) / sigma
-  minc2 <- c2_extrapol(design, c1e)
-  maxc2 <- c2_extrapol(design, c1f)
+  minc2 <- .c2_extrapol(design, c1e)
+  maxc2 <- .c2_extrapol(design, c1f)
   # Assumes c2 is monotonically decreasing
   if (maxc2 < lower_z2) {
     ret <- upper_l
   } else if (minc2 >upper_z2) {
     ret <- lower_l
   } else{
-    ret <- uniroot(\(x) c2_extrapol(design, (x1 - x)*sqrt(n1)/sigma) - (x2 - x)*sqrt(n2)/sigma,
+    ret <- uniroot(\(x) .c2_extrapol(design, (x1 - x)*sqrt(n1)/sigma) - (x2 - x)*sqrt(n2)/sigma,
                    interval = c(lower_l, upper_l))$root
   }
   ret

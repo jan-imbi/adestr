@@ -1,7 +1,6 @@
-
 #' Performance scores for point and interval estimators
 #'
-#' These functions encode various metrics which can be used to evaluate
+#' These classes encode various metrics which can be used to evaluate
 #' the performance characteristics of point and interval estimators.
 #'
 #'
@@ -9,6 +8,7 @@
 #'
 #' @return an \code{EstimatorScore} object.
 #' @export
+#' @aliases EstimatorScore
 #' @seealso \code{\link{evaluate_estimator}}
 #'
 #' @inherit evaluate_estimator examples

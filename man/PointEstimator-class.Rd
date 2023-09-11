@@ -4,7 +4,6 @@
 \name{PointEstimator-class}
 \alias{PointEstimator-class}
 \alias{PointEstimator}
-\alias{VirtualPointEstimator}
 \alias{SampleMean}
 \alias{FirstStageSampleMean}
 \alias{WeightedSampleMean}
@@ -26,8 +25,6 @@
 \title{Point estimators}
 \usage{
 PointEstimator(g1, g2, label)
-
-VirtualPointEstimator()
 
 SampleMean()
 

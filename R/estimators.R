@@ -1,3 +1,26 @@
+#' Statistics and Estimators of the adestr package
+#'
+#' The \code{\link{Statistic}} class is a parent class for the classes
+#' \code{\link{Estimator}} and \code{\link{PValue}}. The \code{\link{Estimator}} class is a parent
+#' for the classes \code{\link{PointEstimator}} and \code{\link{ConfidenceInterval}}.
+#'
+#' The function \code{\link{analyze}} can be used to calculate the value
+#' of a \code{\link{Statistic}} for a given dataset.
+#'
+#' The function \code{\link{evaluate_estimator}} can be used to evaluate
+#' \link[EstimatorScore]{distributional quantities} of an \code{\link{Estimator}}
+#' like the \code{\link{MSE}} for a \code{\link{PointEstimator}} or the
+#' \code{\link{Coverage}} for a \code{\link{ConfidenceInterval}}.
+#'
+#'
+#' @param label name of the statistic. Used in printing methods.
+#'
+#' @export
+#' @rdname Statistic-class
+#' @aliases Statistic Statistics Estimator
+#' @seealso \code{\link{PointEstimator}} \code{\link{ConfidenceInterval}} \code{\link{PValue}}
+#' @seealso \code{\link{analyze}} \code{\link{evaluate_estimator}}
+#' @seealso \code{\link{EstimatorScore}}
 setClass("Statistic", slots = c(label = "character"))
 setClass("Estimator", contains = "Statistic")
 
@@ -18,7 +41,6 @@ setClass("PointEstimator", slots = c(g1 = "function", g2 = "function"), contains
 #' @export
 PointEstimator <- function(g1, g2, label) new("PointEstimator", g1 = g1, g2 = g2, label = label)
 setClass("VirtualPointEstimator", contains = "PointEstimator")
-#' @rdname PointEstimator-class
 VirtualPointEstimator <- function() stop("Cannot create instance of class VirtualPointEstimator.")
 
 
@@ -42,7 +64,6 @@ setClass("PValue", slots = c(g1 = "function", g2 = "function"),  contains = "Sta
 #' @export
 PValue <- function(g1, g2, label) new("PValue", g1 = g1, g2 = g2, label = label)
 setClass("VirtualPValue", contains = "PValue")
-#' @rdname PValue-class
 VirtualPValue <- function() stop("Cannot create instance of class VirtualPValue.")
 
 
@@ -58,6 +79,7 @@ VirtualPValue <- function() stop("Cannot create instance of class VirtualPValue.
 #' @return An object of class \code{IntervalEstimator}.
 #'
 #' @export
+#' @aliases ConfidenceInterval ConfidenceInterval-class
 #'
 #' @examples
 #' IntervalEstimator(
@@ -72,8 +94,6 @@ setClass("IntervalEstimator", slots = c(two_sided = "logical", l1 = "function", 
 #' @export
 IntervalEstimator <- function(two_sided, l1, u1, l2, u2, label) new("IntervalEstimator", two_sided = two_sided, l1 = l1, u1 = u1, l2 = l2, u2 = u2, label = label)
 setClass("VirtualIntervalEstimator", contains = "IntervalEstimator")
-#' @rdname IntervalEstimator-class
-#' @export
 VirtualIntervalEstimator <- function() stop("Cannot create instance of class VirtualIntervalEstimator")
 
 

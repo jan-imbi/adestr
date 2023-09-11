@@ -6,6 +6,9 @@
 \usage{
 get_example_design(label = NULL)
 }
+\arguments{
+\item{label}{(optional) label to be assigned to the design.}
+}
 \value{
 an exmplary design of class \code{TwoStageDesign}.
 }

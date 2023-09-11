@@ -13,7 +13,7 @@ Results <- setClass("Results", slots = c(data ="data.frame",
 #'
 #' @param data a data.frame containing the data to be analyzed.
 #' @param statistics a list of objects of class \code{\link{PointEstimator}}, \code{\link{ConfidenceInterval}} or
-#' \code{\link{PValues}}.
+#' \code{\link{PValue}}.
 #' @inheritParams evaluate_estimator
 #'
 #' @return \code{Results} object containing the values of the statistics
