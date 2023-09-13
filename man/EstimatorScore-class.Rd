@@ -40,7 +40,7 @@ TestAgreement()
 an \code{EstimatorScore} object.
 }
 \description{
-These functions encode various metrics which can be used to evaluate
+These classes encode various metrics which can be used to evaluate
 the performance characteristics of point and interval estimators.
 }
 \section{Slots}{

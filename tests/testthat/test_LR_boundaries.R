@@ -1,12 +1,16 @@
 test_that("implicit rejection boundary from Neyman-Pearson test matches c2",
           {
+            p2 <- get_stagewise_estimators(NeymanPearsonOrderingPValue(0, 0.4),
+                                     Normal(FALSE),
+                                     FALSE,
+                                     designad,
+                                     1,
+                                     FALSE)[[2]]
             expect_equal(
-              c2_np(
+              implied_c2(
                 designad,
                 adoptr:::scaled_integration_pivots(designad),
-                0,
-                0,
-                0.4,
+                p2,
                 1,
                 FALSE,
                 0.025

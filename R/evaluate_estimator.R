@@ -70,7 +70,11 @@ setGeneric("evaluate_estimator", function(score,
                                           early_efficacy_part = TRUE,
                                           conditional_integral = FALSE) standardGeneric("evaluate_estimator"))
 
-#' @rdname evaluate_estimator
+#' @inherit evaluate_estimator
+#' @name evaluate_estimator-methods
+NULL
+
+#' @rdname evaluate_estimator-methods
 setMethod("evaluate_estimator", signature("PointEstimatorScore", "IntervalEstimator"),
           function(score,
                    estimator,
@@ -90,7 +94,7 @@ setMethod("evaluate_estimator", signature("PointEstimatorScore", "IntervalEstima
                    conditional_integral) {
             stop("Cannot evaluate PointEstimatorScore on IntervalEstimator.")
           })
-#' @rdname evaluate_estimator
+#' @rdname evaluate_estimator-methods
 setMethod("evaluate_estimator", signature("IntervalEstimatorScore", "PointEstimator"),
           function(score,
                    estimator,
@@ -110,7 +114,7 @@ setMethod("evaluate_estimator", signature("IntervalEstimatorScore", "PointEstima
                    conditional_integral) {
             stop("Cannot evaluate IntervalEstimatorScore on PointEstimator.")
           })
-#' @rdname evaluate_estimator
+#' @rdname evaluate_estimator-methods
 setMethod("evaluate_estimator", signature("list", "Estimator"),
           function(score,
                    estimator,
@@ -285,7 +289,7 @@ setClass("Expectation", contains = "PointEstimatorScore")
 #' @rdname EstimatorScore-class
 #' @export
 Expectation <- function() new("Expectation", label = "Expectation")
-#' @rdname evaluate_estimator
+#' @rdname evaluate_estimator-methods
 setMethod("evaluate_estimator", signature("Expectation", "PointEstimator"),
           function(score,
                    estimator,
@@ -335,7 +339,7 @@ setClass("Bias", contains = "PointEstimatorScore")
 #' @rdname EstimatorScore-class
 #' @export
 Bias <- function() new("Bias", label = "Bias")
-#' @rdname evaluate_estimator
+#' @rdname evaluate_estimator-methods
 setMethod("evaluate_estimator", signature("Bias", "PointEstimator"),
           function(score,
                    estimator,
@@ -380,7 +384,7 @@ setClass("Variance", contains = "PointEstimatorScore")
 #' @rdname EstimatorScore-class
 #' @export
 Variance <- function() new("Variance", label = "Variance")
-#' @rdname evaluate_estimator
+#' @rdname evaluate_estimator-methods
 setMethod("evaluate_estimator", signature("Variance", "PointEstimator"),
           function(score,
                    estimator,
@@ -448,7 +452,7 @@ setClass("MSE", contains = "PointEstimatorScore")
 #' @rdname EstimatorScore-class
 #' @export
 MSE <- function() new("MSE", label = "MSE")
-#' @rdname evaluate_estimator
+#' @rdname evaluate_estimator-methods
 setMethod("evaluate_estimator", signature("MSE", "PointEstimator"),
           function(score,
                    estimator,
@@ -529,7 +533,7 @@ setClass("OverestimationProbability", contains = "PointEstimatorScore")
 #' @rdname EstimatorScore-class
 #' @export
 OverestimationProbability <- function() new("OverestimationProbability", label = "Probability of overestimation")
-#' @rdname evaluate_estimator
+#' @rdname evaluate_estimator-methods
 setMethod("evaluate_estimator", signature("OverestimationProbability", "PointEstimator"),
           function(score,
                    estimator,
@@ -577,7 +581,7 @@ setClass("Coverage", contains = "IntervalEstimatorScore")
 #' @rdname EstimatorScore-class
 #' @export
 Coverage <- function() new("Coverage", label = "Coverage")
-#' @rdname evaluate_estimator
+#' @rdname evaluate_estimator-methods
 setMethod("evaluate_estimator", signature("Coverage", "IntervalEstimator"),
           function(score,
                    estimator,
@@ -628,7 +632,7 @@ setClass("SoftCoverage", contains = "IntervalEstimatorScore", slots = c(shrinkag
 #' @param shrinkage shrinkage factor for bump function.
 #' @export
 SoftCoverage <- function(shrinkage = 1) new("SoftCoverage", shrinkage = shrinkage, label = "Coverage")
-#' @rdname evaluate_estimator
+#' @rdname evaluate_estimator-methods
 setMethod("evaluate_estimator", signature("SoftCoverage", "IntervalEstimator"),
           function(score,
                    estimator,
@@ -685,7 +689,7 @@ setClass("Width", contains = "IntervalEstimatorScore")
 #' @rdname EstimatorScore-class
 #' @export
 Width <- function() new("Width", label = "Width")
-#' @rdname evaluate_estimator
+#' @rdname evaluate_estimator-methods
 setMethod("evaluate_estimator", signature("Width", "IntervalEstimator"),
           function(score,
                    estimator,
@@ -735,7 +739,7 @@ setClass("TestAgreement", contains = "IntervalEstimatorScore")
 #' @rdname EstimatorScore-class
 #' @export
 TestAgreement <- function() new("TestAgreement", label = "Agreement with test decision")
-#' @rdname evaluate_estimator
+#' @rdname evaluate_estimator-methods
 setMethod("evaluate_estimator", signature("TestAgreement", "IntervalEstimator"),
           function(score,
                    estimator,

@@ -20,7 +20,7 @@ The function \code{\link{analyze}} can be used to calculate the value
 of a \code{\link{Statistic}} for a given dataset.
 
 The function \code{\link{evaluate_estimator}} can be used to evaluate
-\link[EstimatorScore]{distributional quantities} of an \code{\link{Estimator}}
+\link[adestr:EstimatorScore]{distributional quantities} of an \code{\link{Estimator}}
 like the \code{\link{MSE}} for a \code{\link{PointEstimator}} or the
 \code{\link{Coverage}} for a \code{\link{ConfidenceInterval}}.
 }

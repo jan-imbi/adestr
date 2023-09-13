@@ -8,7 +8,7 @@ test_that("Analysis function doesn't throw an error.",
           {
             expect_error(analyze(
               data = dat,
-              estimator = list(FirstStageSampleMean(), SampleMean(), NaiveCI()),
+              statistics = list(FirstStageSampleMean(), SampleMean(), NaiveCI()),
               data_distribution = Normal(),
               sigma = 1,
               design = get_example_design()

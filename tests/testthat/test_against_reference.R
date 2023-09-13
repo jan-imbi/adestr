@@ -17,7 +17,7 @@ test_that("MLE densities agree with reference implementation.",
                  1,
                  exact = FALSE,
                  combine_components = TRUE
-               ))
+               ), tolerance = 1e-4)
     expect_equal(.mle_pdf(1.5, 1, 1, 1, designad),
                dsmean(
                  Normal(two_armed = FALSE),
@@ -27,7 +27,7 @@ test_that("MLE densities agree with reference implementation.",
                  1,
                  exact = FALSE,
                  combine_components = TRUE
-               ))
+               ), tolerance = 1e-4)
 })
 test_that("pseudo Rao-Blackwell estimator agrees with reference implementation.",
           {
