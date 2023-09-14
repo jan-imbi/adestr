@@ -60,4 +60,6 @@ Collate:
     'print.R'
 URL: https://jan-imbi.github.io/adestr/
 RdMacros: Rdpack
+Remotes: github::jan-imbi/adoptr@dissertation
+
 
