@@ -65,11 +65,17 @@ setMethod("toString", signature("Results"),
             right <- x@summary_data$n_stages
             lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
 
+            left <- "Observed n1 (in total)"
+            nval1 <- x@summary_data$n1
+            right <- format(nval1)
+            lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
+
             test_str <- if (is(x@data_distribution, "Normal")) "Z1" else "T1"
             if (x@summary_data$n_groups == 2L)
               n1 <- c(x@summary_data$n_s1_g1, x@summary_data$n_s1_g2)
             else
               n1 <- x@summary_data$n1
+
             test_val <-
               if (is(x@data_distribution, "Normal"))
                 z_test(x@summary_data$smean1,
@@ -85,7 +91,32 @@ setMethod("toString", signature("Results"),
             right <- format(test_val, digits=3)
             lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
 
+            left <- "Interim decision:"
+            if (test_val > x@design@c1e) {
+              right <- "reject null (early efficacy stop)"
+            } else if (test_val< x@design@c1f) {
+              right <- "accept null (early futility stop)"
+            } else {
+              right <- "continue to second stage"
+            }
+            lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
+
+            left <- "Calculated n2(Z1) (per group)"
+            nval2 <- n2(x@design, test_val)
+            right <- format(nval2)
+            lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
+
+            left <- "Calculated c2(Z1)"
+            cval2 <- c2(x@design, test_val)
+            right <- format(cval2, digits=3)
+            lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
+
             if (x@summary_data$n_stages==2L){
+              left <- "Observed n2 (in total)"
+              nval2 <- x@summary_data$n2
+              right <- format(nval2)
+              lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
+
               test_str <- if (is(x@data_distribution, "Normal")) "Z2" else "T2"
               if (x@summary_data$n_groups == 2L)
                 n2 <- c(x@summary_data$n_s2_g1, x@summary_data$n_s2_g2)
@@ -106,12 +137,7 @@ setMethod("toString", signature("Results"),
               right <- format(test_val2, digits=3)
               lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
 
-              left <- "c2(Z1)"
-              cval2 <- c2(x@design, test_val)
-              right <- format(cval2, digits=3)
-              lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
-
-              left <- "Test decision:"
+              left <- "Final test decision:"
               if (test_val2 > cval2) {
                 right <- "reject null"
               } else {
@@ -128,7 +154,7 @@ setMethod("toString", signature("Results"),
                   lines[[length(lines)+1L]] <- paste0("Stage 1 results:\n")
                   print_header <- FALSE
                 }
-                left <- paste0(" ", res$estimator@label, collapse="")
+                left <- paste0(" ", res$statistic@label, collapse="")
                 right <- format(res$stage1, ...)
                 lines[[length(lines)+1L]] <- paste0(pad_middle(paste0(left, ":"), right), "\n")
               }

@@ -205,18 +205,24 @@ Keep in mind that a difference of $\mu=0.3$ was used in the simulation.
 Note that while the median unbiased estimator performs well in this particular example, this
 is not universally true.
 
-
 # More details on the evaluation of performance characteristics
 
 
+```{r}
+a <- evaluate_estimator(MSE(), estimator = SampleMean(), data_distribution = Normal(), design = design, mu=mu, sigma=1)
+b <- evaluate_estimator(MSE(), estimator = AdaptivelyWeightedSampleMean(), data_distribution = Normal(), design = design, mu=mu, sigma=1)
+plot(c(a,b))
+```
 
 
 
-
-
-
-
-
+```{r}
+plot_p(estimator = LikelihoodRatioOrderingPValue(),
+       data_distribution = Normal(),
+       design = design,
+       mu = 0,
+       sigma = 1)
+```
 
 
 

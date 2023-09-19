@@ -37,7 +37,7 @@ Results <- setClass("Results", slots = c(data ="data.frame",
 #'   design = get_example_design()
 #' )
 setGeneric("analyze", function(data,
-                               statistics,
+                               statistics = list(),
                                data_distribution,
                                use_full_twoarm_sampling_distribution = FALSE,
                                design,
@@ -62,6 +62,31 @@ setMethod("analyze", signature("data.frame"),
             arglist <- c(sdata, design = design, sigma = sigma, two_armed = data_distribution@two_armed)
             if (!is.list(statistics)){
               statistics <- list(statistics)
+            }
+            test_val <-
+              if (is(data_distribution, "Normal"))
+                z_test(sdata$smean1,
+                       sdata$n1,
+                       sigma,
+                       data_distribution@two_armed)
+            else
+              t_test(sdata$smean1,
+                     sdata$svar1,
+                     sdata$n1,
+                     data_distribution@two_armed)
+            if (length(statistics)>1) {
+              if (abs(sdata@n1 - design@n1 * (1L + data_distribution@two_armed))/ (design@n1 * (1L + data_distribution@two_armed)) > 0.1)
+                warning("Planned first-stage sample size differs from actually observed sample size by more than 10%. Results may be unreliable.")
+              calc_n2 <- n2(design, test_val, round=FALSE)
+              if (sdata$n_stages==2L){
+                obs_n2 <- sdata@n2
+                if (abs(obs_n2 - calc_n2 * (1L + data_distribution@two_armed))/ (calc_n2 * (1L + data_distribution@two_armed)) > 0.1)
+                  warning("Planned second-stage sample size differs from actually observed sample size by more than 10%. Results may be unreliable.")
+                if (test_val > design@c1e | test_val < design@c1f)
+                  warning("Second-stage data was recorded but trial should have been stopped at interim. Results may be unreliable.")
+              }
+              if (test_val <= design@c1e & test_val >= design@c1f & sdata$n_stages==1L)
+                warning("Calculating statics for interim data, although the trial should continue to the second stage. Results may be unreliable.")
             }
             results <- lapply(statistics, .analzye,
                               data_distribution = data_distribution,

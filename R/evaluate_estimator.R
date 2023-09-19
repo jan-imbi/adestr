@@ -19,6 +19,19 @@ EstimatorScoreResult <- setClass("EstimatorScoreResult", slots = c(score = "list
                                                                    design = "TwoStageDesign", mu = "ANY", sigma = "numeric",
                                                                    results = "list", integrals = "list"))
 setClass("EstimatorScoreResultList", contains = "list")
+EstimatorScoreResultList <- function(...) {
+  r <- list(...)
+  class(r) <- c("EstimatorScoreResultList", "list")
+  r
+}
+setMethod("c", signature("EstimatorScoreResult"), definition =
+            function(x, ...) {
+              EstimatorScoreResultList(x, ...)
+            })
+setMethod("c", signature("EstimatorScoreResultList"), definition =
+            function(x, ...) {
+              EstimatorScoreResultList(x, ...)
+            })
 
 #' Evaluate performance characteristics of an estimator
 #'
@@ -818,6 +831,96 @@ setMethod("evaluate_estimator", signature("TestAgreement", "IntervalEstimator"),
               early_efficacy_part,
               conditional_integral)
           })
+
+
+setClass("Centrality", contains = "PointEstimatorScore",
+         slots = list(interval = "IntervalEstimator"))
+#' @rdname EstimatorScore-class
+#' @export
+Centrality <- function(interval = NULL) new("Centrality", label = sprintf("Centrality with respect to %s", toString(interval)), interval = interval)
+#' @rdname evaluate_estimator-methods
+setMethod("evaluate_estimator", signature("Centrality", "PointEstimator"),
+          function(score,
+                   estimator,
+                   data_distribution,
+                   use_full_twoarm_sampling_distribution,
+                   design,
+                   true_parameter,
+                   mu,
+                   sigma,
+                   tol,
+                   maxEval,
+                   absError,
+                   exact,
+                   early_futility_part,
+                   continuation_part,
+                   early_efficacy_part,
+                   conditional_integral) {
+            design <- TwoStageDesignWithCache(design)
+            stagewise_estimators <- get_stagewise_estimators(estimator = estimator,
+                                                             data_distribution =  data_distribution,
+                                                             use_full_twoarm_sampling_distribution = use_full_twoarm_sampling_distribution,
+                                                             design = design, sigma = sigma, exact = exact)
+            stagewise_intervals <- get_stagewise_estimators(estimator = score@interval,
+                                                             data_distribution =  data_distribution,
+                                                             use_full_twoarm_sampling_distribution = use_full_twoarm_sampling_distribution,
+                                                             design = design, sigma = sigma, exact = exact)
+            g1 <- stagewise_estimators[[1L]]
+            g2 <- stagewise_estimators[[2L]]
+            l1 <- stagewise_intervals[[1L]]
+            u1 <- stagewise_intervals[[2L]]
+            l2 <- stagewise_intervals[[3L]]
+            u2 <- stagewise_intervals[[4L]]
+            generate_g1 = \(tp) \(...) ((g1(...) - l1(...)) + (g1(...) - u1(...)))
+            generate_g2 = \(tp) \(...) ((g2(...) - l2(...)) + (g2(...) - u2(...)))
+            .evaluate_estimator(
+              score,
+              estimator,
+              data_distribution,
+              use_full_twoarm_sampling_distribution,
+              design,
+              generate_g1,
+              generate_g2,
+              true_parameter,
+              mu,
+              sigma,
+              tol,
+              maxEval,
+              absError,
+              exact,
+              early_futility_part,
+              continuation_part,
+              early_efficacy_part,
+              conditional_integral)
+          })
+
+#' @importFrom ggplot2 ggplot scale_x_continuous geom_line facet_wrap
+#' @importFrom latex2exp TeX
+setMethod("plot", signature = "EstimatorScoreResultList", definition =
+            function(x, ...) {
+              dat <- data.frame()
+              for (estimatorscoreresult in x) {
+                plot_list <- names(estimatorscoreresult@results)
+                for (score in plot_list){
+                  dat <- rbind(dat,
+                               data.frame(mu = estimatorscoreresult@mu,
+                                          Score = estimatorscoreresult@results[[score]],
+                                          Estimator = toString(estimatorscoreresult@estimator),
+                                          score_name = score
+                                          )
+                  )
+                }
+              }
+              ggplot(data = dat, mapping = aes(x = mu, y = Score, col = Estimator)) +
+                scale_x_continuous(name = TeX("$\\mu$")) +
+                geom_line() +
+                facet_wrap(vars(score_name), scales = "free_y")
+            })
+setMethod("plot", signature = "EstimatorScoreResult", definition =
+            function(x, ...) {
+              l <- EstimatorScoreResultList(x)
+              plot(l, ...)
+            })
 
 #' @importFrom latex2exp TeX
 plot_rejection_regions <- function(estimators, data_distribution, design, mu, sigma,  subdivisions = 100, ...){
