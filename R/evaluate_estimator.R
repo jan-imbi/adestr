@@ -18,6 +18,7 @@
 #' * \code{Bias()}: \eqn{\mathbb{E}[\hat{\mu} - \mu]}
 #' * \code{Variance()}: \eqn{\mathbb{E}[(\hat{\mu} - \mathbb{E}[\hat{\mu}])^2]}
 #' * \code{MSE()}: \eqn{\mathbb{E}[(\hat{\mu} - mu)^2]}
+#' * \code{OverestimationProbability()}: \eqn{\mathbb{E}[(\hat{\mu} - mu)^2]}
 #'
 #' @md
 #' @slot label name of the performance score. Used in printing methods.
