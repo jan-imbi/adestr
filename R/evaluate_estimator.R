@@ -1,9 +1,25 @@
 #' Performance scores for point and interval estimators
-#'
+#' @description
 #' These classes encode various metrics which can be used to evaluate
 #' the performance characteristics of point and interval estimators.
 #'
+#' @details
+#' # Details on the implemented estimators
+#' In the following, precise definitions of the performance scores implemented
+#' in \code{\link{adestr}}
+#' are given. To this end,
+#' let \eqn{\hat{\mu}} denote a point estimator, (\eqn{\hat{l}}, \eqn{\hat{u}})
+#' an interval estimator, denote the expected value of a random variable
+#' by \eqn{\mathbb{E}}, and let \eqn{\mu} be the real value of the underlying
+#' parameter to be estimated.
 #'
+#' ## Scores for point estimators (\code{PointEstimatorScore}):
+#' * \code{Expectation()}: \eqn{\mathbb{E}[\hat{\mu}]}
+#' * \code{Bias()}: \eqn{\mathbb{E}[\hat{\mu} - \mu]}
+#' * \code{Variance()}: \eqn{\mathbb{E}[(\hat{\mu} - \mathbb{E}[\hat{\mu}])^2]}
+#' * \code{MSE()}: \eqn{\mathbb{E}[(\hat{\mu} - mu)^2]}
+#'
+#' @md
 #' @slot label name of the performance score. Used in printing methods.
 #'
 #' @return an \code{EstimatorScore} object.
@@ -39,18 +55,18 @@ setMethod("c", signature("EstimatorScoreResultList"), definition =
 #' @param estimator object of class \code{PointEstimator}, \code{IntervalEstimator} or \code{PValue}.
 #' @param data_distribution object of class \code{Normal} or \code{Student}.
 #' @param use_full_twoarm_sampling_distribution logical indicating whether this estimator is intended to be used
-#' with the full sampling distribution in a two-armed trial
+#' with the full sampling distribution in a two-armed trial.
 #' @param design object of class \code{TwoStageDesign}.
-#' @param true_parameter true value of the parameter (used e.g. when evaluating bias)
-#' @param mu expected value of the underlying normal distribution
+#' @param true_parameter true value of the parameter (used e.g. when evaluating bias).
+#' @param mu expected value of the underlying normal distribution.
 #' @param sigma assumed standard deviation.
-#' @param tol relative tolerance
-#' @param maxEval maximum number of iterations
-#' @param absError absolute tolerance
+#' @param tol relative tolerance.
+#' @param maxEval maximum number of iterations.
+#' @param absError absolute tolerance.
 #' @param exact logical indicating usage of exact n2 function.
-#' @param early_futility_part include early futility part of integral
-#' @param continuation_part include continuation part of integral
-#' @param early_efficacy_part include early efficacy part of integral
+#' @param early_futility_part include early futility part of integral.
+#' @param continuation_part include continuation part of integral.
+#' @param early_efficacy_part include early efficacy part of integral.
 #' @param conditional_integral treat integral as a conditional integral.
 #'
 #' @return \code{EstimatorScoreResult} object containing the performance characteristics of the estimator.
@@ -62,7 +78,7 @@ setMethod("c", signature("EstimatorScoreResultList"), definition =
 #'   estimator = SampleMean(),
 #'   data_distribution = Normal(FALSE),
 #'   design = get_example_design(),
-#'   mu = c(0.3),
+#'   mu = c(0, 0.3, 0.6),
 #'   sigma = 1,
 #'   exact = FALSE
 #' )
@@ -894,340 +910,22 @@ setMethod("evaluate_estimator", signature("Centrality", "PointEstimator"),
               conditional_integral)
           })
 
-#' @importFrom ggplot2 ggplot scale_x_continuous geom_line facet_wrap
-#' @importFrom latex2exp TeX
-setMethod("plot", signature = "EstimatorScoreResultList", definition =
-            function(x, ...) {
-              dat <- data.frame()
-              for (estimatorscoreresult in x) {
-                plot_list <- names(estimatorscoreresult@results)
-                for (score in plot_list){
-                  dat <- rbind(dat,
-                               data.frame(mu = estimatorscoreresult@mu,
-                                          Score = estimatorscoreresult@results[[score]],
-                                          Estimator = toString(estimatorscoreresult@estimator),
-                                          score_name = score
-                                          )
-                  )
-                }
-              }
-              ggplot(data = dat, mapping = aes(x = mu, y = Score, col = Estimator)) +
-                scale_x_continuous(name = TeX("$\\mu$")) +
-                geom_line() +
-                facet_wrap(vars(score_name), scales = "free_y")
-            })
-setMethod("plot", signature = "EstimatorScoreResult", definition =
-            function(x, ...) {
-              l <- EstimatorScoreResultList(x)
-              plot(l, ...)
-            })
-
-#' @importFrom latex2exp TeX
-plot_rejection_regions <- function(estimators, data_distribution, design, mu, sigma,  subdivisions = 100, ...){
-  design <- TwoStageDesignWithCache(design)
-  two_armed <- data_distribution@two_armed
-  n1 <- n1(design, round = FALSE)
-  se1 <- sigma_to_se(sigma, n1, two_armed)
-  contl <- design@c1e - design@c1f
-  minx <- design@c1f - 1.8*(1-2/(1+sqrt(5))) * contl
-  maxx <- design@c1e + 2.2*(1-2/(1+sqrt(5))) * contl
-  miny <- design@c1f - 4*(1-2/(1+sqrt(5))) * contl
-  maxy <- design@c1e + (1-2/(1+sqrt(5))) * contl
-
-  gridx <- seq(minx, maxx, length.out = subdivisions)
-  gridy <- seq(miny, maxy, length.out = subdivisions)
-  region <- expand.grid(T2 = gridy,
-                        T1 = gridx)
-  continuation_region <- region[design@c1f <= region$T1 & region$T1 <= design@c1e,]
-
-  continuation_x_c2 <- seq(design@c1f, design@c1e, .01)
-  alpha <- adoptr_alpha_shifted_design_kv(design, 0, 0, 0)
-
-  c2_comb_list <- list()
-  draw_line_3 <- FALSE
-  for (i in seq_along(estimators)) {
-    estimator <- estimators[[i]]
-    stagewise_estimators <- get_stagewise_estimators(estimator = estimator,
-                                                     data_distribution =  data_distribution,
-                                                     use_full_twoarm_sampling_distribution = FALSE,
-                                                     design = design, sigma = sigma, exact = FALSE)
-    p1 <- stagewise_estimators[[1L]]
-    p2 <- stagewise_estimators[[2L]]
-    if (is(estimator, "StagewiseCombinationFunctionOrderingPValue")){
-      continuation_y_c2 <- c2_extrapol(design, continuation_x_c2)
-    } else{
-      continuation_y_c2 <- implied_c2(design, continuation_x_c2, p2, sigma, two_armed, alpha)
-    }
-    x_line_3 <- NA
-    if (p1(design = design, smean1 = z_to_smean(design@c1f, n1, sigma, two_armed), n1 = n1, sigma = sigma, two_armed = two_armed) > alpha) {
-      yend1 <- maxy
-    } else{
-      yend1 <- miny
-      draw_line_3 <- TRUE
-      x_line_3 <- uniroot(\(x){
-        p1(design = design, smean1 = z_to_smean(x, n1, sigma, two_armed), n1 = n1, sigma = sigma, two_armed = two_armed) - alpha
-      },
-      lower = -4, upper = 4, extendInt="yes")$root
-    }
-    if (p1(design = design, smean1 = z_to_smean(design@c1e, n1, sigma, two_armed), n1 = n1, sigma = sigma, two_armed = two_armed) < alpha) {
-      yend2 <- miny
-    } else{
-      yend2 <- maxy
-      draw_line_3 <- TRUE
-      x_line_3<- uniroot(\(x){
-        p1(design = design, smean1 = z_to_smean(x, n1, sigma, two_armed), n1 = n1, sigma = sigma, two_armed = two_armed) - alpha
-      },
-      lower = -4, upper = 4, extendInt="yes")$root
-    }
-    continuation_x_c2[c(1, length(continuation_x_c2))] <- continuation_x_c2[c(1, length(continuation_x_c2))]
-    c2_comb <- data.frame(x = c(continuation_x_c2[1L],  continuation_x_c2, continuation_x_c2[length(continuation_x_c2)]),
-                          y = c(yend1, continuation_y_c2, yend2),
-                          x_line_3 = x_line_3,
-                          Ordering = if (is(estimator, "NeymanPearsonOrderingPValue")) "Neyman-Pearson test ordering" else  substr(toTeX(estimator), 1, nchar(toTeX(estimator)) -8))
-    c2_comb_list[[i]] <- c2_comb
-
-  }
-  c2_comb <- do.call("rbind", c2_comb_list)
-  c2_comb$Ordering <- factor(c2_comb$Ordering, levels = unique(c2_comb$Ordering))
-
-  limitsx <- c(min(gridx - .3), max(gridx + .3))
-  limitsy <- c(min(gridy - .3), max(gridy + .3))
-  plt <- ggplot() +
-    geom_line(data = c2_comb, aes(x = .data$x, y = .data$y, color = .data$Ordering), linewidth=1) +
-    scale_color_discrete(labels = sapply(as.character(unique(c2_comb$Ordering)), TeX)) +
-    scale_x_continuous(name =TeX("$z_1$"),
-                       limits = limitsx,
-                       breaks = unique(round(seq(limitsx[1], limitsx[2], .5) )) ) +
-    scale_y_continuous(name =TeX("$z_2$"),
-                       limits = limitsy,
-                       breaks = unique(round(seq(limitsy[1], limitsy[2], .5) ))) +
-    theme_pubclean() +
-    theme(plot.title = element_text(hjust = 0.5)) +
-    ggtitle("All rejection boundaries combined")
-  if (draw_line_3) {
-    c2_comb2 <- c2_comb[!is.na(c2_comb$x_line_3),]
-    plt <- plt + geom_segment(data = c2_comb2, mapping = aes(x=x_line_3, xend=x_line_3, y=miny, yend = maxy, color=.data$Ordering), linewidth=1)
-  }
-  plt
-}
-
-setGeneric("plot_p", \(estimator, data_distribution, design, mu = 0, sigma, boundary_color="lightgreen", subdivisions = 100, ...) standardGeneric("plot_p"))
-#' @import ggplot2 ggpubr latex2exp
-setMethod("plot_p", signature("PValue"),
-          function(estimator, data_distribution, design, mu, sigma, boundary_color, subdivisions, ...){
-            design <- TwoStageDesignWithCache(design)
-            two_armed <- data_distribution@two_armed
-            n1 <- n1(design, round = FALSE)
-            se1 <- sigma_to_se(sigma, n1, two_armed)
-            contl <- design@c1e - design@c1f
-            minx <- design@c1f - 1.8*(1-2/(1+sqrt(5))) * contl
-            maxx <- design@c1e + 2.2*(1-2/(1+sqrt(5))) * contl
-            miny <- design@c1f - 4*(1-2/(1+sqrt(5))) * contl
-            maxy <- design@c1e + (1-2/(1+sqrt(5))) * contl
-
-            gridx <- seq(minx, maxx, length.out = subdivisions)
-            gridy <- seq(miny, maxy, length.out = subdivisions)
-            region <- expand.grid(T2 = gridy,
-                                  T1 = gridx)
-
-            stagewise_estimators <- get_stagewise_estimators(estimator = estimator,
-                                                             data_distribution =  data_distribution,
-                                                             use_full_twoarm_sampling_distribution = FALSE,
-                                                             design = design, sigma = sigma, exact = FALSE)
-            p0 <- stagewise_estimators[[1L]]
-            p1 <- stagewise_estimators[[2L]]
-
-            p_futility <- sapply(gridx[gridx < design@c1f], \(T1) p0(design = design, smean1 = T1 * se1, n1 = n1, sigma = sigma, two_armed = two_armed))
-            p_efficacy<- sapply(gridx[gridx > design@c1e], \(T1) p0(design = design, smean1 = T1 * se1, n1 = n1, sigma = sigma, two_armed = two_armed))
-
-            continuation_region <- region[design@c1f <= region$T1 & region$T1 <= design@c1e,]
-            p_continuation <- mapply(\(T1, T2) {
-              n2 <- n2_extrapol(design, T1)
-              se2 <- sigma / sqrt(n2)
-              ret <- p1(
-                design = design,
-                smean1 = T1 * se1,
-                smean2 = T2 * se2,
-                n1 = n1,
-                n2 = n2,
-                sigma = sigma,
-                two_armed = two_armed
-              )
-            },
-            T1 = continuation_region$T1,
-            T2 = continuation_region$T2)
-
-            continuation_x_c2 <- seq(design@c1f, design@c1e, .01)
-            alpha <- adoptr_alpha_shifted_design_kv(design, 0, 0, 0)
-            if (is(estimator, "StagewiseOrderingPValue")){
-              continuation_y_c2 <- c2_extrapol(design, continuation_x_c2)
-            } else{
-              continuation_y_c2 <- sapply(continuation_x_c2,
-                                          \(x) uniroot(\(y) {
-                                            n2 <- n2_extrapol(design, x)
-                                            p1(design = design,
-                                               smean1 = z_to_smean(x, n1, sigma, two_armed),
-                                               smean2 = z_to_smean(y, n2, sigma, two_armed),
-                                               n1 = n1, n2 = n2, sigma = sigma, two_armed = two_armed) - alpha
-                                          } , lower = -4, upper = 4, extendInt = "yes")$root)
-            }
-            draw_line_3 <- FALSE
-            if (p0(design = design, smean1 = z_to_smean(design@c1f, n1, sigma, two_armed), n1 = n1, sigma = sigma, two_armed = two_armed) > alpha) {
-              yend1 <- maxy
-            } else{
-              yend1 <- miny
-              draw_line_3 <- TRUE
-              x_line_3 <- uniroot(\(x){
-                p0(design = design, smean1 = z_to_smean(x, n1, sigma, two_armed), n1 = n1, sigma = sigma, two_armed = two_armed) - alpha
-              },
-              lower = -4, upper = 4, extendInt="yes")$root
-            }
-            if (p0(design = design, smean1 = z_to_smean(design@c1e, n1, sigma, two_armed), n1 = n1, sigma = sigma, two_armed = two_armed) < alpha) {
-              yend2 <- miny
-            } else{
-              yend2 <- maxy
-              draw_line_3 <- TRUE
-              x_line_3<- uniroot(\(x){
-                p0(design = design, smean1 = z_to_smean(x, n1, sigma, two_armed), n1 = n1, sigma = sigma, two_armed = two_armed) - alpha
-              },
-              lower = -4, upper = 4, extendInt="yes")$root
-            }
-            continuation_x_c2[c(1, length(continuation_x_c2))] <- continuation_x_c2[c(1, length(continuation_x_c2))]
-            c2_comb <- data.frame(x = c(continuation_x_c2[1L],  continuation_x_c2, continuation_x_c2[length(continuation_x_c2)]),
-                                  y = c(yend1, continuation_y_c2, yend2),
-                                  PValue = estimator@label)
-            p_comb <- rbind(
-              cbind(
-                T1 = gridx[gridx < design@c1f],
-                T2 = rep(0, length(gridx[gridx < design@c1f])),
-                p = p_futility
-              ),
-              cbind(continuation_region, p = p_continuation),
-              cbind(
-                T1 = gridx[gridx > design@c1e],
-                T2 = rep(0, length(gridx[gridx > design@c1e])),
-                p = p_efficacy
-              )
-            )
-
-            p_comb <- cbind(region,
-                            p = c(rep(p_futility, each = length(gridx)),
-                                  p_continuation,
-                                  rep(p_efficacy, each = length(gridx))
-                            ))
-            limitsx <- c(min(gridx - .3), max(gridx + .3))
-            limitsy <- c(min(gridy - .3), max(gridy + .3))
-            if (is(data_distribution, "Normal")) {
-              xtxt <- TeX("$z_1$")
-              ytxt <- TeX("$z_2$")
-            } else if (is(data_distribution, "Student")) {
-              xtxt <- TeX("$t_1$")
-              ytxt <- TeX("$t_2$")
-            } else {
-             stop("unsupported data distribution")
-            }
-            plt <- ggplot() +
-              # geom_tile(data = p_comb[p_comb$T1 < design@c1f & p_comb$T2==min(p_comb$T2),],
-              #             aes(x = .data$`T1`, y = .data$`T2`, fill = .data$`p`, height=.25)) +
-              # geom_tile(data = p_comb[p_comb$T1 >= design@c1f & p_comb$T1 <= design@c1e,],
-              #           aes(x = .data$`T1`, y = .data$`T2`, fill = .data$`p`, height=.25)) +
-              # geom_tile(data = p_comb[p_comb$T1 > design@c1e & p_comb$T2==max(p_comb$T2),],
-              #             aes(x = .data$`T1`, y = .data$`T2`, fill = .data$`p`, height=.25)) +
-              geom_tile(data = p_comb, aes(x = .data$`T1`, y = .data$`T2`, fill = .data$`p`)) +
-              # geom_segment(data = c2_comb, mapping = aes(x=design@c1f, xend=design@c1f, y=.data[["y"]][[1]], yend = yend1), color="lightgreen", linewidth=1) +
-              # geom_segment(data = c2_comb, mapping = aes(x=design@c1e, xend=design@c1e, y=.data[["y"]][[length(c2_comb[,1])]], yend = yend2), color="lightgreen", linewidth=1) +
-              geom_line(data = c2_comb, aes(x = .data$x, y = .data$y), color = boundary_color, linewidth=1) +
-              scale_color_manual() +
-              scale_fill_gradient(low="blue", high="red") +
-              scale_x_continuous(name =xtxt,
-                                 limits = limitsx,
-                                 breaks = unique(round(seq(limitsx[1], limitsx[2], .5) )) ) +
-              scale_y_continuous(name =ytxt,
-                                 limits = limitsy,
-                                 breaks = unique(round(seq(limitsy[1], limitsy[2], .5) ))) +
-              theme_pubclean() +
-              theme(plot.title = element_text(hjust = 0.5), legend.key.width = unit(1, 'cm')) +
-              ggtitle(TeX(toTeX(estimator)))
-            if (draw_line_3) {
-              plt <- plt + geom_segment(data = c2_comb, mapping = aes(x=x_line_3, xend=x_line_3, y=miny, yend = maxy), color = boundary_color, linewidth=1)
-            }
-            plt
-          })
-
-
-setGeneric("plot_sample_mean", \(data_distribution, design, mu, sigma, combine_components = TRUE, plot_treatment_group_if_twoarm = FALSE,
-                                 p_limit = .0001, subdivisions = 100L,
-                                 exact = FALSE, facets = 3L, ...) standardGeneric("plot_sample_mean"))
-#' @import ggplot2
-#' @importFrom forcats as_factor
-setMethod("plot_sample_mean", signature("DataDistribution", "TwoStageDesign"),
-          \(data_distribution, design, mu, sigma, combine_components, p_limit, subdivisions, exact, facets, ...) {
-            two_armed <- data_distribution@two_armed
-            n1 <- n1(design, round = FALSE)
-            se1 <- sigma_to_se(sigma, n1, two_armed)
-            smean_list <- list()
-            for (m in mu){
-              if (is(data_distribution, "Student")) {
-                gridx <- suppressWarnings(seq(qt(1-p_limit, df = n1, ncp = m/se1, lower.tail = FALSE),
-                                              qt(p_limit, df = n1, ncp = m/se1, lower.tail = FALSE),
-                                              length.out = subdivisions)) * se1
-                gridx <- gridx[!(abs(gridx)<.02)]
-              } else {
-                gridx <- seq(qnorm(1-p_limit, mean = m, sd = se1, lower.tail = FALSE),
-                             qnorm(p_limit, mean = m, sd = se1, lower.tail = FALSE),
-                             length.out = subdivisions)
-              }
-              if (plot_treatment_group_if_twoarm){
-                y <- dsmeanT(data_distribution, design, smeanT = gridx, mu = m, sigma = sigma,
-                             combine_components = combine_components, exact = exact)
-              } else{
-                y <- dsmean(data_distribution, design, smean = gridx, mu = m, sigma = sigma, two_armed = two_armed,
-                            combine_components = combine_components, exact = exact)
-              }
-
-              if (combine_components)
-                smean_list[[length(smean_list)+1L]] <- data.frame(smean = gridx, Density = y, mu = (paste0("mu == ",format(round(m, digits = 2)))))
-            }
-            if (combine_components){
-              smean_dat <- do.call("rbind", smean_list)
-              smean_dat$mu <- as_factor(smean_dat$mu)
-              plt <- ggplot(data = smean_dat, aes(x = .data$`smean`, y = .data$`Density`)) +
-                geom_line(size = 1) +
-                scale_x_continuous(name = "Overall sample mean") +
-                theme_pubclean()
-              if (length(mu) > 1L) {
-                plt <- plt + facet_wrap(vars(mu), labeller = label_parsed)
-              }
-              return(plt)
-            } else {
-              if (exact) {
-                y[["0"]] <- y[["futility"]] + y[["efficacy"]]
-                y$efficacy <- NULL
-                y$futility <- NULL
-                ys <- c(y["0"], y[seq(1L, length(y)-1L, length.out = facets)])
-              }
-              else
-                ys <- c(y["futility"], y["continuation"], y["efficacy"])
-              smean_dat <- data.frame(smean = rep(gridx, times = length(ys)),
-                                      Density = do.call(c, ys),
-                                      n = if (exact) paste0("n2 = ",rep(names(ys), each = length(gridx))) else rep(c("futility", "continuation", "efficacy"), each = length(gridx)) )
-              smean_dat$n <- as_factor(smean_dat$n)
-              plt <- ggplot(data = smean_dat, aes(x = .data$`smean`, y = .data$`Density`)) +
-                geom_line(size = 1) +
-                scale_x_continuous(name = "Sample mean") +
-                facet_wrap(vars(n))
-              return(plt)
-            }
-          })
-
-
 #' Evaluate different scenarios in parallel
 #'
 #' This function takes a list of lists of scores, a list of lists of estimators,
 #' and lists lists of various other design parameters. Each possible combination
-#' of the elements of the respective sublists is then used to create a separate
-#' scenario. These scenarios are than evaluated independelty of each other,
-#' allowing for parallelization via the \code{future} framework.
+#' of the elements of the respective sublists is then used to create separate
+#' scenarios.
+#' These scenarios are than evaluated independelty of each other,
+#' allowing for parallelization via the \code{\link{future}} framework. For each scenario,
+#' one call to the \code{\link{evaluate_estimator}} function is made.
+#'
+#' Concretely, the cross product of
+#' the first sublist of scores and the first sublist of estimators and the other parameters
+#' is calculated. Then the cross product of the second sublist of scores, estimators
+#' and other design parameters is calculated. All of these cross products together
+#' make up the set of all scenarios. The combinations say the first sublist of scores
+#' and the second sublist of estimators are not considered.
 #'
 #' @param score_lists a list of lists of estimator scores.
 #' @param estimator_lists a list of lists of estimators.
@@ -1261,6 +959,7 @@ setMethod("plot_sample_mean", signature("DataDistribution", "TwoStageDesign"),
 #'
 #' @importFrom future.apply future_apply
 #' @importFrom progressr progressor
+#' @seealso [evaluate_estimator]
 evaluate_scenarios_parallel <- function(score_lists,
                                         estimator_lists,
                                         data_distribution_lists,

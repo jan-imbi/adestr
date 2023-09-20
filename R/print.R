@@ -65,7 +65,18 @@ setMethod("toString", signature("Results"),
             right <- x@summary_data$n_stages
             lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
 
-            left <- "Observed n1 (in total)"
+            if (x@data_distribution@two_armed){
+              left <- "Observed n1 (group 1)"
+              nval1 <- x@summary_data$n_s1_g1
+              right <- format(nval1)
+              lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
+
+              left <- "Observed n1 (group 2)"
+              nval1 <- x@summary_data$n_s1_g2
+              right <- format(nval1)
+              lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
+            }
+            left <- "Observed n1 (total)"
             nval1 <- x@summary_data$n1
             right <- format(nval1)
             lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
@@ -112,6 +123,17 @@ setMethod("toString", signature("Results"),
             lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
 
             if (x@summary_data$n_stages==2L){
+              if (x@data_distribution@two_armed){
+                left <- "Observed n2 (group 1)"
+                nval2 <- x@summary_data$n_s2_g1
+                right <- format(nval2)
+                lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
+
+                left <- "Observed n2 (group 2)"
+                nval2 <- x@summary_data$n_s2_g2
+                right <- format(nval2)
+                lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
+              }
               left <- "Observed n2 (in total)"
               nval2 <- x@summary_data$n2
               right <- format(nval2)
@@ -145,7 +167,6 @@ setMethod("toString", signature("Results"),
               }
               lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
             }
-
             print_header <- TRUE
             for (res in x@results){
               if ("stage1" %in% names(res)){

@@ -14,6 +14,7 @@
 \alias{evaluate_estimator,SoftCoverage,IntervalEstimator-method}
 \alias{evaluate_estimator,Width,IntervalEstimator-method}
 \alias{evaluate_estimator,TestAgreement,IntervalEstimator-method}
+\alias{evaluate_estimator,Centrality,PointEstimator-method}
 \title{Evaluate performance characteristics of an estimator}
 \usage{
 \S4method{evaluate_estimator}{PointEstimatorScore,IntervalEstimator}(
@@ -267,6 +268,27 @@
   early_efficacy_part = TRUE,
   conditional_integral = FALSE
 )
+
+\S4method{evaluate_estimator}{Centrality,PointEstimator}(
+  score,
+  estimator,
+  data_distribution,
+  use_full_twoarm_sampling_distribution = FALSE,
+  design,
+  true_parameter = mu,
+  mu,
+  sigma,
+  tol = getOption("adestr_tol_outer", default = .adestr_options[["adestr_tol_outer"]]),
+  maxEval = getOption("adestr_maxEval_outer", default =
+    .adestr_options[["adestr_maxEval_outer"]]),
+  absError = getOption("adestr_absError_outer", default =
+    .adestr_options[["adestr_absError_outer"]]),
+  exact = FALSE,
+  early_futility_part = TRUE,
+  continuation_part = TRUE,
+  early_efficacy_part = TRUE,
+  conditional_integral = FALSE
+)
 }
 \arguments{
 \item{score}{performance measure to evaluate.}
@@ -276,29 +298,29 @@
 \item{data_distribution}{object of class \code{Normal} or \code{Student}.}
 
 \item{use_full_twoarm_sampling_distribution}{logical indicating whether this estimator is intended to be used
-with the full sampling distribution in a two-armed trial}
+with the full sampling distribution in a two-armed trial.}
 
 \item{design}{object of class \code{TwoStageDesign}.}
 
-\item{true_parameter}{true value of the parameter (used e.g. when evaluating bias)}
+\item{true_parameter}{true value of the parameter (used e.g. when evaluating bias).}
 
-\item{mu}{expected value of the underlying normal distribution}
+\item{mu}{expected value of the underlying normal distribution.}
 
 \item{sigma}{assumed standard deviation.}
 
-\item{tol}{relative tolerance}
+\item{tol}{relative tolerance.}
 
-\item{maxEval}{maximum number of iterations}
+\item{maxEval}{maximum number of iterations.}
 
-\item{absError}{absolute tolerance}
+\item{absError}{absolute tolerance.}
 
 \item{exact}{logical indicating usage of exact n2 function.}
 
-\item{early_futility_part}{include early futility part of integral}
+\item{early_futility_part}{include early futility part of integral.}
 
-\item{continuation_part}{include continuation part of integral}
+\item{continuation_part}{include continuation part of integral.}
 
-\item{early_efficacy_part}{include early efficacy part of integral}
+\item{early_efficacy_part}{include early efficacy part of integral.}
 
 \item{conditional_integral}{treat integral as a conditional integral.}
 }
@@ -314,7 +336,7 @@ evaluate_estimator(
   estimator = SampleMean(),
   data_distribution = Normal(FALSE),
   design = get_example_design(),
-  mu = c(0.3),
+  mu = c(0, 0.3, 0.6),
   sigma = 1,
   exact = FALSE
 )

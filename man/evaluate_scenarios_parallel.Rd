@@ -62,9 +62,19 @@ list of data.frames containing the results for the respective scenarios.
 \description{
 This function takes a list of lists of scores, a list of lists of estimators,
 and lists lists of various other design parameters. Each possible combination
-of the elements of the respective sublists is then used to create a separate
-scenario. These scenarios are than evaluated independelty of each other,
-allowing for parallelization via the \code{future} framework.
+of the elements of the respective sublists is then used to create separate
+scenarios.
+These scenarios are than evaluated independelty of each other,
+allowing for parallelization via the \code{\link{future}} framework. For each scenario,
+one call to the \code{\link{evaluate_estimator}} function is made.
+}
+\details{
+Concretely, the cross product of
+the first sublist of scores and the first sublist of estimators and the other parameters
+is calculated. Then the cross product of the second sublist of scores, estimators
+and other design parameters is calculated. All of these cross products together
+make up the set of all scenarios. The combinations say the first sublist of scores
+and the second sublist of estimators are not considered.
 }
 \examples{
 res <-evaluate_scenarios_parallel(
@@ -76,4 +86,7 @@ res <-evaluate_scenarios_parallel(
  sigma_lists = list(1)
 )
 
+}
+\seealso{
+[evaluate_estimator]
 }

@@ -419,7 +419,7 @@ get_stagewise_estimators(
 \item{data_distribution}{object of class \code{Normal} or \code{Student}.}
 
 \item{use_full_twoarm_sampling_distribution}{logical indicating whether this estimator is intended to be used
-with the full sampling distribution in a two-armed trial}
+with the full sampling distribution in a two-armed trial.}
 
 \item{design}{object of class \code{TwoStageDesign}.}
 

@@ -13,6 +13,7 @@
 \alias{SoftCoverage}
 \alias{Width}
 \alias{TestAgreement}
+\alias{Centrality}
 \title{Performance scores for point and interval estimators}
 \usage{
 Expectation()
@@ -32,6 +33,8 @@ SoftCoverage(shrinkage = 1)
 Width()
 
 TestAgreement()
+
+Centrality(interval = NULL)
 }
 \arguments{
 \item{shrinkage}{shrinkage factor for bump function.}
@@ -49,13 +52,31 @@ the performance characteristics of point and interval estimators.
 \item{\code{label}}{name of the performance score. Used in printing methods.}
 }}
 
+\section{Details on the implemented estimators}{
+In the following, precise definitions of the performance scores implemented
+in \code{\link{adestr}}
+are given. To this end,
+let \eqn{\hat{\mu}} denote a point estimator, (\eqn{\hat{l}}, \eqn{\hat{u}})
+an interval estimator, denote the expected value of a random variable
+by \eqn{\mathbb{E}}, and let \eqn{\mu} be the real value of the underlying
+parameter to be estimated.
+\subsection{Scores for point estimators (\code{PointEstimatorScore}):}{
+\itemize{
+\item \code{Expectation()}: \eqn{\mathbb{E}[\hat{\mu}]}
+\item \code{Bias()}: \eqn{\mathbb{E}[\hat{\mu} - \mu]}
+\item \code{Variance()}: \eqn{\mathbb{E}[(\hat{\mu} - \mathbb{E}[\hat{\mu}])^2]}
+\item \code{MSE()}: \eqn{\mathbb{E}[(\hat{\mu} - mu)^2]}
+}
+}
+}
+
 \examples{
 evaluate_estimator(
   score = MSE(),
   estimator = SampleMean(),
   data_distribution = Normal(FALSE),
   design = get_example_design(),
-  mu = c(0.3),
+  mu = c(0, 0.3, 0.6),
   sigma = 1,
   exact = FALSE
 )

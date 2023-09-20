@@ -7,7 +7,7 @@
 \usage{
 analyze(
   data,
-  statistics,
+  statistics = list(),
   data_distribution,
   use_full_twoarm_sampling_distribution = FALSE,
   design,
@@ -17,7 +17,7 @@ analyze(
 
 \S4method{analyze}{data.frame}(
   data,
-  statistics,
+  statistics = list(),
   data_distribution,
   use_full_twoarm_sampling_distribution = FALSE,
   design,
@@ -34,7 +34,7 @@ analyze(
 \item{data_distribution}{object of class \code{Normal} or \code{Student}.}
 
 \item{use_full_twoarm_sampling_distribution}{logical indicating whether this estimator is intended to be used
-with the full sampling distribution in a two-armed trial}
+with the full sampling distribution in a two-armed trial.}
 
 \item{design}{object of class \code{TwoStageDesign}.}
 
