@@ -55,6 +55,12 @@
     <loc>https://jan-imbi.github.io/adestr/reference/analyze.html</loc>
   </url>
   <url>
+    <loc>https://jan-imbi.github.io/adestr/reference/c-EstimatorScoreResult-method.html</loc>
+  </url>
+  <url>
+    <loc>https://jan-imbi.github.io/adestr/reference/c-EstimatorScoreResultList-method.html</loc>
+  </url>
+  <url>
     <loc>https://jan-imbi.github.io/adestr/reference/c2_extrapol.html</loc>
   </url>
   <url>
@@ -83,5 +89,17 @@
   </url>
   <url>
     <loc>https://jan-imbi.github.io/adestr/reference/n2_extrapol.html</loc>
+  </url>
+  <url>
+    <loc>https://jan-imbi.github.io/adestr/reference/plot-EstimatorScoreResult-method.html</loc>
+  </url>
+  <url>
+    <loc>https://jan-imbi.github.io/adestr/reference/plot-EstimatorScoreResultList-method.html</loc>
+  </url>
+  <url>
+    <loc>https://jan-imbi.github.io/adestr/reference/plot-list-method.html</loc>
+  </url>
+  <url>
+    <loc>https://jan-imbi.github.io/adestr/reference/plot_p.html</loc>
   </url>
 </urlset>

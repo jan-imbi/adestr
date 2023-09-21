@@ -70,13 +70,20 @@ the performance characteristics of point and interval estimators.</p>
 <span></span>
 <span><span class="fu">Width</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">TestAgreement</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">TestAgreement</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">Centrality</span><span class="op">(</span>interval <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>shrinkage</dt>
 <dd><p>shrinkage factor for bump function.</p></dd>
+
+
+<dt>interval</dt>
+<dd><p>confidence interval with respect to which centrality of a point
+estimator should be evaluated.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -95,6 +102,35 @@ the performance characteristics of point and interval estimators.</p>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="details-on-the-implemented-estimators">Details on the implemented estimators<a class="anchor" aria-label="anchor" href="#details-on-the-implemented-estimators"></a></h2>
+    <p>In the following, precise definitions of the performance scores implemented
+in <code><a href="adestr.html">adestr</a></code>
+are given. To this end,
+let \(\hat{\mu}\) denote a point estimator, (\(\hat{l}\), \(\hat{u}\))
+an interval estimator, denote the expected value of a random variable
+by \(\mathbb{E}\), the probability of an event by \(P\),
+and let \(\mu\) be the real value of the underlying
+parameter to be estimated.</p><div class="section">
+<h3 id="scores-for-point-estimators-pointestimatorscore-">Scores for point estimators (<code>PointEstimatorScore</code>):<a class="anchor" aria-label="anchor" href="#scores-for-point-estimators-pointestimatorscore-"></a></h3>
+
+<ul><li><p><code>Expectation()</code>: \(\mathbb{E}[\hat{\mu}]\)</p></li>
+<li><p><code>Bias()</code>: \(\mathbb{E}[\hat{\mu} - \mu]\)</p></li>
+<li><p><code>Variance()</code>: \(\mathbb{E}[(\hat{\mu} - \mathbb{E}[\hat{\mu}])^2]\)</p></li>
+<li><p><code>MSE()</code>: \(\mathbb{E}[(\hat{\mu} - mu)^2]\)</p></li>
+<li><p><code>OverestimationProbability()</code>: \(P(\hat{\mu} &gt; \mu)\)</p></li>
+<li><p><code>Centrality(interval)</code>: \(\mathbb{E}[(\hat{\mu} - \hat{l}) + (\hat{\mu} - \hat{u}]\)</p></li>
+</ul></div>
+
+<div class="section">
+<h3 id="scores-for-confidence-intervals-intervalestimatorscore-">Scores for confidence intervals (<code>IntervalEstimatorScore</code>):<a class="anchor" aria-label="anchor" href="#scores-for-confidence-intervals-intervalestimatorscore-"></a></h3>
+
+<ul><li><p><code>Coverage()</code>: \(P(\hat{l} \leq \mu \leq \hat{u})\)</p></li>
+<li><p><code>Width()</code>: \(\mathbb{E}[\hat{u} - \hat{l}]\)</p></li>
+<li><p><code>TestAgreement()</code>: \(P\left( \left(\{0 &lt; \hat{l} \text{ and } (c_{1, e} &lt; Z_1 \text{ or } c_{2}(Z_1) &lt; Z_2 ) \right) \text{ or } \left(\{\hat{l} \leq 0  \text{ and } ( Z_1 &lt; c_{1, f} \text{ or } Z_2 \leq c_{2}(Z_1))\}\right)\right)\)</p></li>
+</ul></div>
+
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="evaluate_estimator.html">evaluate_estimator</a></code></p></div>
     </div>
@@ -106,7 +142,7 @@ the performance characteristics of point and interval estimators.</p>
 <span class="r-in"><span>  estimator <span class="op">=</span> <span class="fu"><a href="PointEstimator-class.html">SampleMean</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  data_distribution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  design <span class="op">=</span> <span class="fu"><a href="get_example_design.html">get_example_design</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.3</span>, <span class="fl">0.6</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  sigma <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>  exact <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
@@ -114,13 +150,32 @@ the performance characteristics of point and interval estimators.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data Distribution:                                          Normal&lt;single-armed&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimator:                                                           Sample mean</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Assumed sigma:                                                                 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Assumed mu:                                                                  0.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Assumed mu:                                                          0.0 0.3 0.6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Results:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Expectation:                                                          0.3056919</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Bias:                                                               0.005691935</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Variance:                                                            0.03778007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  MSE:                                                                 0.03781247</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Expectation:                                -0.02491922  0.30567290  0.62041636</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Bias:                                    -0.024919220  0.005672903  0.020416356</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Variance:                                      0.02779122 0.03777824 0.02790974</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  MSE:                                           0.02841219 0.03781042 0.02832657</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  score <span class="op">=</span> <span class="fu">Coverage</span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  estimator <span class="op">=</span> <span class="fu"><a href="IntervalEstimator-class.html">StagewiseCombinationFunctionOrderingCI</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data_distribution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  design <span class="op">=</span> <span class="fu"><a href="get_example_design.html">get_example_design</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.3</span>, <span class="fl">0.6</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  sigma <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  exact <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Design:                               TwoStageDesign&lt;n1=28;0.8&lt;=x1&lt;=2.3:n2=9-40&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data Distribution:                                          Normal&lt;single-armed&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Estimator:                                                      SWCF ordering CI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Assumed sigma:                                                                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Assumed mu:                                                          0.0 0.3 0.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Coverage:                                         0.9500681 0.9499744 0.9500955</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

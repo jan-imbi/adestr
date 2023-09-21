@@ -81,38 +81,58 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">321</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  endpoint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">28</span>, <span class="fl">.2</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">28</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>               <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">23</span>, <span class="fl">.2</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">23</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ctl"</span>, <span class="st">"trt"</span>, <span class="st">"ctl"</span>, <span class="st">"trt"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                     <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">28</span>,<span class="fl">28</span>,<span class="fl">23</span>,<span class="fl">23</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  stage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1L</span>, <span class="fl">2L</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">56</span>, <span class="fl">46</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  endpoint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">28</span>, <span class="fl">0.3</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  stage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">28</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="analyze.html">analyze</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  data <span class="op">=</span> <span class="va">dat</span>,</span></span>
-<span class="r-in"><span>  statistics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="get_example_statistics.html">get_example_statistics</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  data_distribution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  sigma <span class="op">=</span> <span class="fl">1</span>,</span></span>
-<span class="r-in"><span>  design <span class="op">=</span> <span class="fu"><a href="get_example_design.html">get_example_design</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="analyze.html">analyze</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dat</span>,</span></span>
+<span class="r-in"><span>        statistics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        data_distribution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        design <span class="op">=</span> <span class="fu"><a href="get_example_design.html">get_example_design</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        sigma <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Design:                               TwoStageDesign&lt;n1=28;0.8&lt;=x1&lt;=2.3:n2=9-40&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Data Distribution:                                             Normal&lt;two-armed&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data Distribution:                                          Normal&lt;single-armed&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Observed number of stages:                                                     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Observed n1 (total)                                                           28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Z1                                                                           1.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Interim decision:                                       continue to second stage</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Calculated n2(Z1) (per group)                                                 32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Calculated c2(Z1)                                                           1.71</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The results suggest recruiting 32 patients for the second stage</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">dat</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    endpoint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">32</span>, mean <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    stage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">32</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="analyze.html">analyze</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dat</span>,</span></span>
+<span class="r-in"><span>        statistics <span class="op">=</span> <span class="fu"><a href="get_example_statistics.html">get_example_statistics</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        data_distribution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        design <span class="op">=</span> <span class="fu"><a href="get_example_design.html">get_example_design</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        sigma <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Design:                               TwoStageDesign&lt;n1=28;0.8&lt;=x1&lt;=2.3:n2=9-40&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data Distribution:                                          Normal&lt;single-armed&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Observed number of stages:                                                     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Z1                                                                          1.75</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Z2                                                                          2.12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> c2(Z1)                                                                      1.14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Test decision:                                                       reject null</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Observed n1 (total)                                                           28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Z1                                                                           1.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Interim decision:                                       continue to second stage</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Calculated n2(Z1) (per group)                                                 32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Calculated c2(Z1)                                                           1.71</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Observed n2 (in total)                                                        32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Z2                                                                          2.66</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Final test decision:                                                 reject null</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Stage 2 results:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Sample mean:                                                          0.5389012</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Pseudo Rao-Blackwellized:                                             0.3632916</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Median unbiased (LR test ordering):                                   0.5069941</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Bias reduced MLE (iterations=1):                                      0.5253743</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  SWCF ordering CI:                                       [0.06264641, 0.7431231]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  LR test ordering CI:                                       [0.2504091, 0.81829]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  SWCF ordering p-value:                                               0.01097483</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  LR test ordering p-value:                                          6.653031e-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Sample mean:                                                          0.3656173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Pseudo Rao-Blackwellized:                                             0.3135628</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Median unbiased (LR test ordering):                                   0.3420742</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Bias reduced MLE (iterations=1):                                       0.357214</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  SWCF ordering CI:                                       [0.04664821, 0.6142449]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  LR test ordering CI:                                    [0.08992822, 0.6106096]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  SWCF ordering p-value:                                               0.01321363</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  LR test ordering p-value:                                           0.003551316</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
