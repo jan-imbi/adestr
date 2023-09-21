@@ -24,19 +24,26 @@ a list of estimators and pvalues.
 Generate a list of estimators and p-values to use in examples
 }
 \examples{
-set.seed(321)
+set.seed(123)
 dat <- data.frame(
-  endpoint = c(rnorm(28, .2, 1), rnorm(28, 0, 1),
-               rnorm(23, .2, 1), rnorm(23, 0, 1)),
-  group = factor(rep(c("ctl", "trt", "ctl", "trt"),
-                     c(28,28,23,23))),
-  stage = rep(c(1L, 2L), c(56, 46))
+  endpoint = c(rnorm(28, 0.3)),
+  stage = rep(1, 28)
 )
-analyze(
-  data = dat,
-  statistics = c(get_example_statistics()),
-  data_distribution = Normal(),
-  sigma = 1,
-  design = get_example_design()
-)
+analyze(data = dat,
+        statistics = list(),
+        data_distribution = Normal(FALSE),
+        design = get_example_design(),
+        sigma = 1)
+
+# The results suggest recruiting 32 patients for the second stage
+dat <- rbind(
+  dat,
+  data.frame(
+    endpoint = rnorm(32, mean = 0.3),
+    stage = rep(2, 32)))
+analyze(data = dat,
+        statistics = get_example_statistics(),
+        data_distribution = Normal(FALSE),
+        design = get_example_design(),
+        sigma = 1)
 }

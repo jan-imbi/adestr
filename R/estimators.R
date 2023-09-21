@@ -26,11 +26,58 @@ setClass("Estimator", contains = "Statistic")
 
 #' Point estimators
 #'
+#' This is the parent class for all point estimators implemented in this package.
+#' Currently, only estimators for the parameter \eqn{\mu} of a normal distribution
+#' are implemented.
+#'
+#' @details
+#' Details about the point estimators can be found in (our upcoming paper).
+#' ## Sample Mean (\code{SampleMean()})
+#' The sample mean is the maximum likelihood estimator for the mean and probably the
+#' 'most straightforward' of the implemented estimators.
+#' ## Fixed weighted sample means (\code{WeightedSampleMean()})
+#' The first- and second-stage (if available) sample means are combined via fixed, predefined
+#' weights. See \insertCite{brannath2006estimation}{adestr} and \insertCite{@Section 8.3.2 in @wassmer2016group}{adestr}.
+#' ## Adaptively weighted sample means (\code{AdaptivelyWeightedSampleMean()})
+#' The first- and second-stage (if available) sample means are combined via a combination of
+#' fixed and adaptively modified
+#' weights that depend on the standard error.
+#' See \insertCite{@Section 8.3.4 in @wassmer2016group}{adestr}.
+#' ## Minimizing peak variance in adaptively weighted sample means (\code{MinimizePeakVariance()})
+#' For this estimator, the weights of the adaptively weighted sample mean are chosen to
+#' minimize the variance of the estimator for the value of \eqn{\mu} which maximizes
+#' the expected sample size.
+#' ## (Pseudo) Rao-Blackwell estimators (\code{RaoBlackwell} and \code{PseudoRaoBlackwell})
+#' The conditional expectation of the first-stage sample mean given the overall sample
+#' mean and the second-stage sample size. See \insertCite{emerson1997computationally}{adestr}.
+#' ## A bias-reduced estimator (\code{BiasReduced()})
+#' This estimator is calculated by subtracting an estimate of the bias from the MLE.
+#' See \insertCite{whitehead1986bias}{adestr}.
+#' ## Median-unbiased estimators
+#' The implemented median-unbiased estimators are:
+#' * \code{MedianUnbiasedMLEOrdering()}
+#' * \code{MedianUnbiasedLikelihoodRatioOrdering()}
+#' * \code{MedianUnbiasedScoreTestOrdering()}
+#' * \code{MedianUnbiasedStagewiseCombinationFunctionOrdering()}
+#'
+#' These estimators are constructed by specifying an ordering of the sample space
+#' and finding the value of \eqn{\mu}, such that the observed sample is the
+#' median of the sample space according to the chosen ordering.
+#' Some of the implemented orderings are based on the work presented in
+#' \insertCite{emerson1990parameter}{adestr},
+#' \insertCite{@Sections 8.4 in @jennison1999group}{adestr},
+#' and \insertCite{@Sections 4.1.1 and 8.2.1 in @wassmer2016group}{adestr}.
+#' @md
+#'
 #' @param g1 functional representation of the estimator in the early futility and efficacy regions.
 #' @param g2 functional representation of the estimator in the continuation region.
 #' @param label name of the estimator. Used in printing methods.
+#' @seealso \code{\link{evaluate_estimator}}
 #'
-#' @return An object of class \code{PointEstimator}.
+#' @return an object of class \code{PointEstimator}.
+#'
+#' @references
+#' \insertAllCited{}
 #'
 #' @export
 #'
@@ -46,18 +93,42 @@ VirtualPointEstimator <- function() stop("Cannot create instance of class Virtua
 
 #' P-values
 #'
+#' This is the parent class for all p-values implemented in this package.
+#' Details about the methods for calculating p-values can be found in
+#' (our upcoming paper).
 #' @param g1 functional representation of the p-value in the early futility and efficacy regions.
 #' @param g2 functional representation of the p-value in the continuation region.
 #' @param label name of the p-value. Used in printing methods.
+#' @seealso [plot_p]
 #'
 #' @return An object of class \code{PValue}.
+#' @details
+#' The implemented p-values are:
+#' * \code{MLEOrderingPValue()}
+#' * \code{LikelihoodRatioOrderingPValue()}
+#' * \code{ScoreTestOrderingPValue()}
+#' * \code{StagewiseCombinationFunctionOrderingPValue()}
+#'
+#' The p-values are calculated by specifying an ordering of the sample space
+#' calculating the probability that a random sample under the null hypothesis is
+#' larger than the observed sample.
+#' Some of the implemented orderings are based on the work presented in
+#' \insertCite{emerson1990parameter}{adestr},
+#' \insertCite{@Sections 8.4 in @jennison1999group}{adestr},
+#' and \insertCite{@Sections 4.1.1 and 8.2.1 in @wassmer2016group}{adestr}.
+#' @md
+#'
+#' @references
+#' \insertAllCited{}
 #'
 #' @export
 #'
 #' @examples
+#' # This is the definition of a 'naive' p-value based on a Z-test for a one-armed trial
 #' PValue(
-#'   g1 = \(smean1, ...) runif(length(smean1)),
-#'   g2 = \(smean2, ...) runif(length(smean2)),
+#'   g1 = \(smean1, n1, sigma, ...) pnorm(smean1*sqrt(n1)/sigma, lower.tail=FALSE),
+#'   g2 = \(smean1, smean2, n1, n2, ...) pnorm((n1 * smean1 + n2 * smean2)/(n1 + n2) *
+#'                                         sqrt(n1+n2)/sigma, lower.tail=FALSE),
 #'   label="My custom p-value")
 setClass("PValue", slots = c(g1 = "function", g2 = "function"),  contains = "Statistic")
 #' @rdname PValue-class
@@ -69,26 +140,52 @@ VirtualPValue <- function() stop("Cannot create instance of class VirtualPValue.
 
 #' Interval estimators
 #'
+#' This is the parent class for all confidence intervals implemented in this package.
+#' Currently, only confidence intervals for the parameter \eqn{\mu} of a normal distribution
+#' are implemented. Details about the methods for calculating confidence intervals can be found in
+#' (our upcoming paper).
 #' @param l1 functional representation of the lower boundary of the interval in the early futility and efficacy regions.
 #' @param u1 functional representation of the upper boundary of the interval in the early futility and efficacy regions.
 #' @param l2 functional representation of the lower boundary of the interval in the continuation region.
 #' @param u2 functional representation of the upper boundary of the interval in the continuation region.
 #' @param two_sided logical indicating whether the confidence interval is two-sided.
 #' @param label name of the estimator. Used in printing methods.
+#' @seealso \code{\link{evaluate_estimator}}
 #'
-#' @return An object of class \code{IntervalEstimator}.
+#' @return an object of class \code{IntervalEstimator}.
 #'
 #' @export
 #' @aliases ConfidenceInterval ConfidenceInterval-class
 #'
+#' @details
+#' The implemented confidence intervals are:
+#' * \code{MLEOrderingCI()}
+#' * \code{LikelihoodRatioOrderingCI()}
+#' * \code{ScoreTestOrderingCI()}
+#' * \code{StagewiseCombinationFunctionOrderingCI()}
+#'
+#' These confidence intervals are constructed by specifying an ordering of the sample space
+#' and finding the value of \eqn{\mu}, such that the observed sample is the
+#' \eqn{\alpha/2} (or (\eqn{1-\alpha/2})) quantile of the sample space according to the
+#' chosen ordering.
+#' Some of the implemented orderings are based on the work presented in
+#' \insertCite{emerson1990parameter}{adestr},
+#' \insertCite{@Sections 8.4 in @jennison1999group}{adestr},
+#' and \insertCite{@Sections 4.1.1 and 8.2.1 in @wassmer2016group}{adestr}.
+#' @md
+#'
+#' @references
+#' \insertAllCited{}
+#'
 #' @examples
+#' # This is the definition of the 'naive' confidence interval for one-armed trials
 #' IntervalEstimator(
-#'   two_sided = FALSE,
-#'   l1 = \(smean1, ...) smean1 - 1,
-#'   u1 = \(smean1, ...) smean1 + 1,
-#'   l2 = \(smean2, ...) smean2 - 1,
-#'   u2 = \(smean2, ...) smean2 + 1,
-#'   label="My custom p-value")
+#'   two_sided = TRUE,
+#'   l1 = \(smean1, n1, sigma, ...) smean1 - qnorm(.95, sd = sigma/sqrt(n1)),
+#'   u1 = \(smean1, n1, sigma, ...) smean1 + qnorm(.95, sd = sigma/sqrt(n1)),
+#'   l2 = \(smean1, smean2, n1, n2, sigma, ...) smean2 - qnorm(.95, sd = sigma/sqrt(n1 + n2)),
+#'   u2 = \(smean1, smean2, n1, n2, sigma, ...) smean2 + qnorm(.95, sd = sigma/sqrt(n1 + n2)),
+#'   label="My custom CI")
 setClass("IntervalEstimator", slots = c(two_sided = "logical", l1 = "function", u1 = "function", l2 = "function", u2 = "function"), contains = "Estimator")
 #' @rdname IntervalEstimator-class
 #' @export
@@ -415,7 +512,7 @@ FirstStageSampleMean <- function() new("PointEstimator", g1 = \(smean1, ...) sme
 setClass("WeightedSampleMean", contains = "PointEstimator")
 
 #' @rdname PointEstimator-class
-#' @param w1 weight of the first-stage sample mean.
+#' @param w1 weight of the first-stage data.
 #' @importFrom scales percent
 #' @export
 WeightedSampleMean <- function(w1=.5) new("PointEstimator", g1 = \(smean1, ...) smean1, g2 = \(smean1, smean2, n1, n2, ...) w1 * smean1 + (1-w1) * smean2,
@@ -424,6 +521,7 @@ WeightedSampleMean <- function(w1=.5) new("PointEstimator", g1 = \(smean1, ...) 
 setClass("AdaptivelyWeightedSampleMean", contains = "VirtualPointEstimator", slots = c(w1 = "numeric"))
 #' @rdname PointEstimator-class
 #' @importFrom scales percent
+#' @export
 AdaptivelyWeightedSampleMean <- function(w1 = 1/sqrt(2)) {
   new(
     "AdaptivelyWeightedSampleMean",

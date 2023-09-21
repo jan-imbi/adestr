@@ -65,7 +65,7 @@ and lists lists of various other design parameters. Each possible combination
 of the elements of the respective sublists is then used to create separate
 scenarios.
 These scenarios are than evaluated independelty of each other,
-allowing for parallelization via the \code{\link{future}} framework. For each scenario,
+allowing for parallelization via the \code{\link[future:future]{future}} framework. For each scenario,
 one call to the \code{\link{evaluate_estimator}} function is made.
 }
 \details{

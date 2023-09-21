@@ -4,8 +4,9 @@
 #' one facet per score. If the input argument is a list, the different estimators
 #' will be displayed in the same facets, differentiated by color.
 #'
-#' @param EstimatorScoreResultList An output object from evaluate_estimator or a list
-#' of such objects
+#' @param x an output object from evaluate_estimator (\code{EstimatorScoreResult}) or a list
+#' of such objects (\code{EstimatorScoreResultList}).
+#' @param y unused.
 #' @param ... additional arguments handed down to ggplot.
 #' @export
 #' @importFrom ggplot2 ggplot scale_x_continuous geom_line facet_wrap
@@ -46,16 +47,19 @@ setMethod("plot", signature = "EstimatorScoreResultList", definition =
                   )
                 }
               }
-              ggplot(data = dat, mapping = aes(x = mu, y = Score, col = Estimator), ...) +
+              ggplot(data = dat, mapping = aes(x = .data$mu, y = .data$Score, col = .data$Estimator), ...) +
                 scale_x_continuous(name = TeX("$\\mu$")) +
                 geom_line() +
-                facet_wrap(vars(score_name), scales = "free_y")
+                facet_wrap(vars(.data$score_name), scales = "free_y")
             })
+#' @inherit plot,EstimatorScoreResultList-method
 setMethod("plot", signature = "EstimatorScoreResult", definition =
             function(x, ...) {
               l <- EstimatorScoreResultList(x)
               plot(l, ...)
             })
+#' @inherit plot,EstimatorScoreResultList-method
+#' @importFrom graphics plot.default
 setMethod("plot", signature = "list", definition =
             function(x, ...) {
               if (is(x[[1]], "EstimatorScoreResult")) {
@@ -95,7 +99,7 @@ setMethod("plot", signature = "list", definition =
 #' @examples
 #' plot_p(estimator = StagewiseCombinationFunctionOrderingPValue(),
 #'   data_distribution = Normal(FALSE),
-#'   design = design,
+#'   design = get_example_design(),
 #'   mu = 0,
 #'   sigma = 1)
 plot_p <- function(estimator, data_distribution, design, mu = 0, sigma, boundary_color="lightgreen", subdivisions = 100, ...){
@@ -382,6 +386,8 @@ setMethod("plot_sample_mean", signature("DataDistribution", "TwoStageDesign"),
 
 # Helper function to plot designs
 #' @importFrom scales percent
+#' @importFrom ggpubr theme_pubr ggarrange
+#' @import ggplot2
 plot_design <- function(design, data_distribution = Normal(two_armed = FALSE)){
   two_armed <- data_distribution@two_armed
   if (is(data_distribution, "Student")) {

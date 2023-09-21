@@ -38,6 +38,9 @@ Centrality(interval = NULL)
 }
 \arguments{
 \item{shrinkage}{shrinkage factor for bump function.}
+
+\item{interval}{confidence interval with respect to which centrality of a point
+estimator should be evaluated.}
 }
 \value{
 an \code{EstimatorScore} object.
@@ -58,7 +61,8 @@ in \code{\link{adestr}}
 are given. To this end,
 let \eqn{\hat{\mu}} denote a point estimator, (\eqn{\hat{l}}, \eqn{\hat{u}})
 an interval estimator, denote the expected value of a random variable
-by \eqn{\mathbb{E}}, and let \eqn{\mu} be the real value of the underlying
+by \eqn{\mathbb{E}}, the probability of an event by \eqn{P},
+and let \eqn{\mu} be the real value of the underlying
 parameter to be estimated.
 \subsection{Scores for point estimators (\code{PointEstimatorScore}):}{
 \itemize{
@@ -66,6 +70,16 @@ parameter to be estimated.
 \item \code{Bias()}: \eqn{\mathbb{E}[\hat{\mu} - \mu]}
 \item \code{Variance()}: \eqn{\mathbb{E}[(\hat{\mu} - \mathbb{E}[\hat{\mu}])^2]}
 \item \code{MSE()}: \eqn{\mathbb{E}[(\hat{\mu} - mu)^2]}
+\item \code{OverestimationProbability()}: \eqn{P(\hat{\mu} > \mu)}
+\item \code{Centrality(interval)}: \eqn{\mathbb{E}[(\hat{\mu} - \hat{l}) + (\hat{\mu} - \hat{u}]}
+}
+}
+
+\subsection{Scores for confidence intervals (\code{IntervalEstimatorScore}):}{
+\itemize{
+\item \code{Coverage()}: \eqn{P(\hat{l} \leq \mu \leq \hat{u})}
+\item \code{Width()}: \eqn{\mathbb{E}[\hat{u} - \hat{l}]}
+\item \code{TestAgreement()}: \eqn{P\left( \left(\{0 < \hat{l} \text{ and } (c_{1, e} < Z_1 \text{ or } c_{2}(Z_1) < Z_2 ) \right) \text{ or } \left(\{\hat{l} \leq 0  \text{ and } ( Z_1 < c_{1, f} \text{ or } Z_2 \leq c_{2}(Z_1))\}\right)\right)}
 }
 }
 }
@@ -80,6 +94,17 @@ evaluate_estimator(
   sigma = 1,
   exact = FALSE
 )
+
+evaluate_estimator(
+  score = Coverage(),
+  estimator = StagewiseCombinationFunctionOrderingCI(),
+  data_distribution = Normal(FALSE),
+  design = get_example_design(),
+  mu = c(0, 0.3, 0.6),
+  sigma = 1,
+  exact = FALSE
+)
+
 }
 \seealso{
 \code{\link{evaluate_estimator}}

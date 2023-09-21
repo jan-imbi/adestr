@@ -3,6 +3,9 @@
 #' These classes encode various metrics which can be used to evaluate
 #' the performance characteristics of point and interval estimators.
 #'
+#' @param interval confidence interval with respect to which centrality of a point
+#' estimator should be evaluated.
+#'
 #' @details
 #' # Details on the implemented estimators
 #' In the following, precise definitions of the performance scores implemented
@@ -10,7 +13,8 @@
 #' are given. To this end,
 #' let \eqn{\hat{\mu}} denote a point estimator, (\eqn{\hat{l}}, \eqn{\hat{u}})
 #' an interval estimator, denote the expected value of a random variable
-#' by \eqn{\mathbb{E}}, and let \eqn{\mu} be the real value of the underlying
+#' by \eqn{\mathbb{E}}, the probability of an event by \eqn{P},
+#' and let \eqn{\mu} be the real value of the underlying
 #' parameter to be estimated.
 #'
 #' ## Scores for point estimators (\code{PointEstimatorScore}):
@@ -18,7 +22,12 @@
 #' * \code{Bias()}: \eqn{\mathbb{E}[\hat{\mu} - \mu]}
 #' * \code{Variance()}: \eqn{\mathbb{E}[(\hat{\mu} - \mathbb{E}[\hat{\mu}])^2]}
 #' * \code{MSE()}: \eqn{\mathbb{E}[(\hat{\mu} - mu)^2]}
-#' * \code{OverestimationProbability()}: \eqn{\mathbb{E}[(\hat{\mu} - mu)^2]}
+#' * \code{OverestimationProbability()}: \eqn{P(\hat{\mu} > \mu)}
+#' * \code{Centrality(interval)}: \eqn{\mathbb{E}[(\hat{\mu} - \hat{l}) + (\hat{\mu} - \hat{u}]}
+#' ## Scores for confidence intervals (\code{IntervalEstimatorScore}):
+#' * \code{Coverage()}: \eqn{P(\hat{l} \leq \mu \leq \hat{u})}
+#' * \code{Width()}: \eqn{\mathbb{E}[\hat{u} - \hat{l}]}
+#' * \code{TestAgreement()}: \eqn{P\left( \left(\{0 < \hat{l} \text{ and } (c_{1, e} < Z_1 \text{ or } c_{2}(Z_1) < Z_2 ) \right) \text{ or } \left(\{\hat{l} \leq 0  \text{ and } ( Z_1 < c_{1, f} \text{ or } Z_2 \leq c_{2}(Z_1))\}\right)\right)}
 #'
 #' @md
 #' @slot label name of the performance score. Used in printing methods.
@@ -41,16 +50,69 @@ EstimatorScoreResultList <- function(...) {
   class(r) <- c("EstimatorScoreResultList", "list")
   r
 }
+
+#' Combine EstimatoreScoreResult objects into a list
+#'
+#' Creates an object of class EstimatoreScoreResultList,
+#' which is a basically list with the respective
+#' EstimatoreScoreResult objects.
+#'
+#' @param x an object of class EstimatorScoreResult.
+#' @param ... additional arguments passed along to the \code{\link{list}} function
+#' @return an object of class EstimatoreScoreResultList.
 setMethod("c", signature("EstimatorScoreResult"), definition =
             function(x, ...) {
               EstimatorScoreResultList(x, ...)
             })
+#' @inherit c,EstimatorScoreResult-method
 setMethod("c", signature("EstimatorScoreResultList"), definition =
             function(x, ...) {
               EstimatorScoreResultList(x, ...)
             })
 
 #' Evaluate performance characteristics of an estimator
+#'
+#' This function evaluates an \code{\link{EstimatorScore}} for a \code{\link{PointEstimator}}
+#' or and \code{\link{IntervalEstimator}} by integrating over the sampling distribution.
+#'
+#' @details
+#' ## General
+#'
+#' First, a functional representation of the integrand is created by combining information
+#' from the \code{\link{EstimatorScore}} object (\code{score}) and the \code{\link{PointEstimator}} or
+#' \code{\link{IntervalEstimator}} object (\code{estimator}).
+#' The sampling distribution of a design is determined by the \code{\link{TwoStageDesign}} object
+#' (\code{design}) and the \code{\link{DataDistribution}} object (\code{data_distribution}),
+#' as well as the assumed parameters \eqn{\mu} (mu) and \eqn{\sigma} (sigma).
+#' The other parameters control various details of the integration problem.
+#'
+#' ## Other parameters
+#'
+#' For a two-armed \code{data_distribution},
+#' if \code{use_full_twoarm_sampling_distribution} is \code{TRUE}, the sample means
+#' for both groups are integrated independently. If \code{use_full_twoarm_sampling_distribution}
+#' is \code{FALSE}, only the difference in sample means is integrated.
+#'
+#' \code{true_parameter} controls which parameters is supposed to be estimated. This
+#' is usually \code{mu}, but could be set to \code{sigma} if one is interested in
+#' estimating the standard deviation.
+#'
+#' If the parameter \code{exact} is set to \code{FALSE}
+#' (the default), the continuous version of the second-stage sample-size function \code{\link{n2}}
+#' is used. Otherwise, an integer valued version of that function will be used,
+#' though this is considerably slower.
+#'
+#' The parameters \code{early_futility_part},
+#' \code{continuation_part} and \code{early_efficacy_part} control which parts
+#' of the sample-space should be integrated over (all default to \code{TRUE}).
+#' They can be used in conjunction with the parameter \code{conditional_integral},
+#' which enables the calculation of the expected value of performance score conditional
+#' on reaching any of the selected integration regions.
+#'
+#' Lastly, the paramters
+#' \code{tol}, \code{maxEval}, and \code{absError} control the integration accuracy.
+#' They are handed down to the \code{\link{hcubature}} function.
+#' @md
 #'
 #' @param score performance measure to evaluate.
 #' @param estimator object of class \code{PointEstimator}, \code{IntervalEstimator} or \code{PValue}.
@@ -71,6 +133,9 @@ setMethod("c", signature("EstimatorScoreResultList"), definition =
 #' @param conditional_integral treat integral as a conditional integral.
 #'
 #' @return \code{EstimatorScoreResult} object containing the performance characteristics of the estimator.
+#' @seealso [EstimatorScore]
+#' @seealso [PointEstimator] [IntervalEstimator]
+#' @seealso \link[adestr:plot,EstimatorScoreResultList-method]{plot}
 #' @export
 #'
 #' @examples
@@ -83,6 +148,17 @@ setMethod("c", signature("EstimatorScoreResultList"), definition =
 #'   sigma = 1,
 #'   exact = FALSE
 #' )
+#'
+#' evaluate_estimator(
+#'   score = Coverage(),
+#'   estimator = StagewiseCombinationFunctionOrderingCI(),
+#'   data_distribution = Normal(FALSE),
+#'   design = get_example_design(),
+#'   mu = c(0, 0.3, 0.6),
+#'   sigma = 1,
+#'   exact = FALSE
+#' )
+#'
 setGeneric("evaluate_estimator", function(score,
                                           estimator,
                                           data_distribution,
@@ -918,7 +994,7 @@ setMethod("evaluate_estimator", signature("Centrality", "PointEstimator"),
 #' of the elements of the respective sublists is then used to create separate
 #' scenarios.
 #' These scenarios are than evaluated independelty of each other,
-#' allowing for parallelization via the \code{\link{future}} framework. For each scenario,
+#' allowing for parallelization via the \code{\link[future:future]{future}} framework. For each scenario,
 #' one call to the \code{\link{evaluate_estimator}} function is made.
 #'
 #' Concretely, the cross product of

@@ -52,7 +52,7 @@ The rejection boundary signals the line where
 \examples{
 plot_p(estimator = StagewiseCombinationFunctionOrderingPValue(),
   data_distribution = Normal(FALSE),
-  design = design,
+  design = get_example_design(),
   mu = 0,
   sigma = 1)
 }

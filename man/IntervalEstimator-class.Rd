@@ -49,17 +49,45 @@ NaiveCI(two_sided = TRUE)
 \item{mu1}{expected value of the normal distribution under the null hypothesis.}
 }
 \value{
-An object of class \code{IntervalEstimator}.
+an object of class \code{IntervalEstimator}.
 }
 \description{
-Interval estimators
+This is the parent class for all confidence intervals implemented in this package.
+Currently, only confidence intervals for the parameter \eqn{\mu} of a normal distribution
+are implemented. Details about the methods for calculating confidence intervals can be found in
+(our upcoming paper).
+}
+\details{
+The implemented confidence intervals are:
+\itemize{
+\item \code{MLEOrderingCI()}
+\item \code{LikelihoodRatioOrderingCI()}
+\item \code{ScoreTestOrderingCI()}
+\item \code{StagewiseCombinationFunctionOrderingCI()}
+}
+
+These confidence intervals are constructed by specifying an ordering of the sample space
+and finding the value of \eqn{\mu}, such that the observed sample is the
+\eqn{\alpha/2} (or (\eqn{1-\alpha/2})) quantile of the sample space according to the
+chosen ordering.
+Some of the implemented orderings are based on the work presented in
+\insertCite{emerson1990parameter}{adestr},
+\insertCite{@Sections 8.4 in @jennison1999group}{adestr},
+and \insertCite{@Sections 4.1.1 and 8.2.1 in @wassmer2016group}{adestr}.
 }
 \examples{
+# This is the definition of the 'naive' confidence interval for one-armed trials
 IntervalEstimator(
-  two_sided = FALSE,
-  l1 = \(smean1, ...) smean1 - 1,
-  u1 = \(smean1, ...) smean1 + 1,
-  l2 = \(smean2, ...) smean2 - 1,
-  u2 = \(smean2, ...) smean2 + 1,
-  label="My custom p-value")
+  two_sided = TRUE,
+  l1 = \(smean1, n1, sigma, ...) smean1 - qnorm(.95, sd = sigma/sqrt(n1)),
+  u1 = \(smean1, n1, sigma, ...) smean1 + qnorm(.95, sd = sigma/sqrt(n1)),
+  l2 = \(smean1, smean2, n1, n2, sigma, ...) smean2 - qnorm(.95, sd = sigma/sqrt(n1 + n2)),
+  u2 = \(smean1, smean2, n1, n2, sigma, ...) smean2 + qnorm(.95, sd = sigma/sqrt(n1 + n2)),
+  label="My custom CI")
+}
+\references{
+\insertAllCited{}
+}
+\seealso{
+\code{\link{evaluate_estimator}}
 }

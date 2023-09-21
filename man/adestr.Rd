@@ -6,26 +6,30 @@
 \alias{adestr-package}
 \title{adestr}
 \description{
-Point estimates, confidence intervals, and p-values for optimal adaptive two-stage designs
+Point estimates, confidence intervals, and p-values for optimal adaptive two-stage designs.
 }
 \details{
-This package implements methods to evaluate the performance characteristics of
-various point and interval estimators for optimal adaptive two-stage designs.
+This package implements methods to \link[adestr:evaluate_estimator]{evaluate the performance characteristics} of
+various \link[adestr:PointEstimator]{point} and \link[adestr:IntervalEstimator]{interval} estimators for optimal adaptive two-stage designs.
 Specifically, this package is written to interface with trial designs created by the \code{\link{adoptr}} package
 \insertCite{kunzmann2021adoptr,pilz2021optimal}{adestr}.
 Apart from the a priori evaluation of performance characteristics, this package also allows for the
-evaluation of the implemented estimators on real datasets, and it implements methods
-to calculate p-values.
+\link[adestr:analyze]{calculation of the values of the estimators} given real datasets, and it implements methods
+to calculate \link[adestr:PValue]{p-values}.
 }
 \references{
 \insertAllCited{}
 }
 \seealso{
-Useful links:
-\itemize{
-  \item \url{https://jan-imbi.github.io/adestr/}
-}
+\code{\link[adestr:evaluate_estimator]{evaluate_estimator}}
 
+\code{\link[adestr:analyze]{analyze}}
+
+\code{\link[adestr:Statistic]{Statistic}} \code{\link[adestr:PointEstimator]{PointEstimator}} \code{\link[adestr:IntervalEstimator]{IntervalEstimator}} \code{\link[adestr:PValue]{PValue}}
+
+\code{\link[adestr:plot,EstimatorScoreResultList-method]{plot}} \code{\link[adestr:plot_p]{plot_p}}
+
+\url{https://jan-imbi.github.io/adestr/}
 }
 \author{
 \strong{Maintainer}: Jan Meis \email{meis@imbi.uni-heidelberg.de} (\href{https://orcid.org/0000-0001-5407-7220}{ORCID})

@@ -47,11 +47,38 @@ NeymanPearsonOrderingPValue(mu0 = 0, mu1 = 0.4)
 An object of class \code{PValue}.
 }
 \description{
-P-values
+This is the parent class for all p-values implemented in this package.
+Details about the methods for calculating p-values can be found in
+(our upcoming paper).
+}
+\details{
+The implemented p-values are:
+\itemize{
+\item \code{MLEOrderingPValue()}
+\item \code{LikelihoodRatioOrderingPValue()}
+\item \code{ScoreTestOrderingPValue()}
+\item \code{StagewiseCombinationFunctionOrderingPValue()}
+}
+
+The p-values are calculated by specifying an ordering of the sample space
+calculating the probability that a random sample under the null hypothesis is
+larger than the observed sample.
+Some of the implemented orderings are based on the work presented in
+\insertCite{emerson1990parameter}{adestr},
+\insertCite{@Sections 8.4 in @jennison1999group}{adestr},
+and \insertCite{@Sections 4.1.1 and 8.2.1 in @wassmer2016group}{adestr}.
 }
 \examples{
+# This is the definition of a 'naive' p-value based on a Z-test for a one-armed trial
 PValue(
-  g1 = \(smean1, ...) runif(length(smean1)),
-  g2 = \(smean2, ...) runif(length(smean2)),
+  g1 = \(smean1, n1, sigma, ...) pnorm(smean1*sqrt(n1)/sigma, lower.tail=FALSE),
+  g2 = \(smean1, smean2, n1, n2, ...) pnorm((n1 * smean1 + n2 * smean2)/(n1 + n2) *
+                                        sqrt(n1+n2)/sigma, lower.tail=FALSE),
   label="My custom p-value")
+}
+\references{
+\insertAllCited{}
+}
+\seealso{
+\link{plot_p}
 }

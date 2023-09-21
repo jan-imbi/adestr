@@ -1,13 +1,13 @@
 #' adestr
-#' @description Point estimates, confidence intervals, and p-values for optimal adaptive two-stage designs
+#' @description Point estimates, confidence intervals, and p-values for optimal adaptive two-stage designs.
 #'
-#' @details This package implements methods to evaluate the performance characteristics of
-#' various point and interval estimators for optimal adaptive two-stage designs.
+#' @details This package implements methods to \link[adestr:evaluate_estimator]{evaluate the performance characteristics} of
+#' various \link[adestr:PointEstimator]{point} and \link[adestr:IntervalEstimator]{interval} estimators for optimal adaptive two-stage designs.
 #' Specifically, this package is written to interface with trial designs created by the \code{\link{adoptr}} package
 #' \insertCite{kunzmann2021adoptr,pilz2021optimal}{adestr}.
 #' Apart from the a priori evaluation of performance characteristics, this package also allows for the
-#' evaluation of the implemented estimators on real datasets, and it implements methods
-#' to calculate p-values.
+#' \link[adestr:analyze]{calculation of the values of the estimators} given real datasets, and it implements methods
+#' to calculate \link[adestr:PValue]{p-values}.
 #'
 #' @docType package
 #' @name adestr
@@ -15,6 +15,11 @@
 #' @importFrom stats dnorm pnorm qnorm dt pt qt dchisq pchisq qchisq integrate uniroot var
 #' @importFrom cubature hcubature
 #' @importFrom Rdpack reprompt
+#' @seealso \code{\link[adestr:evaluate_estimator]{evaluate_estimator}}
+#' @seealso \code{\link[adestr:analyze]{analyze}}
+#' @seealso \code{\link[adestr:Statistic]{Statistic}} \code{\link[adestr:PointEstimator]{PointEstimator}} \code{\link[adestr:IntervalEstimator]{IntervalEstimator}} \code{\link[adestr:PValue]{PValue}}
+#' @seealso \code{\link[adestr:plot,EstimatorScoreResultList-method]{plot}} \code{\link[adestr:plot_p]{plot_p}}
+#' @seealso \url{https://jan-imbi.github.io/adestr/}
 #'
 #' @references
 #' \insertAllCited{}
@@ -25,16 +30,16 @@
 
 .adestr_options <- list(
   # Root finding inside estimators
-  adestr_tol_roots = 1e-3,
-  adestr_maxiter_roots = 1e3,
+  adestr_tol_roots = 2e-3,
+  adestr_maxiter_roots = 5e2,
   # Integrals used inside estimators
-  adestr_tol_inner = 5e-3,
-  adestr_maxEval_inner = 1e4,
-  adestr_absError_inner = 1e-5,
+  adestr_tol_inner = 2e-3,
+  adestr_maxEval_inner = 5e2,
+  adestr_absError_inner = 5e-5,
   # Integrals to evaluate estimators
-  adestr_tol_outer = 5e-6,
-  adestr_maxEval_outer = 3e5,
-  adestr_absError_outer = 1e-8
+  adestr_tol_outer = 1e-3,
+  adestr_maxEval_outer = 1e3,
+  adestr_absError_outer = 1e-5
 )
 
 #### Universal argument order for all functions: ####

@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# adestr <a href='https://github.com/jan-imbi/adestr'><img src='man/figures/sticker.png' align="right" height="70" /></a>
+# adestr <a href='https://github.com/jan-imbi/adestr'><img src='man/figures/sticker.png' align="right" height="80" /></a>
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/jan-imbi/adestr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jan-imbi/adestr/actions/workflows/R-CMD-check.yaml)
@@ -70,6 +70,16 @@ evaluate_estimator(
  mu = c(0, 0.3, 0.6),
  sigma = 1
 )
+
+evaluate_estimator(
+ score = MSE(),
+ estimator = SampleMean(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(),
+ mu = seq(-0.7, 1.5, .05),
+ sigma = 1
+) |> 
+  plot()
 ```
 
 You can analyze a dataset like this:
@@ -85,8 +95,8 @@ dat <- data.frame(
 )
 analyze(
  data = dat,
- estimator = get_example_statistics(),
- data_distribution = Normal(),
+ statistics = get_example_statistics(),
+ data_distribution = Normal(two_armed = TRUE),
  sigma = 1,
  design = get_example_design()
 )

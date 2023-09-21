@@ -63,7 +63,48 @@ with the full sampling distribution in a two-armed trial.}
 \code{EstimatorScoreResult} object containing the performance characteristics of the estimator.
 }
 \description{
-Evaluate performance characteristics of an estimator
+This function evaluates an \code{\link{EstimatorScore}} for a \code{\link{PointEstimator}}
+or and \code{\link{IntervalEstimator}} by integrating over the sampling distribution.
+}
+\details{
+\subsection{General}{
+
+First, a functional representation of the integrand is created by combining information
+from the \code{\link{EstimatorScore}} object (\code{score}) and the \code{\link{PointEstimator}} or
+\code{\link{IntervalEstimator}} object (\code{estimator}).
+The sampling distribution of a design is determined by the \code{\link{TwoStageDesign}} object
+(\code{design}) and the \code{\link{DataDistribution}} object (\code{data_distribution}),
+as well as the assumed parameters \eqn{\mu} (mu) and \eqn{\sigma} (sigma).
+The other parameters control various details of the integration problem.
+}
+
+\subsection{Other parameters}{
+
+For a two-armed \code{data_distribution},
+if \code{use_full_twoarm_sampling_distribution} is \code{TRUE}, the sample means
+for both groups are integrated independently. If \code{use_full_twoarm_sampling_distribution}
+is \code{FALSE}, only the difference in sample means is integrated.
+
+\code{true_parameter} controls which parameters is supposed to be estimated. This
+is usually \code{mu}, but could be set to \code{sigma} if one is interested in
+estimating the standard deviation.
+
+If the parameter \code{exact} is set to \code{FALSE}
+(the default), the continuous version of the second-stage sample-size function \code{\link{n2}}
+is used. Otherwise, an integer valued version of that function will be used,
+though this is considerably slower.
+
+The parameters \code{early_futility_part},
+\code{continuation_part} and \code{early_efficacy_part} control which parts
+of the sample-space should be integrated over (all default to \code{TRUE}).
+They can be used in conjunction with the parameter \code{conditional_integral},
+which enables the calculation of the expected value of performance score conditional
+on reaching any of the selected integration regions.
+
+Lastly, the paramters
+\code{tol}, \code{maxEval}, and \code{absError} control the integration accuracy.
+They are handed down to the \code{\link{hcubature}} function.
+}
 }
 \examples{
 evaluate_estimator(
@@ -75,4 +116,22 @@ evaluate_estimator(
   sigma = 1,
   exact = FALSE
 )
+
+evaluate_estimator(
+  score = Coverage(),
+  estimator = StagewiseCombinationFunctionOrderingCI(),
+  data_distribution = Normal(FALSE),
+  design = get_example_design(),
+  mu = c(0, 0.3, 0.6),
+  sigma = 1,
+  exact = FALSE
+)
+
+}
+\seealso{
+\link{EstimatorScore}
+
+\link{PointEstimator} \link{IntervalEstimator}
+
+\link[adestr:plot,EstimatorScoreResultList-method]{plot}
 }

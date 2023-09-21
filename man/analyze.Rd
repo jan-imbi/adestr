@@ -28,7 +28,8 @@ analyze(
 \arguments{
 \item{data}{a data.frame containing the data to be analyzed.}
 
-\item{statistics}{a list of objects of class \code{\link{PointEstimator}}, \code{\link{ConfidenceInterval}} or
+\item{statistics}{a list of objects of class \code{\link{PointEstimator}},
+\code{\link{ConfidenceInterval}} or
 \code{\link{PValue}}.}
 
 \item{data_distribution}{object of class \code{Normal} or \code{Student}.}
@@ -52,20 +53,37 @@ The \code{analyze} function can be used calculate the values of a list of
 \link[adestr:ConfidenceInterval]{confidence intervals},
 and \link[adestr:PValue]{p-values} for a given dataset.
 }
+\details{
+Note that in \code{\link{adestr}}, statistics are codes as functions of the
+stage-wise sample means (and stage-wise sample variances if data_distribution is
+\code{\link{Student}}). In a first-step, the data is summarized to produce these
+parameters. Then, the list of statistics are evaluated at the values of these parameters.
+
+The output of the \code{analyze} function also displays information on the hypothesis
+test and the interim decision. If the \code{\link[adestr:Statistic-class]{statistics}} list is empty, this will
+be the only information displayed.
+}
 \examples{
-set.seed(321)
+set.seed(123)
 dat <- data.frame(
-  endpoint = c(rnorm(28, .2, 1), rnorm(28, 0, 1),
-               rnorm(23, .2, 1), rnorm(23, 0, 1)),
-  group = factor(rep(c("ctl", "trt", "ctl", "trt"),
-                     c(28,28,23,23))),
-  stage = rep(c(1L, 2L), c(56, 46))
+  endpoint = c(rnorm(28, 0.3)),
+  stage = rep(1, 28)
 )
-analyze(
-  data = dat,
-  statistics = c(get_example_statistics()),
-  data_distribution = Normal(),
-  sigma = 1,
-  design = get_example_design()
-)
+analyze(data = dat,
+        statistics = list(),
+        data_distribution = Normal(FALSE),
+        design = get_example_design(),
+        sigma = 1)
+
+# The results suggest recruiting 32 patients for the second stage
+dat <- rbind(
+  dat,
+  data.frame(
+    endpoint = rnorm(32, mean = 0.3),
+    stage = rep(2, 32)))
+analyze(data = dat,
+        statistics = get_example_statistics(),
+        data_distribution = Normal(FALSE),
+        design = get_example_design(),
+        sigma = 1)
 }

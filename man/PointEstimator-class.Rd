@@ -69,7 +69,7 @@ MedianUnbiasedNeymanPearsonOrdering(mu0 = 0, mu1 = 0.4)
 
 \item{label}{name of the estimator. Used in printing methods.}
 
-\item{w1}{weight of the first-stage sample mean.}
+\item{w1}{weight of the first-stage data.}
 
 \item{iterations}{number of bias reduction iterations. Defaults to 1.}
 
@@ -78,11 +78,79 @@ MedianUnbiasedNeymanPearsonOrdering(mu0 = 0, mu1 = 0.4)
 \item{mu1}{expected value of the normal distribution under the null hypothesis.}
 }
 \value{
-An object of class \code{PointEstimator}.
+an object of class \code{PointEstimator}.
 }
 \description{
-Point estimators
+This is the parent class for all point estimators implemented in this package.
+Currently, only estimators for the parameter \eqn{\mu} of a normal distribution
+are implemented.
+}
+\details{
+Details about the point estimators can be found in (our upcoming paper).
+\subsection{Sample Mean (\code{SampleMean()})}{
+
+The sample mean is the maximum likelihood estimator for the mean and probably the
+'most straightforward' of the implemented estimators.
+}
+
+\subsection{Fixed weighted sample means (\code{WeightedSampleMean()})}{
+
+The first- and second-stage (if available) sample means are combined via fixed, predefined
+weights. See \insertCite{brannath2006estimation}{adestr} and \insertCite{@Section 8.3.2 in @wassmer2016group}{adestr}.
+}
+
+\subsection{Adaptively weighted sample means (\code{AdaptivelyWeightedSampleMean()})}{
+
+The first- and second-stage (if available) sample means are combined via a combination of
+fixed and adaptively modified
+weights that depend on the standard error.
+See \insertCite{@Section 8.3.4 in @wassmer2016group}{adestr}.
+}
+
+\subsection{Minimizing peak variance in adaptively weighted sample means (\code{MinimizePeakVariance()})}{
+
+For this estimator, the weights of the adaptively weighted sample mean are chosen to
+minimize the variance of the estimator for the value of \eqn{\mu} which maximizes
+the expected sample size.
+}
+
+\subsection{(Pseudo) Rao-Blackwell estimators (\code{RaoBlackwell} and \code{PseudoRaoBlackwell})}{
+
+The conditional expectation of the first-stage sample mean given the overall sample
+mean and the second-stage sample size. See \insertCite{emerson1997computationally}{adestr}.
+}
+
+\subsection{A bias-reduced estimator (\code{BiasReduced()})}{
+
+This estimator is calculated by subtracting an estimate of the bias from the MLE.
+See \insertCite{whitehead1986bias}{adestr}.
+}
+
+\subsection{Median-unbiased estimators}{
+
+The implemented median-unbiased estimators are:
+\itemize{
+\item \code{MedianUnbiasedMLEOrdering()}
+\item \code{MedianUnbiasedLikelihoodRatioOrdering()}
+\item \code{MedianUnbiasedScoreTestOrdering()}
+\item \code{MedianUnbiasedStagewiseCombinationFunctionOrdering()}
+}
+
+These estimators are constructed by specifying an ordering of the sample space
+and finding the value of \eqn{\mu}, such that the observed sample is the
+median of the sample space according to the chosen ordering.
+Some of the implemented orderings are based on the work presented in
+\insertCite{emerson1990parameter}{adestr},
+\insertCite{@Sections 8.4 in @jennison1999group}{adestr},
+and \insertCite{@Sections 4.1.1 and 8.2.1 in @wassmer2016group}{adestr}.
+}
 }
 \examples{
 PointEstimator(g1 = \(smean1, ...) smean1,g2 = \(smean2, ...) smean2, label="My custom estimator")
+}
+\references{
+\insertAllCited{}
+}
+\seealso{
+\code{\link{evaluate_estimator}}
 }
