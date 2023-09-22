@@ -12,7 +12,7 @@ the performance characteristics of point and interval estimators."><!-- mathjax 
     
     <a class="navbar-brand me-2" href="../index.html">adestr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -140,7 +140,7 @@ parameter to be estimated.</p><div class="section">
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  score <span class="op">=</span> <span class="fu">MSE</span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  estimator <span class="op">=</span> <span class="fu"><a href="PointEstimator-class.html">SampleMean</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  data_distribution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data_distribution <span class="op">=</span> <span class="fu"><a href="Normal.html">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  design <span class="op">=</span> <span class="fu"><a href="get_example_design.html">get_example_design</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.3</span>, <span class="fl">0.6</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  sigma <span class="op">=</span> <span class="fl">1</span>,</span></span>
@@ -161,7 +161,7 @@ parameter to be estimated.</p><div class="section">
 <span class="r-in"><span><span class="fu"><a href="evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  score <span class="op">=</span> <span class="fu">Coverage</span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  estimator <span class="op">=</span> <span class="fu"><a href="IntervalEstimator-class.html">StagewiseCombinationFunctionOrderingCI</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  data_distribution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data_distribution <span class="op">=</span> <span class="fu"><a href="Normal.html">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  design <span class="op">=</span> <span class="fu"><a href="get_example_design.html">get_example_design</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.3</span>, <span class="fl">0.6</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  sigma <span class="op">=</span> <span class="fl">1</span>,</span></span>

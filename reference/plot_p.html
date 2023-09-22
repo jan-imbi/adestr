@@ -12,7 +12,7 @@ of values for the first and second-stage test statistics."><!-- mathjax --><scri
     
     <a class="navbar-brand me-2" href="../index.html">adestr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,7 +109,7 @@ of values for the first and second-stage test statistics.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>When the first-stage test statistic lies below the futility threshold (c1f) or
-above the early efficacy threshold (c1e) of the <code><a href="https://rdrr.io/pkg/adoptr/man/TwoStageDesign-class.html" class="external-link">TwoStageDesign</a></code>,
+above the early efficacy threshold (c1e) of the <code>TwoStageDesign</code>,
 there is no second-stage test statistics. The p-values in these regions are only
 based on the first-stage values.
 For first-stage test statistic values between c1f and c1e, the first and second-stage
@@ -120,7 +120,7 @@ test statistic determine the p-value.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">plot_p</span><span class="op">(</span>estimator <span class="op">=</span> <span class="fu"><a href="PValue-class.html">StagewiseCombinationFunctionOrderingPValue</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  data_distribution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data_distribution <span class="op">=</span> <span class="fu"><a href="Normal.html">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  design <span class="op">=</span> <span class="fu"><a href="get_example_design.html">get_example_design</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  mu <span class="op">=</span> <span class="fl">0</span>,</span></span>
 <span class="r-in"><span>  sigma <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>

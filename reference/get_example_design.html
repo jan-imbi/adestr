@@ -18,7 +18,7 @@ For an alternative hypothesis of mu=0.4, the overall power is 80%."><!-- mathjax
     
     <a class="navbar-brand me-2" href="../index.html">adestr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,12 +63,17 @@ For an alternative hypothesis of mu=0.4, the overall power is 80%.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_example_design</span><span class="op">(</span>label <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_example_design</span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">FALSE</span>, label <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>label</dt>
+    <dl><dt>two_armed</dt>
+<dd><p>(logical) determins whether the design is for one- or
+two-armed trials.</p></dd>
+
+
+<dt>label</dt>
 <dd><p>(optional) label to be assigned to the design.</p></dd>
 
 </dl></div>
@@ -81,19 +86,9 @@ For an alternative hypothesis of mu=0.4, the overall power is 80%.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu">get_example_design</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># Type I error</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/Scores.html" class="external-link">evaluate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/ConditionalPower-class.html" class="external-link">Power</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/PointMassPrior-class.html" class="external-link">PointMassPrior</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>, <span class="va">design</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.02500571</span>
-<span class="r-in"><span><span class="co"># Power</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/Scores.html" class="external-link">evaluate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/ConditionalPower-class.html" class="external-link">Power</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/PointMassPrior-class.html" class="external-link">PointMassPrior</a></span><span class="op">(</span><span class="fl">.4</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>, <span class="va">design</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7985303</span>
-<span class="r-in"><span><span class="co"># Expected sample size under the alternative</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/Scores.html" class="external-link">evaluate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/ConditionalSampleSize-class.html" class="external-link">ExpectedSampleSize</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/PointMassPrior-class.html" class="external-link">PointMassPrior</a></span><span class="op">(</span><span class="fl">.4</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>, <span class="va">design</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 39.85593</span>
-<span class="r-in"><span><span class="co"># Expected sample size under the null</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/Scores.html" class="external-link">evaluate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/ConditionalSampleSize-class.html" class="external-link">ExpectedSampleSize</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/PointMassPrior-class.html" class="external-link">PointMassPrior</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>, <span class="va">design</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 34.45135</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">get_example_design</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TwoStageDesign&lt;n1=28;0.8&lt;=x1&lt;=2.3:n2=9-40&gt;</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

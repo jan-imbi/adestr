@@ -31,6 +31,9 @@
     <loc>https://jan-imbi.github.io/adestr/reference/IntervalEstimator-class.html</loc>
   </url>
   <url>
+    <loc>https://jan-imbi.github.io/adestr/reference/Normal.html</loc>
+  </url>
+  <url>
     <loc>https://jan-imbi.github.io/adestr/reference/NormalPrior.html</loc>
   </url>
   <url>
@@ -41,6 +44,12 @@
   </url>
   <url>
     <loc>https://jan-imbi.github.io/adestr/reference/Statistic-class.html</loc>
+  </url>
+  <url>
+    <loc>https://jan-imbi.github.io/adestr/reference/Student.html</loc>
+  </url>
+  <url>
+    <loc>https://jan-imbi.github.io/adestr/reference/TwoStageDesign-class.html</loc>
   </url>
   <url>
     <loc>https://jan-imbi.github.io/adestr/reference/TwoStageDesignWithCache.html</loc>

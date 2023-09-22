@@ -12,7 +12,7 @@ or and IntervalEstimator by integrating over the sampling distribution."><!-- ma
     
     <a class="navbar-brand me-2" href="../index.html">adestr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -159,8 +159,8 @@ with the full sampling distribution in a two-armed trial.</p></dd>
 <p>First, a functional representation of the integrand is created by combining information
 from the <code><a href="EstimatorScore-class.html">EstimatorScore</a></code> object (<code>score</code>) and the <code><a href="PointEstimator-class.html">PointEstimator</a></code> or
 <code><a href="IntervalEstimator-class.html">IntervalEstimator</a></code> object (<code>estimator</code>).
-The sampling distribution of a design is determined by the <code><a href="https://rdrr.io/pkg/adoptr/man/TwoStageDesign-class.html" class="external-link">TwoStageDesign</a></code> object
-(<code>design</code>) and the <code><a href="https://rdrr.io/pkg/adoptr/man/DataDistribution-class.html" class="external-link">DataDistribution</a></code> object (<code>data_distribution</code>),
+The sampling distribution of a design is determined by the <code>TwoStageDesign</code> object
+(<code>design</code>) and the <code>DataDistribution</code> object (<code>data_distribution</code>),
 as well as the assumed parameters \(\mu\) (mu) and \(\sigma\) (sigma).
 The other parameters control various details of the integration problem.</p>
 </div>
@@ -177,7 +177,7 @@ is <code>FALSE</code>, only the difference in sample means is integrated.</p>
 is usually <code>mu</code>, but could be set to <code>sigma</code> if one is interested in
 estimating the standard deviation.</p>
 <p>If the parameter <code>exact</code> is set to <code>FALSE</code>
-(the default), the continuous version of the second-stage sample-size function <code><a href="https://rdrr.io/pkg/adoptr/man/n.html" class="external-link">n2</a></code>
+(the default), the continuous version of the second-stage sample-size function <code>n2</code>
 is used. Otherwise, an integer valued version of that function will be used,
 though this is considerably slower.</p>
 <p>The parameters <code>early_futility_part</code>,
@@ -204,7 +204,7 @@ They are handed down to the <code>hcubature</code> function.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">evaluate_estimator</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  score <span class="op">=</span> <span class="fu"><a href="EstimatorScore-class.html">MSE</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  estimator <span class="op">=</span> <span class="fu"><a href="PointEstimator-class.html">SampleMean</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  data_distribution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data_distribution <span class="op">=</span> <span class="fu"><a href="Normal.html">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  design <span class="op">=</span> <span class="fu"><a href="get_example_design.html">get_example_design</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.3</span>, <span class="fl">0.6</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  sigma <span class="op">=</span> <span class="fl">1</span>,</span></span>
@@ -225,7 +225,7 @@ They are handed down to the <code>hcubature</code> function.</p>
 <span class="r-in"><span><span class="fu">evaluate_estimator</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  score <span class="op">=</span> <span class="fu"><a href="EstimatorScore-class.html">Coverage</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  estimator <span class="op">=</span> <span class="fu"><a href="IntervalEstimator-class.html">StagewiseCombinationFunctionOrderingCI</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  data_distribution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/adoptr/man/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data_distribution <span class="op">=</span> <span class="fu"><a href="Normal.html">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  design <span class="op">=</span> <span class="fu"><a href="get_example_design.html">get_example_design</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.3</span>, <span class="fl">0.6</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  sigma <span class="op">=</span> <span class="fl">1</span>,</span></span>
