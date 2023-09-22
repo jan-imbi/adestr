@@ -29,6 +29,7 @@ Imports:
     latex2exp,
     forcats,
     future.apply,
+    pracma,
     progressr,
     Rdpack
 Suggests: 

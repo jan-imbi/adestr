@@ -1,6 +1,6 @@
 ### Remove some of this once adoptr is back on CRAN ###
 
-#' Two-stage designs
+#' Re-export of two-stage design class
 #'
 #' This is a re-export of the \code{TwoStageDesign} class from the
 #' \code{adoptr} \insertCite{kunzmann2021adoptr}{adestr} package.
@@ -24,6 +24,7 @@
 #' Maximilian Pilz is available at \url{https://github.com/kkmann/adoptr}.
 #'
 #' @exportClass TwoStageDesign
+#' @importFrom pracma gaussLegendre
 setClass("TwoStageDesign", representation(
   n1        = "numeric",
   c1f       = "numeric",
@@ -34,34 +35,20 @@ setClass("TwoStageDesign", representation(
   weights   = "numeric",
   tunable   = "logical"
 ))
-TwoStageDesign <- function(n1, c1f, c1e, n2_pivots, c2_pivots, order = NULL) {
-  # The original version of this is available from
-  # https://github.com/kkmann/adoptr/blob/master/R/TwoStageDesign.R
-  if (is.null(order)) {
-    order <- length(c2_pivots)
-  } else if (length(n2_pivots) != order) {
-    n2_pivots <- rep(n2_pivots[1], order)
-    c2_pivots <- rep(c2_pivots[1], order)
+TwoStageDesign <- function(n1, c1f, c1e, n2_pivots, c2_pivots, order = length(c2_pivots)) {
+  if (order != length(c2_pivots)) {
+    stop("order needs to be same length as c2_pivots")
   }
-  order <- as.integer(order)
-  if (order < 2) stop("At least two nodes are necessary for integration!")
-  j   <- 1:(order - 1)
-  mu0 <- 2
-  b   <- j / (4 * j^2 - 1)^0.5
-  A   <- rep(0, order * order)
-  A[(order + 1) * (j - 1) + 2] <- b
-  A[(order + 1) * j] <- b
-  dim(A) <- c(order, order)
-  sd <- eigen(A, symmetric = TRUE)
-  w <- rev(as.vector(sd$vectors[1, ]))
-  w <- mu0 * w^2
-  x <- rev(sd$values)
-  rule <- data.frame(nodes = x, weights = w)
-  tunable        <- logical(8) # initialize to all false
-  tunable[1:5]   <- TRUE
-  names(tunable) <- c("n1", "c1f", "c1e", "n2_pivots", "c2_pivots", "x1_norm_pivots", "weights", "tunable")
+  if (length(n2_pivots) != length(c2_pivots) && length(n2_pivots)!=1) {
+    stop("n2_pivots needs to be the same length as c2_pivots or of length 1.")
+  }
+  if (length(n2_pivots)==1L)
+    n2_pivots <- rep(n2_pivots, order)
+  glr <- gaussLegendre(order, -1, 1)
+  tunable        <- c("n1" = TRUE, "c1f" = TRUE, "c1e" = TRUE, "n2_pivots" = TRUE, "c2_pivots" = TRUE,
+                      "x1_norm_pivots" = FALSE, "weights" = FALSE, "tunable" = FALSE)
   new("TwoStageDesign", n1 = n1, c1f = c1f, c1e = c1e, n2_pivots = n2_pivots,
-      c2_pivots = c2_pivots, x1_norm_pivots = rule$nodes, weights = rule$weights,
+      c2_pivots = c2_pivots, x1_norm_pivots = glr$x, weights = glr$w,
       tunable = tunable)
 }
 setClass("DataDistribution", representation(

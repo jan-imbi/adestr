@@ -3,7 +3,7 @@
 \docType{class}
 \name{TwoStageDesign-class}
 \alias{TwoStageDesign-class}
-\title{Two-stage designs}
+\title{Re-export of two-stage design class}
 \description{
 This is a re-export of the \code{TwoStageDesign} class from the
 \code{adoptr} \insertCite{kunzmann2021adoptr}{adestr} package.
