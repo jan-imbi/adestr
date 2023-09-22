@@ -4,9 +4,12 @@
 \alias{get_example_design}
 \title{Generate an exemplary adaptive design}
 \usage{
-get_example_design(label = NULL)
+get_example_design(two_armed = FALSE, label = NULL)
 }
 \arguments{
+\item{two_armed}{(logical) determins whether the design is for one- or
+two-armed trials.}
+
 \item{label}{(optional) label to be assigned to the design.}
 }
 \value{
@@ -20,13 +23,6 @@ for a normally distributed test statistic (i.e. known variance).
 For an alternative hypothesis of mu=0.4, the overall power is 80\%.
 }
 \examples{
-design <- get_example_design()
-# Type I error
-evaluate(Power(Normal(FALSE), PointMassPrior(0, 1)), design)
-# Power
-evaluate(Power(Normal(FALSE), PointMassPrior(.4, 1)), design)
-# Expected sample size under the alternative
-evaluate(ExpectedSampleSize(Normal(FALSE), PointMassPrior(.4, 1)), design)
-# Expected sample size under the null
-evaluate(ExpectedSampleSize(Normal(FALSE), PointMassPrior(0, 1)), design)
+get_example_design()
+
 }

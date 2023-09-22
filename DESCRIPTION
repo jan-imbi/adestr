@@ -1,7 +1,7 @@
 Package: adestr
 Type: Package
 Title: Adaptive Design Estimation in R
-Version: 0.0.1
+Version: 0.5.0
 Authors@R: c(person("Jan", "Meis", role = c("aut", "cre"), email="meis@imbi.uni-heidelberg.de", comment = c(ORCID = "0000-0001-5407-7220")))
 Description:
   This package implements methods to evaluate the performance characteristics of
@@ -17,8 +17,7 @@ LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 7.2.3
 Depends:
-    R (>= 4.0.0),
-    adoptr
+    R (>= 4.0.0)
 Imports: 
     methods,
     stats,
@@ -41,6 +40,7 @@ Suggests:
 Config/testthat/edition: 3
 Collate: 
     'adestr_package.R'
+    'twostagedesign_with_cache.R'
     'analyze.R'
     'estimators.R'
     'densities.R'
@@ -54,12 +54,10 @@ Collate:
     'mle_distribution.R'
     'mlmse_score.R'
     'n2c2_helpers.R'
-    'twostagedesign_with_cache.R'
     'plot.R'
     'priors.R'
     'print.R'
 URL: https://jan-imbi.github.io/adestr/
 RdMacros: Rdpack
-Remotes: github::jan-imbi/adoptr@dissertation
 
 

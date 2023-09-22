@@ -113,12 +113,12 @@ setMethod("toString", signature("Results"),
             lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
 
             left <- "Calculated n2(Z1) (per group)"
-            nval2 <- n2(x@design, test_val)
+            nval2 <- .n2_extrapol(x@design, test_val)
             right <- format(nval2)
             lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
 
             left <- "Calculated c2(Z1)"
-            cval2 <- c2(x@design, test_val)
+            cval2 <- .c2_extrapol(x@design, test_val)
             right <- format(cval2, digits=3)
             lines[[length(lines)+1L]] <- paste0(pad_middle(left, right), "\n")
 
@@ -202,33 +202,39 @@ setMethod("toString", signature("Results"),
             return(unlist(lines))
           })
 setMethod("show", signature("Results"), \(object) cat(c(toString(object), "\n"), sep = ""))
-
-#' @importFrom utils capture.output
 setMethod("toString", signature("DataDistribution"),
           function(x, ...) {
-            str <- capture.output(print(x))
-            substr(str, 1, nchar(str))
+            sprintf("%s<%s>", class(x), if(x@two_armed) "two-armed" else "single-armed")
 })
 setMethod("toString", signature("EstimatorScore"),
           function(x, ...) {
             x@label
           })
-#' @importFrom utils capture.output
 setMethod("toString", signature("TwoStageDesign"),
           function(x, ...) {
             if (!is.null(attr(x, "label")))
               return(attr(x, "label"))
-            str <- print(x)
-            str
+            # This is partially taken from the adoptr implementation of design2str
+            n2_piv <- seq(x@c1f, x@c1e, length.out = length(x@n2_pivots))
+            n2range <- range(.n2_extrapol(x, n2_piv))
+            sprintf(
+              "%s<n1=%i;%.1f<=x1<=%.1f:n2=%s>",
+              class(x)[1], n1(x, round=TRUE),
+              x@c1f, x@c1e,
+              if (diff(round(n2range)) == 0) sprintf("%i", round(n2range)[1]) else paste(round(n2range), collapse = '-')
+            )
           })
-#' @importFrom utils capture.output
 setMethod("toString", signature("TwoStageDesignWithCache"),
           function(x, ...) {
-            if (!is.null(attr(x, "label")))
-              return(attr(x, "label"))
-            str <- print(x)
-            str
+            toString(forget_cache(x), ...)
           })
+
+### Remove once adoptr is back on CRAN ###
+setMethod("show", signature("TwoStageDesign"),
+          function(object) {
+            cat(toString(object))
+          })
+### end remove ###
 
 setGeneric("toTeX", \(x, ...) standardGeneric("toTeX"))
 
@@ -266,6 +272,4 @@ setMethod("toString", "UniformPrior",
             sprintf("UniformPrior<min=%s;max=%s>", format(x@min), format(x@max))
           })
 setMethod("show", signature("UniformPrior"), \(object)cat(c(toString(object), "\n"), sep=""))
-
-
 

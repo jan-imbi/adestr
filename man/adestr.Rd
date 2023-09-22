@@ -11,7 +11,7 @@ Point estimates, confidence intervals, and p-values for optimal adaptive two-sta
 \details{
 This package implements methods to \link[adestr:evaluate_estimator]{evaluate the performance characteristics} of
 various \link[adestr:PointEstimator]{point} and \link[adestr:IntervalEstimator]{interval} estimators for optimal adaptive two-stage designs.
-Specifically, this package is written to interface with trial designs created by the \code{\link{adoptr}} package
+Specifically, this package is written to interface with trial designs created by the \code{adoptr} package
 \insertCite{kunzmann2021adoptr,pilz2021optimal}{adestr}.
 Apart from the a priori evaluation of performance characteristics, this package also allows for the
 \link[adestr:analyze]{calculation of the values of the estimators} given real datasets, and it implements methods

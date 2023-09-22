@@ -76,7 +76,7 @@ setMethod("plot", signature = "list", definition =
 #' of values for the first and second-stage test statistics.
 #'
 #' When the first-stage test statistic lies below the futility threshold (c1f) or
-#' above the early efficacy threshold (c1e) of the \code{\link{TwoStageDesign}},
+#' above the early efficacy threshold (c1e) of the \code{TwoStageDesign},
 #' there is no second-stage test statistics. The p-values in these regions are only
 #' based on the first-stage values.
 #' For first-stage test statistic values between c1f and c1e, the first and second-stage
@@ -379,7 +379,7 @@ setMethod("plot_sample_mean", signature("DataDistribution", "TwoStageDesign"),
               plt <- ggplot(data = smean_dat, aes(x = .data$`smean`, y = .data$`Density`)) +
                 geom_line(size = 1) +
                 scale_x_continuous(name = "Sample mean") +
-                facet_wrap(vars(n))
+                facet_wrap(vars(.data$n))
               return(plt)
             }
           })

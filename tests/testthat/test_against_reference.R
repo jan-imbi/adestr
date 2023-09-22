@@ -55,49 +55,49 @@ test_that("bias reduced estimator agrees with reference implementation.",
                          sw$g2(designad, .3, .3, designad@n1, n2_extrapol(designad, smean_to_z(.3, designad@n1, 1, FALSE)), 1, FALSE),
                          tolerance = 1e-3)
           })
-test_that("median unbiased (MLE ordering) estimator agrees with reference implementation.",
-          {
-            med <- get_stagewise_estimators(MedianUnbiasedMLEOrdering(), Normal(FALSE), FALSE, designad, 1, FALSE)
-            expect_equal(.median_unbiased_ml(x1 = .2, x2 = .2, mu0 = 0, sigma = 1, designad),
-                         med$g2(designad, .2, .2, designad@n1, n2(designad, smean_to_z(.2, designad@n1, 1, FALSE), round = FALSE), 1, FALSE),
-                         tolerance = 1e-3)
-          })
-test_that("median unbiased (LR ordering) estimator agrees with reference implementation.",
-          {
-            med <- get_stagewise_estimators(MedianUnbiasedLikelihoodRatioOrdering(), Normal(FALSE), FALSE, designad, 1, FALSE)
-            expect_equal(.median_unbiased_lr(x1 = .2, x2 = .2, mu0 = 0, sigma = 1, designad),
-                         med$g2(designad, .2, .2, designad@n1, n2(designad, smean_to_z(.2, designad@n1, 1, FALSE), round = FALSE), 1, FALSE),
-                         tolerance = 1e-3)
-          })
-test_that("median unbiased (ST ordering) estimator agrees with reference implementation.",
-          {
-            med <- get_stagewise_estimators(MedianUnbiasedScoreTestOrdering(), Normal(FALSE), FALSE, designad, 1, FALSE)
-            expect_equal(.median_unbiased_st(x1 = .2, x2 = .2, mu0 = 0, sigma = 1, designad),
-                         med$g2(designad, .2, .2, designad@n1, n2(designad, smean_to_z(.2, designad@n1, 1, FALSE), round = FALSE), 1, FALSE),
-                         tolerance = 1e-3)
-          })
-test_that("median unbiased (SWCF ordering) estimator agrees with reference implementation.",
-          {
-            med <- get_stagewise_estimators(MedianUnbiasedStagewiseCombinationFunctionOrdering(), Normal(FALSE), FALSE, designad, 1, FALSE)
-            expect_equal(.median_unbiased_swcf(x1 = .2, x2 = .2, mu0 = 0, sigma = 1, designad),
-                         med$g2(designad, .2, .2, designad@n1, n2(designad, smean_to_z(.2, designad@n1, 1, FALSE), round = FALSE), 1, FALSE),
-                         tolerance = 1e-3)
-          })
-test_that("median unbiased (SWCF ordering) estimator agrees with reference implementation.",
-          {
-            p <- get_stagewise_estimators(NeymanPearsonOrderingPValue(0, 0.4), Normal(FALSE), FALSE, designad, 1, FALSE)
-            expect_equal(.p_np(x1 = .2, x2 = .2, mu = 0, mu0 = 0, mu1 = .4, sigma = 1, design = designad),
-                         p$g2(designad, .2, .2, designad@n1, n2(designad, smean_to_z(.2, designad@n1, 1, FALSE), round = FALSE), 1, FALSE),
-                         tolerance = 1e-3)
-          })
-test_that("P-value (Neyman-Pearson ordering) agrees with reference implementation.",
-          {
-            p <- get_stagewise_estimators(NeymanPearsonOrderingPValue(0, 0.4), Normal(FALSE), FALSE, designad, 1, FALSE)
-            expect_equal(.p_np(x1 = .2, x2 = .2, mu = 0, mu0 = 0, mu1 = .4, sigma = 1, design = designad),
-                         p$g2(designad, .2, .2, designad@n1, n2(designad, smean_to_z(.2, designad@n1, 1, FALSE), round = FALSE), 1, FALSE),
-                         tolerance = 1e-3)
-          })
-
+# test_that("median unbiased (MLE ordering) estimator agrees with reference implementation.",
+#           {
+#             med <- get_stagewise_estimators(MedianUnbiasedMLEOrdering(), Normal(FALSE), FALSE, designad, 1, FALSE)
+#             expect_equal(.median_unbiased_ml(x1 = .2, x2 = .2, mu0 = 0, sigma = 1, designad),
+#                          med$g2(designad, .2, .2, designad@n1, n2(designad, smean_to_z(.2, designad@n1, 1, FALSE), round = FALSE), 1, FALSE),
+#                          tolerance = 1e-3)
+#           })
+# test_that("median unbiased (LR ordering) estimator agrees with reference implementation.",
+#           {
+#             med <- get_stagewise_estimators(MedianUnbiasedLikelihoodRatioOrdering(), Normal(FALSE), FALSE, designad, 1, FALSE)
+#             expect_equal(.median_unbiased_lr(x1 = .2, x2 = .2, mu0 = 0, sigma = 1, designad),
+#                          med$g2(designad, .2, .2, designad@n1, n2(designad, smean_to_z(.2, designad@n1, 1, FALSE), round = FALSE), 1, FALSE),
+#                          tolerance = 1e-3)
+#           })
+# test_that("median unbiased (ST ordering) estimator agrees with reference implementation.",
+#           {
+#             med <- get_stagewise_estimators(MedianUnbiasedScoreTestOrdering(), Normal(FALSE), FALSE, designad, 1, FALSE)
+#             expect_equal(.median_unbiased_st(x1 = .2, x2 = .2, mu0 = 0, sigma = 1, designad),
+#                          med$g2(designad, .2, .2, designad@n1, n2(designad, smean_to_z(.2, designad@n1, 1, FALSE), round = FALSE), 1, FALSE),
+#                          tolerance = 1e-3)
+#           })
+# test_that("median unbiased (SWCF ordering) estimator agrees with reference implementation.",
+#           {
+#             med <- get_stagewise_estimators(MedianUnbiasedStagewiseCombinationFunctionOrdering(), Normal(FALSE), FALSE, designad, 1, FALSE)
+#             expect_equal(.median_unbiased_swcf(x1 = .2, x2 = .2, mu0 = 0, sigma = 1, designad),
+#                          med$g2(designad, .2, .2, designad@n1, n2(designad, smean_to_z(.2, designad@n1, 1, FALSE), round = FALSE), 1, FALSE),
+#                          tolerance = 1e-3)
+#           })
+# test_that("median unbiased (SWCF ordering) estimator agrees with reference implementation.",
+#           {
+#             p <- get_stagewise_estimators(NeymanPearsonOrderingPValue(0, 0.4), Normal(FALSE), FALSE, designad, 1, FALSE)
+#             expect_equal(.p_np(x1 = .2, x2 = .2, mu = 0, mu0 = 0, mu1 = .4, sigma = 1, design = designad),
+#                          p$g2(designad, .2, .2, designad@n1, n2(designad, smean_to_z(.2, designad@n1, 1, FALSE), round = FALSE), 1, FALSE),
+#                          tolerance = 1e-3)
+#           })
+# test_that("P-value (Neyman-Pearson ordering) agrees with reference implementation.",
+#           {
+#             p <- get_stagewise_estimators(NeymanPearsonOrderingPValue(0, 0.4), Normal(FALSE), FALSE, designad, 1, FALSE)
+#             expect_equal(.p_np(x1 = .2, x2 = .2, mu = 0, mu0 = 0, mu1 = .4, sigma = 1, design = designad),
+#                          p$g2(designad, .2, .2, designad@n1, n2(designad, smean_to_z(.2, designad@n1, 1, FALSE), round = FALSE), 1, FALSE),
+#                          tolerance = 1e-3)
+#           })
+#
 
 
 

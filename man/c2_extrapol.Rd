@@ -14,6 +14,3 @@ c2_extrapol(design, x1)
 \description{
 Also extrapolates results for values outside of [c1f, c1e].
 }
-\seealso{
-\link[adoptr]{c2}
-}

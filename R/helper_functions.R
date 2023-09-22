@@ -102,46 +102,68 @@ get_overall_svar_twoarm <- function(smean1, smean1T, svar1, smean2, smean2T, sva
 #' for a normally distributed test statistic (i.e. known variance).
 #' For an alternative hypothesis of mu=0.4, the overall power is 80\%.
 #'
+#' @param two_armed (logical) determins whether the design is for one- or
+#' two-armed trials.
 #' @param label (optional) label to be assigned to the design.
 #'
 #' @return an exmplary design of class \code{TwoStageDesign}.
 #' @export
 #'
 #' @examples
-#' design <- get_example_design()
-#' # Type I error
-#' evaluate(Power(Normal(FALSE), PointMassPrior(0, 1)), design)
-#' # Power
-#' evaluate(Power(Normal(FALSE), PointMassPrior(.4, 1)), design)
-#' # Expected sample size under the alternative
-#' evaluate(ExpectedSampleSize(Normal(FALSE), PointMassPrior(.4, 1)), design)
-#' # Expected sample size under the null
-#' evaluate(ExpectedSampleSize(Normal(FALSE), PointMassPrior(0, 1)), design)
-get_example_design <- function(label = NULL) {
-  d <- TwoStageDesign(
-    n1 = 28.16834031633078083701,
-    c1f = 0.7907304707554818623549,
-    c1e = 2.291260947864900643367,
-    n2_pivots = c(
-      39.39294353955478555918,
-      37.23397813905835818105,
-      33.27173714438612961430,
-      27.77227568901122012335,
-      21.41776450755991234587,
-      15.17163280081247300757,
-      10.25508398663193787570
-    ),
-    c2_pivots = c(
-      2.16914648055318837194250,
-      2.02493357331804890719695,
-      1.77299079624771049878973,
-      1.42524439642541422834654,
-      0.99916431580845133098023,
-      0.52325801518650127963639,
-      0.07133753446126563091401
-    ),
-    7
-  )
+#' get_example_design()
+#'
+get_example_design <- function(two_armed = FALSE, label = NULL) {
+  if (two_armed) {
+    d <- TwoStageDesign(
+      n1 = 56.33739084822602904978,
+      c1f = 0.7907356135206976555097,
+      c1e = 2.291313615804561720779,
+      n2_pivots = c(
+        78.74984462914770233510,
+        74.46976145811771630179,
+        66.54436357139142899086,
+        55.54462857388867291775,
+        42.83473938241603207189,
+        30.34059894227031151104,
+        20.48959489543554823854
+      ),
+      c2_pivots = c(
+        2.16905734410577055726321,
+        2.02492349183474207308109,
+        1.77298374394898416994693,
+        1.42521477360223225439029,
+        0.99909735679793421070372,
+        0.52314051699418129270924,
+        0.07058637352917693230658
+      ),
+      7
+    )
+  } else {
+    d <- TwoStageDesign(
+      n1 = 28.16834031633078083701,
+      c1f = 0.7907304707554818623549,
+      c1e = 2.291260947864900643367,
+      n2_pivots = c(
+        39.39294353955478555918,
+        37.23397813905835818105,
+        33.27173714438612961430,
+        27.77227568901122012335,
+        21.41776450755991234587,
+        15.17163280081247300757,
+        10.25508398663193787570
+      ),
+      c2_pivots = c(
+        2.16914648055318837194250,
+        2.02493357331804890719695,
+        1.77299079624771049878973,
+        1.42524439642541422834654,
+        0.99916431580845133098023,
+        0.52325801518650127963639,
+        0.07133753446126563091401
+      ),
+      7
+    )
+  }
   d <- TwoStageDesignWithCache(d)
   attr(d, "label") <- label
   d
@@ -219,13 +241,3 @@ get_statistics_from_paper <- function(point_estimators = TRUE,
     ret <- c(ret, p)
   return(ret)
 }
-
-
-
-
-
-
-
-
-
-

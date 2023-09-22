@@ -101,7 +101,7 @@ setMethod("analyze", signature("data.frame"),
                 if (abs(sdata$n_s1_g2 - design@n1)/ (design@n1) > 0.1)
                   warning("Planned first-stage sample size in group 2 differs from actually observed sample size by more than 10%. Results may be unreliable.")
               }
-              calc_n2 <- n2(design, test_val, round=FALSE)
+              calc_n2 <- .n2_extrapol(design, test_val)
               if (sdata$n_stages==2L){
                 if (abs(sdata$n_s2_g1 - calc_n2 )/ (calc_n2) > 0.1)
                   warning("Planned second-stage sample size in group 1 differs from actually observed sample size by more than 10%. Results may be unreliable.")

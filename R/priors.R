@@ -2,7 +2,9 @@ setGeneric("get_pdf", function(prior) standardGeneric("get_pdf"))
 setGeneric("get_logpdf", function(prior) standardGeneric("get_logpdf"))
 setGeneric("get_bounds", function(prior, infq) standardGeneric("get_bounds"))
 setGeneric("get_mean", function(prior, infq) standardGeneric("get_mean"))
-
+### Remove once adoptr is back on CRAN ###
+setClass("Prior")
+### end remove ###
 setClass("NormalPrior", contains = "Prior", slots = c(mu = "numeric", sigma = "numeric"))
 #' Normal prior distribution for the parameter mu
 #'
@@ -21,7 +23,6 @@ NormalPrior <- function(mu = 0, sigma = 1) {
      sigma = sigma
      )
 }
-
 setClass("UniformPrior", contains = "Prior", slots = c(min = "numeric", max = "numeric"))
 #' Uniform prior distribution for the parameter mu
 #'
@@ -40,7 +41,6 @@ UniformPrior <- function(min = -1, max = 1) {
       max = max
   )
 }
-
 setMethod("get_pdf", signature = "NormalPrior",
           function(prior) function(x) dnorm(x, mean = prior@mu, sd = prior@sigma))
 
@@ -67,10 +67,3 @@ setMethod("get_mean", signature = "NormalPrior",
 
 setMethod("get_mean", signature = "UniformPrior",
           function(prior) mean(c(prior@min, prior@max)))
-
-
-
-
-
-
-

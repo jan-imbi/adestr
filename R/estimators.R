@@ -566,12 +566,13 @@ setMethod("get_stagewise_estimators", signature("MinimizePeakVariance", "Normal"
                    design,
                    sigma,
                    exact) {
-            get_ess <- function(mu) {
-              H <- PointMassPrior(mu, 1)
-              ess <- ExpectedSampleSize(data_distribution, H)
-              evaluate(ess, design, optimization=TRUE)
-            }
-            max_ess_mu <- optimize(get_ess, z_to_smean(c(design@c1f, design@c1e), n1(design, round=FALSE), sigma, data_distribution@two_armed), maximum = TRUE)$maximum
+            # get_ess <- function(mu) {
+            #   H <- PointMassPrior(mu, 1)
+            #   ess <- ExpectedSampleSize(data_distribution, H)
+            #   evaluate(ess, design, optimization=TRUE)
+            # }
+            # max_ess_mu <- optimize(get_ess, z_to_smean(c(design@c1f, design@c1e), n1(design, round=FALSE), sigma, data_distribution@two_armed), maximum = TRUE)$maximum
+            max_ess_mu <- mean(z_to_smean(c(design@c1f, design@c1e), n1(design, round=FALSE), sigma, data_distribution@two_armed))
             get_var <- function(w1) {
               est <- AdaptivelyWeightedSampleMean(w1)
               evaluate_estimator(score = Variance(),

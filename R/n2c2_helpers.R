@@ -74,7 +74,6 @@ get_c2_coefficients <- function(design){
 #' @param design an object of class \code{\link{TwoStageDesignWithCache}}.
 #' @param x1 first-stage test statistic
 #'
-#' @seealso \link[adoptr]{n2}
 n2_extrapol <- function(design, x1) {
   if (length(design@n2_pivots) > 1L){
     fastmonoH.FC_evaluate(x1, design@n2_coefficients)
@@ -89,7 +88,6 @@ n2_extrapol <- function(design, x1) {
 #' @param design an object of class \code{\link{TwoStageDesignWithCache}}.
 #' @param x1 first-stage test statistic
 #'
-#' @seealso \link[adoptr]{c2}
 c2_extrapol <- function(design, x1) {
   fastmonoH.FC_evaluate(x1, design@c2_coefficients)
 }

@@ -337,8 +337,8 @@ or and \code{\link{IntervalEstimator}} by integrating over the sampling distribu
 First, a functional representation of the integrand is created by combining information
 from the \code{\link{EstimatorScore}} object (\code{score}) and the \code{\link{PointEstimator}} or
 \code{\link{IntervalEstimator}} object (\code{estimator}).
-The sampling distribution of a design is determined by the \code{\link{TwoStageDesign}} object
-(\code{design}) and the \code{\link{DataDistribution}} object (\code{data_distribution}),
+The sampling distribution of a design is determined by the \code{TwoStageDesign} object
+(\code{design}) and the \code{DataDistribution} object (\code{data_distribution}),
 as well as the assumed parameters \eqn{\mu} (mu) and \eqn{\sigma} (sigma).
 The other parameters control various details of the integration problem.
 }
@@ -355,7 +355,7 @@ is usually \code{mu}, but could be set to \code{sigma} if one is interested in
 estimating the standard deviation.
 
 If the parameter \code{exact} is set to \code{FALSE}
-(the default), the continuous version of the second-stage sample-size function \code{\link{n2}}
+(the default), the continuous version of the second-stage sample-size function \code{n2}
 is used. Otherwise, an integer valued version of that function will be used,
 though this is considerably slower.
 

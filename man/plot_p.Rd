@@ -41,7 +41,7 @@ of values for the first and second-stage test statistics.
 }
 \details{
 When the first-stage test statistic lies below the futility threshold (c1f) or
-above the early efficacy threshold (c1e) of the \code{\link{TwoStageDesign}},
+above the early efficacy threshold (c1e) of the \code{TwoStageDesign},
 there is no second-stage test statistics. The p-values in these regions are only
 based on the first-stage values.
 For first-stage test statistic values between c1f and c1e, the first and second-stage

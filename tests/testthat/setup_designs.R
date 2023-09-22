@@ -1,6 +1,7 @@
 # adoptr designs used for testing
 designad <- get_example_design()
-designgs <- adoptr::GroupSequentialDesign(
+### Put GroupSequentialDesign( once adoptr is back on CRAN ###
+designgs <- TwoStageDesign(
   n1 = 29.53980042851903320411,
   c1f = 0.8563037186428685831885,
   c1e = 2.211178640465977007779,

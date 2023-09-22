@@ -31,40 +31,19 @@ adaptive two-stage designs. You can learn about adoptr here:
 
 # Fitting a design with adoptr
 In order to showcase the capabilities of this package, we need a trial design first.
-Following [the example from the adoptr documentation](https://kkmann.github.io/adoptr/articles/adoptr.html),
-such a design can be fitted like this:
-
-```{r}
-library(adoptr)
-H_0 <- PointMassPrior(.0, 1)
-H_1 <- PointMassPrior(.4, 1)
-datadist <- Normal(two_armed = TRUE)
-ess <- ExpectedSampleSize(datadist, H_1)
-power <- Power(datadist, H_1)
-toer  <- Power(datadist, H_0)
-initial_design <- get_initial_design(
-  theta = .4,
-  alpha = .025,
-  beta  = .2,
-  type_design  = "two-stage",
-  dist  = datadist,
-  order = 7L
-)
-opt_res <- minimize(
-  ess,
-  subject_to(
-    power >= 0.8,
-    toer  <= .025
-  ),
-  initial_design
-)
-design <- opt_res$design
-plot(design)
-```
-
+We refer to [the example from the adoptr documentation](https://kkmann.github.io/adoptr/articles/adoptr.html)
+for this.
 You can read more about optimal adaptive designs fitted via the adoptr package here:
 [kkmann.github.io/adoptr/articles/adoptr_jss.html](https://kkmann.github.io/adoptr/articles/adoptr_jss.html).
 
+For the sake of this introduction, a pre-computed version of the first example from
+[kkmann.github.io/adoptr/articles/adoptr.html](https://kkmann.github.io/adoptr/articles/adoptr.html)
+is provided with this package via the `get_example_design` function.
+
+```{r}
+library(adestr)
+get_example_design(two_armed = TRUE)
+```
 
 # Example
 ## Evaluating the mean squared of an estimator
@@ -73,12 +52,11 @@ characteristics of various estimators for the mean in that design.
 To this end, the `evaluate_estimator` function can be used.
 
 ```{r}
-library(adestr)
 evaluate_estimator(
  score = MSE(),
  estimator = SampleMean(),
  data_distribution = Normal(two_armed = TRUE),
- design = design,
+ design = get_example_design(two_armed = TRUE),
  mu = 0.3,
  sigma = 1
 )
@@ -97,7 +75,7 @@ mse_mle <- evaluate_estimator(
   score = MSE(),
   estimator = SampleMean(),
   data_distribution = Normal(two_armed = TRUE),
-  design = design,
+  design = get_example_design(two_armed = TRUE),
   mu = seq(-0.75, 1.32, .03),
   sigma = 1
 )
@@ -105,7 +83,7 @@ mse_weighted_sample_means <- evaluate_estimator(
   score = MSE(),
   estimator = WeightedSampleMean(w1 = .8),
   data_distribution = Normal(two_armed = TRUE),
-  design = design,
+  design = get_example_design(two_armed = TRUE),
   mu = seq(-0.75, 1.32, .03),
   sigma = 1
 )
@@ -133,7 +111,7 @@ head(dat)
 analyze(data = dat,
         statistics = list(),
         data_distribution = Normal(two_armed = TRUE),
-        design = design,
+        design = get_example_design(two_armed = TRUE),
         sigma = 1)
 ```
 The results suggest recruiting 23 more patients per group for the second stage.
@@ -165,7 +143,7 @@ analyze(
    ),
  data_distribution = Normal(two_armed = TRUE),
  sigma = 1,
- design = design
+ design = get_example_design(two_armed = TRUE)
 )
 ```
 
