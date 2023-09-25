@@ -4,7 +4,7 @@ Title: Adaptive Design Estimation in R
 Version: 0.5.0
 Authors@R: c(person("Jan", "Meis", role = c("aut", "cre"), email="meis@imbi.uni-heidelberg.de", comment = c(ORCID = "0000-0001-5407-7220")))
 Description:
-  This package implements methods to evaluate the performance characteristics of
+  Methods to evaluate the performance characteristics of
   various point and interval estimators for optimal adaptive two-stage designs.
   Specifically, this package is written to work with trial designs created by the adoptr package
   (Kunzmann et al. (2021) <doi:10.18637/jss.v098.i09>; Pilz et al. (2021) <doi:10.1002/sim.8953>)).
@@ -29,6 +29,7 @@ Imports:
     latex2exp,
     forcats,
     future.apply,
+    pracma,
     progressr,
     Rdpack
 Suggests: 

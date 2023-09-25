@@ -100,7 +100,7 @@ evaluate_estimator(
   estimator = StagewiseCombinationFunctionOrderingCI(),
   data_distribution = Normal(FALSE),
   design = get_example_design(),
-  mu = c(0, 0.3, 0.6),
+  mu = c(0, 0.3),
   sigma = 1,
   exact = FALSE
 )
