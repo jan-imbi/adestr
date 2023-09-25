@@ -120,10 +120,10 @@ f_p_reject <- adestr:::plot_rejection_regions(
   Normal(two_armed = FALSE), designad, 0, 1, subdivisions = 200L)
 f_p <- ggarrange(f_p_sw, f_p_ml, f_p_lr, f_p_st, f_p_np, f_p_reject,  ncol = 2, nrow = 3,
                  legend.grob = gridExtra::gtable_rbind(get_legend(f_p_reject), get_legend(f_p_sw)))
-Cairo::CairoTIFF("data/f_p.tiff", width = 900, height = 700)
+Cairo::CairoTIFF("data/f_p.tiff", width = 900*3.5*2, height = 700*3.5*2, res = 310*2)
 f_p
 dev.off()
-Cairo::CairoPNG("data/f_p.png", width = 900, height = 700)
+Cairo::CairoPNG("data/f_p.png", width = 900*3.5*2, height = 700*3.5*2, res = 310*2)
 f_p
 dev.off()
 
@@ -139,10 +139,10 @@ f_p_reject <- adestr:::plot_rejection_regions(
   Normal(two_armed = FALSE), designgs, 0, 1, subdivisions = 200L)
 f_p <- ggarrange(f_p_sw, f_p_ml, f_p_lr, f_p_st, f_p_np, f_p_reject,  ncol = 2, nrow = 3,
                  legend.grob = gridExtra::gtable_rbind(get_legend(f_p_reject), get_legend(f_p_sw)))
-Cairo::CairoTIFF("data/f_p_gs.tiff", width = 900, height = 700)
+Cairo::CairoTIFF("data/f_p_gs.tiff", width = 900*3.5*2, height = 700*3.5*2, res = 310*2)
 f_p
 dev.off()
-Cairo::CairoPNG("data/f_p_gs.png", width = 900, height = 700)
+Cairo::CairoPNG("data/f_p_gs.png", width = 900*3.5*2, height = 700*3.5*2, res = 310*2)
 f_p
 dev.off()
 
