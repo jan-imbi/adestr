@@ -1,14 +1,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# adestr <a href='https://github.com/jan-imbi/adestr'><img src='man/figures/sticker.png' align="right" height="100" /></a>
+# adestr <a href='https://github.com/jan-imbi/adestr'><img src='man/figures/sticker.png' align="right" height="80" /></a>
 
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/jan-imbi/adestr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jan-imbi/adestr/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/jan-imbi/adestr/branch/master/graph/badge.svg?token=ORYWTYOZPT)](https://app.codecov.io/gh/jan-imbi/adestr?branch=master)
-[![License](https://img.shields.io/badge/license-MIT-blue)](https://github.com/jan-imbi/adestr/blob/master/LICENSE.md)
+[![License](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://github.com/jan-imbi/adestr/blob/master/LICENSE.md)
 <!-- badges: end -->
 
 This package implements methods to evaluate the performance
@@ -47,7 +47,6 @@ load `adestr`:
 
 ``` r
 library(adestr)
-#> Loading required package: adoptr
 ```
 
 Then, you can evaluate the performance of an estimator like this:
@@ -67,10 +66,10 @@ evaluate_estimator(
 #> Assumed sigma:                                                                 1
 #> Assumed mu:                                                          0.0 0.3 0.6
 #> Results:
-#>  Expectation:                                -0.03523827  0.28169661  0.63556746
-#>  Bias:                                       -0.03523827 -0.01830339  0.03556746
-#>  Variance:                                      0.05558910 0.07330464 0.06591361
-#>  MSE:                                           0.05683084 0.07363966 0.06717865
+#>  Expectation:                                   -0.0352411  0.2816994  0.6355803
+#>  Bias:                                       -0.03524110 -0.01830056  0.03558030
+#>  Variance:                                      0.05558372 0.07330105 0.06590990
+#>  MSE:                                           0.05682565 0.07363596 0.06717585
 
 evaluate_estimator(
  score = MSE(),
@@ -111,7 +110,7 @@ analyze(
 #> Observed n1 (total)                                                           56
 #> Z1                                                                          1.75
 #> Interim decision:                                       continue to second stage
-#> Calculated n2(Z1) (per group)                                                 23
+#> Calculated n2(Z1) (per group)                                           23.49151
 #> Calculated c2(Z1)                                                           1.14
 #> Observed n2 (group 1)                                                         23
 #> Observed n2 (group 2)                                                         23
@@ -123,9 +122,9 @@ analyze(
 #>  Sample mean:                                                          0.5389012
 #>  Pseudo Rao-Blackwellized:                                             0.3632916
 #>  Median unbiased (LR test ordering):                                   0.5069941
-#>  Bias reduced MLE (iterations=1):                                      0.5253743
-#>  SWCF ordering CI:                                       [0.06264641, 0.7431231]
-#>  LR test ordering CI:                                       [0.2504091, 0.81829]
+#>  Bias reduced MLE (iterations=1):                                      0.5253942
+#>  SWCF ordering CI:                                       [0.06264641, 0.7429735]
+#>  LR test ordering CI:                                       [0.2509094, 0.81829]
 #>  SWCF ordering p-value:                                               0.01097483
 #>  LR test ordering p-value:                                          6.653031e-05
 ```
