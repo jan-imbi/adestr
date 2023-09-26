@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/jan-imbi/adestr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jan-imbi/adestr/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/jan-imbi/adestr/branch/master/graph/badge.svg?token=ORYWTYOZPT)](https://app.codecov.io/gh/jan-imbi/adestr?branch=master)
-[![License](https://img.shields.io/badge/license-MIT-blue)](https://github.com/jan-imbi/adestr/blob/master/LICENSE.md)
+[![License](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://github.com/jan-imbi/adestr/blob/master/LICENSE.md)
 <!-- badges: end -->
 
 
