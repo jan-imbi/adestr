@@ -69,7 +69,41 @@ under the assumption of known variance.</p>
 <dd><p>(logical) determines whether one or two-armed trials are assumed.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
 
+<p>an object of class <code>Normal</code>. This object encodes the distributional
+assumptions of the data for usage in the functions
+<code><a href="evaluate_estimator.html">evaluate_estimator</a></code> and <code><a href="analyze.html">analyze</a></code>.</p>
+    </div>
+
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  score <span class="op">=</span> <span class="fu"><a href="EstimatorScore-class.html">MSE</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  estimator <span class="op">=</span> <span class="fu"><a href="PointEstimator-class.html">SampleMean</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data_distribution <span class="op">=</span> <span class="fu">Normal</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  design <span class="op">=</span> <span class="fu"><a href="get_example_design.html">get_example_design</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.3</span>, <span class="fl">0.6</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  sigma <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  exact <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Design:                               TwoStageDesign&lt;n1=28;0.8&lt;=x1&lt;=2.3:n2=9-40&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data Distribution:                                          Normal&lt;single-armed&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Estimator:                                                           Sample mean</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Assumed sigma:                                                                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Assumed mu:                                                          0.0 0.3 0.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Expectation:                                -0.02491922  0.30567290  0.62041636</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Bias:                                    -0.024919220  0.005672903  0.020416356</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Variance:                                      0.02779122 0.03777824 0.02790974</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  MSE:                                           0.02841219 0.03781042 0.02832657</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
