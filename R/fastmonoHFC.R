@@ -62,6 +62,7 @@ fastmonoH.FC_function <- function(x, y=NULL, ties = mean, extrapol = c("linear",
   dx <- x[-1L] - x[-nx]
   Sx <- dy/dx
   m <- c(Sx[1L], (Sx[-1L] + Sx[-n1])/2, Sx[n1])
+  browser()
   m <- .Call(MymonoFC_m, m, Sx, PACKAGE = "adestr")
   p0 <- y[-length(y)]
   p1 <- y[-1L]

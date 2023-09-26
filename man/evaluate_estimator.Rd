@@ -60,7 +60,10 @@ with the full sampling distribution in a two-armed trial.}
 \item{conditional_integral}{treat integral as a conditional integral.}
 }
 \value{
-\code{EstimatorScoreResult} object containing the performance characteristics of the estimator.
+an object of class \code{EstimatorScoreResult}
+containing the values of the evaluated \code{\link{EstimatorScore}} and
+information about the setting for which they were calculated
+(e.g. the \code{estimator}, \code{data_distribution}, \code{design}, \code{mu}, and \code{sigma}).
 }
 \description{
 This function evaluates an \code{\link{EstimatorScore}} for a \code{\link{PointEstimator}}

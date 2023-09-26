@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper_functions.R
 \name{get_statistics_from_paper}
 \alias{get_statistics_from_paper}
-\title{Generate a list of estimators and p-values to use in examples}
+\title{Generate the list of estimators and p-values that were used in the paper}
 \usage{
 get_statistics_from_paper(
   point_estimators = TRUE,
@@ -18,10 +18,11 @@ get_statistics_from_paper(
 \item{p_values}{logical indicating whether p-values should be included in output list}
 }
 \value{
-a list of estimators and pvalues.
+a list of \code{\link{PointEstimator}}s, \code{\link{IntervalEstimator}}s and
+\code{\link{PValue}}.
 }
 \description{
-Generate a list of estimators and p-values to use in examples
+Generate the list of estimators and p-values that were used in the paper
 }
 \examples{
 set.seed(123)

@@ -65,6 +65,21 @@ setClass("Normal", contains = "DataDistribution")
 #' @param two_armed (logical) determines whether one or two-armed trials are assumed.
 #'
 #' @export
+#' @returns an object of class \code{Normal}. This object encodes the distributional
+#' assumptions of the data for usage in the functions
+#' \code{\link{evaluate_estimator}} and \code{\link{analyze}}.
+#' @examples
+#' evaluate_estimator(
+#'   score = MSE(),
+#'   estimator = SampleMean(),
+#'   data_distribution = Normal(FALSE),
+#'   design = get_example_design(),
+#'   mu = c(0, 0.3, 0.6),
+#'   sigma = 1,
+#'   exact = FALSE
+#' )
+#'
+#'
 Normal <- function(two_armed = TRUE) new("Normal", two_armed = two_armed)
 setClass("Student", contains = "DataDistribution")
 
@@ -76,8 +91,22 @@ setClass("Student", contains = "DataDistribution")
 #' under the assumption of known variance.
 #'
 #' @param two_armed (logical) determines whether one or two-armed trials are assumed.
+#' @returns an object of class \code{Student}. This object encodes the distributional
+#' assumptions of the data for usage in the functions
+#' \code{\link{evaluate_estimator}} and \code{\link{analyze}}.
 #'
 #' @export
+#' @examples
+#' evaluate_estimator(
+#'   score = MSE(),
+#'   estimator = SampleMean(),
+#'   data_distribution = Student(FALSE),
+#'   design = get_example_design(),
+#'   mu = c(0, 0.3, 0.6),
+#'   sigma = 1,
+#'   exact = FALSE
+#' )
+#'
 Student <- function(two_armed = TRUE) new("Student", two_armed = two_armed)
 n1 <- function(design, round = FALSE) if (round) round(design@n1) else design@n1
 ### end of remove ###

@@ -12,7 +12,9 @@ UniformPrior(min = -1, max = 1)
 \item{max}{maximum of support interval.}
 }
 \value{
-An object of class \code{UniformPrior}.
+an object of class \code{UniformPrior}. This object can be supplied
+as the argument \code{mu} of the \code{\link{evaluate_estimator}} function
+to calculate performance scores weighted by a prior.
 }
 \description{
 Uniform prior distribution for the parameter mu

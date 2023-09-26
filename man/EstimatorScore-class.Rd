@@ -43,7 +43,8 @@ Centrality(interval = NULL)
 estimator should be evaluated.}
 }
 \value{
-an \code{EstimatorScore} object.
+an object of class \code{EstimatorScore}. This class signals that
+an object can be used with the \code{\link{evaluate_estimator}} function.
 }
 \description{
 These classes encode various metrics which can be used to evaluate

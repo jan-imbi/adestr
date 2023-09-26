@@ -250,10 +250,8 @@ setMethod("toTeX", signature("NeymanPearsonOrderingPValue"),
             str
           })
 
-#' @export
-format.EstimatorScoreResultList <- function(x, ...) rep("<EstimatorScoreResult>", length(x))
 
-#' @export
+format.EstimatorScoreResultList <- function(x, ...) rep("<EstimatorScoreResult>", length(x))
 `[.EstimatorScoreResultList` <- function(x, i){
   class(x) <- class(x)[class(x)!="EstimatorScoreResultList"]
   x <- x[i]

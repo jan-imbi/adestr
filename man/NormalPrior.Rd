@@ -12,7 +12,9 @@ NormalPrior(mu = 0, sigma = 1)
 \item{sigma}{standard deviation of the prior distribution.}
 }
 \value{
-An object of class \code{NormalPrior}.
+an object of class \code{NormalPrior}. This object can be supplied
+as the argument \code{mu} of the \code{\link{evaluate_estimator}} function
+to calculate performance scores weighted by a prior.
 }
 \description{
 Normal prior distribution for the parameter mu

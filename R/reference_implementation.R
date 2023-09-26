@@ -19,25 +19,19 @@
   x2 <- .z_to_x(z = z2, n = n2, mu0 = mu0, sigma = sigma)
   (n1 * x1 + n2 * x2) / (n1 + n2)
 }
-.n2_extrapol <- function(design, x1) {
+.n2_extrapol <- function(design, z1) {
   if (length(design@n2_pivots)>1){
-    h <- (design@c1e - design@c1f) / 2
-    return(stats::splinefun(
-      h * design@x1_norm_pivots + (h + design@c1f),
-      design@n2_pivots,
-      method = "monoH.FC"
-    )(x1))
+    z_interval_length <- design@c1e - design@c1f
+    z_trafo <- design@c1f + z_interval_length/2 * (1 + design@x1_norm_pivots)
+    return(stats::splinefun(z_trafo, design@n2_pivots, method = "monoH.FC")(z1))
   } else{
     return(design@n2_pivots)
   }
 }
-.c2_extrapol <- function(design, x1) {
-  h <- (design@c1e - design@c1f) / 2
-  return(stats::splinefun(
-    h * design@x1_norm_pivots + (h + design@c1f),
-    design@c2_pivots,
-    method = "monoH.FC"
-  )(x1))
+.c2_extrapol <- function(design, z1) {
+  z_interval_length <- design@c1e - design@c1f
+  z_trafo <- design@c1f + z_interval_length/2 * (1 + design@x1_norm_pivots)
+  return(stats::splinefun(z_trafo, design@c2_pivots, method = "monoH.FC")(z1))
 }
 
 ## The densities for integration.

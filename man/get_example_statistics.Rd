@@ -18,10 +18,43 @@ get_example_statistics(
 \item{p_values}{logical indicating whether p-values should be included in output list}
 }
 \value{
-a list of estimators and pvalues.
+a list of \code{\link{PointEstimator}}s, \code{\link{IntervalEstimator}}s and
+\code{\link{PValue}}.
 }
 \description{
-Generate a list of estimators and p-values to use in examples
+This function generates a list of objects of class \code{\link{PointEstimator}},
+\code{\link{IntervalEstimator}}s, and \code{\link{PValue}}s to use in
+examples of the \code{\link{analyze}} function.
+}
+\details{
+\subsection{Point estimators}{
+
+The following \code{\link{PointEstimator}}s are included:
+\itemize{
+\item \code{\link{SampleMean}}
+\item \code{\link{PseudoRaoBlackwell}}
+\item \code{\link{MedianUnbiasedLikelihoodRatioOrdering}}
+\item \code{\link{BiasReduced}}
+}
+}
+
+\subsection{Confidence intervals}{
+
+The following \code{\link{IntervalEstimator}}s are included:
+\itemize{
+\item \code{\link{StagewiseCombinationFunctionOrderingCI}}
+\item \code{\link{LikelihoodRatioOrderingCI}}
+}
+}
+
+\subsection{P-Values}{
+
+The following \code{\link{PValue}}s are included:
+\itemize{
+\item \code{\link{StagewiseCombinationFunctionOrderingPValue}}
+\item \code{\link{LikelihoodRatioOrderingPValue}}
+}
+}
 }
 \examples{
 set.seed(123)

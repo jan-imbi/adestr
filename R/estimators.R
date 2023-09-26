@@ -14,6 +14,8 @@
 #'
 #'
 #' @param label name of the statistic. Used in printing methods.
+#' @returns An object of class \code{Statistic}. This class signals that
+#' an object can be supplied to the \code{\link{analyze}} function.
 #'
 #' @export
 #' @rdname Statistic-class
@@ -74,7 +76,9 @@ setClass("Estimator", contains = "Statistic")
 #' @param label name of the estimator. Used in printing methods.
 #' @seealso \code{\link{evaluate_estimator}}
 #'
-#' @return an object of class \code{PointEstimator}.
+#' @returns an object of class \code{PointEstimator}. This class signals that an
+#' object can be supplied to the \code{\link{evaluate_estimator}} and the
+#' \code{\link{analyze}} functions.
 #'
 #' @references
 #' \insertAllCited{}
@@ -101,7 +105,8 @@ VirtualPointEstimator <- function() stop("Cannot create instance of class Virtua
 #' @param label name of the p-value. Used in printing methods.
 #' @seealso [plot_p]
 #'
-#' @return An object of class \code{PValue}.
+#' @returns an object of class \code{PValue}. This class signals that an
+#' object can be supplied to the \code{\link{analyze}} function.
 #' @details
 #' The implemented p-values are:
 #' * \code{MLEOrderingPValue()}
@@ -152,7 +157,9 @@ VirtualPValue <- function() stop("Cannot create instance of class VirtualPValue.
 #' @param label name of the estimator. Used in printing methods.
 #' @seealso \code{\link{evaluate_estimator}}
 #'
-#' @return an object of class \code{IntervalEstimator}.
+#' @return an object of class \code{IntervalEstimator}. This class signals that an
+#' object can be supplied to the \code{\link{evaluate_estimator}} and the
+#' \code{\link{analyze}} functions.
 #'
 #' @export
 #' @aliases ConfidenceInterval ConfidenceInterval-class
@@ -206,7 +213,7 @@ VirtualIntervalEstimator <- function() stop("Cannot create instance of class Vir
 #'
 #' @inheritParams evaluate_estimator
 #'
-#' @return a list with the conditional functional representations
+#' @returns a list with the conditional functional representations
 #' (one for each stage where the trial might end) of the estimator or p-value.
 #' @export
 #'

@@ -26,7 +26,7 @@ Results <- setClass("Results", slots = c(data ="data.frame",
 #' \code{\link{PValue}}.
 #' @inheritParams evaluate_estimator
 #'
-#' @return \code{Results} object containing the values of the statistics
+#' @returns \code{Results} object containing the values of the statistics
 #' when applied to data.
 #' @export
 #'

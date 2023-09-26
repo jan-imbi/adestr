@@ -11,7 +11,9 @@ setClass("NormalPrior", contains = "Prior", slots = c(mu = "numeric", sigma = "n
 #' @param mu mean of prior distribution.
 #' @param sigma standard deviation of the prior distribution.
 #'
-#' @return An object of class \code{NormalPrior}.
+#' @returns an object of class \code{NormalPrior}. This object can be supplied
+#' as the argument \code{mu} of the \code{\link{evaluate_estimator}} function
+#' to calculate performance scores weighted by a prior.
 #'
 #' @export
 #'
@@ -29,7 +31,9 @@ setClass("UniformPrior", contains = "Prior", slots = c(min = "numeric", max = "n
 #' @param min minimum of support interval.
 #' @param max maximum of support interval.
 #'
-#' @return An object of class \code{UniformPrior}.
+#' @returns an object of class \code{UniformPrior}. This object can be supplied
+#' as the argument \code{mu} of the \code{\link{evaluate_estimator}} function
+#' to calculate performance scores weighted by a prior.
 #'
 #' @export
 #'

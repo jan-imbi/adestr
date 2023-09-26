@@ -44,7 +44,8 @@ NeymanPearsonOrderingPValue(mu0 = 0, mu1 = 0.4)
 \item{mu1}{expected value of the normal distribution under the null hypothesis.}
 }
 \value{
-An object of class \code{PValue}.
+an object of class \code{PValue}. This class signals that an
+object can be supplied to the \code{\link{analyze}} function.
 }
 \description{
 This is the parent class for all p-values implemented in this package.

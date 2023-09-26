@@ -34,4 +34,9 @@ to calculate \link[adestr:PValue]{p-values}.
 \author{
 \strong{Maintainer}: Jan Meis \email{meis@imbi.uni-heidelberg.de} (\href{https://orcid.org/0000-0001-5407-7220}{ORCID})
 
+Other contributors:
+\itemize{
+  \item Martin Maechler \email{maechler@stat.math.ethz.ch} (\href{https://orcid.org/0000-0002-8685-9910}{ORCID}) (Original author of monoSpl.c (from the 'stats' package).) [copyright holder]
+}
+
 }

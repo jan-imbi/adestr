@@ -13,7 +13,10 @@ two-armed trials.}
 \item{label}{(optional) label to be assigned to the design.}
 }
 \value{
-an exmplary design of class \code{TwoStageDesign}.
+an exemplary design of class \code{TwoStageDesign}. This object
+contains information about the sample size recalculation rule \code{n2}, the
+futility and efficacy boundaries \code{c1f} and \code{c1e} and the
+second-stage rejection boundary \code{c2}.
 }
 \description{
 The design was optimized to minimize the expected sample size

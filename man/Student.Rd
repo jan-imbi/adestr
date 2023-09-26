@@ -9,9 +9,26 @@ Student(two_armed = TRUE)
 \arguments{
 \item{two_armed}{(logical) determines whether one or two-armed trials are assumed.}
 }
+\value{
+an object of class \code{Student}. This object encodes the distributional
+assumptions of the data for usage in the functions
+\code{\link{evaluate_estimator}} and \code{\link{analyze}}.
+}
 \description{
 This function creates an object representing the distributional assumptions
 of the data: normally distributed outcomes sample from a trial with
 one or two arms (depending on the value of the parameter \code{two_armed}),
 under the assumption of known variance.
+}
+\examples{
+evaluate_estimator(
+  score = MSE(),
+  estimator = SampleMean(),
+  data_distribution = Student(FALSE),
+  design = get_example_design(),
+  mu = c(0, 0.3, 0.6),
+  sigma = 1,
+  exact = FALSE
+)
+
 }

@@ -10,6 +10,10 @@
 \arguments{
 \item{label}{name of the statistic. Used in printing methods.}
 }
+\value{
+An object of class \code{Statistic}. This class signals that
+an object can be supplied to the \code{\link{analyze}} function.
+}
 \description{
 The \code{\link{Statistic}} class is a parent class for the classes
 \code{\link{Estimator}} and \code{\link{PValue}}. The \code{\link{Estimator}} class is a parent

@@ -78,7 +78,9 @@ MedianUnbiasedNeymanPearsonOrdering(mu0 = 0, mu1 = 0.4)
 \item{mu1}{expected value of the normal distribution under the null hypothesis.}
 }
 \value{
-an object of class \code{PointEstimator}.
+an object of class \code{PointEstimator}. This class signals that an
+object can be supplied to the \code{\link{evaluate_estimator}} and the
+\code{\link{analyze}} functions.
 }
 \description{
 This is the parent class for all point estimators implemented in this package.

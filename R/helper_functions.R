@@ -106,7 +106,11 @@ get_overall_svar_twoarm <- function(smean1, smean1T, svar1, smean2, smean2T, sva
 #' two-armed trials.
 #' @param label (optional) label to be assigned to the design.
 #'
-#' @return an exmplary design of class \code{TwoStageDesign}.
+#' @returns an exemplary design of class \code{TwoStageDesign}. This object
+#' contains information about the sample size recalculation rule \code{n2}, the
+#' futility and efficacy boundaries \code{c1f} and \code{c1e} and the
+#' second-stage rejection boundary \code{c2}.
+#'
 #' @export
 #'
 #' @examples
@@ -170,11 +174,35 @@ get_example_design <- function(two_armed = FALSE, label = NULL) {
 }
 #' Generate a list of estimators and p-values to use in examples
 #'
+#' This function generates a list of objects of class \code{\link{PointEstimator}},
+#' \code{\link{IntervalEstimator}}s, and \code{\link{PValue}}s to use in
+#' examples of the \code{\link{analyze}} function.
+#'
+#' @details
+#' ## Point estimators
+#' The following \code{\link{PointEstimator}}s are included:
+#'  * \code{\link{SampleMean}}
+#'  * \code{\link{PseudoRaoBlackwell}}
+#'  * \code{\link{MedianUnbiasedLikelihoodRatioOrdering}}
+#'  * \code{\link{BiasReduced}}
+#'
+#' ## Confidence intervals
+#' The following \code{\link{IntervalEstimator}}s are included:
+#'  * \code{\link{StagewiseCombinationFunctionOrderingCI}}
+#'  * \code{\link{LikelihoodRatioOrderingCI}}
+#'
+#' ## P-Values
+#' The following \code{\link{PValue}}s are included:
+#'  * \code{\link{StagewiseCombinationFunctionOrderingPValue}}
+#'  * \code{\link{LikelihoodRatioOrderingPValue}}
+#' @md
+#'
 #' @param point_estimators logical indicating whether point estimators should be included in output list
 #' @param interval_estimators logical indicating whether interval estimators should be included in output list
 #' @param p_values logical indicating whether p-values should be included in output list
 #'
-#' @return a list of estimators and pvalues.
+#' @returns a list of \code{\link{PointEstimator}}s, \code{\link{IntervalEstimator}}s and
+#' \code{\link{PValue}}.
 #' @export
 #'
 #' @inherit analyze examples
@@ -194,14 +222,14 @@ get_example_statistics <- function(point_estimators = TRUE,
   return(ret)
 }
 
-#' Generate a list of estimators and p-values to use in examples
+#' Generate the list of estimators and p-values that were used in the paper
 #'
 #' @param point_estimators logical indicating whether point estimators should be included in output list
 #' @param interval_estimators logical indicating whether interval estimators should be included in output list
 #' @param p_values logical indicating whether p-values should be included in output list
 #'
-#' @return a list of estimators and pvalues.
-#' @export
+#' @returns a list of \code{\link{PointEstimator}}s, \code{\link{IntervalEstimator}}s and
+#' \code{\link{PValue}}.
 #'
 #' @inherit analyze examples
 get_statistics_from_paper <- function(point_estimators = TRUE,

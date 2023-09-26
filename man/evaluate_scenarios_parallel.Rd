@@ -57,7 +57,7 @@ evaluate_scenarios_parallel(
 \item{conditional_integral_lists}{a list of lists of `conditional_integral_lists` parameters.}
 }
 \value{
-list of data.frames containing the results for the respective scenarios.
+a list of data.frames containing the results for the respective scenarios.
 }
 \description{
 This function takes a list of lists of scores, a list of lists of estimators,

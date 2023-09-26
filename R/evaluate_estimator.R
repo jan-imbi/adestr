@@ -32,7 +32,8 @@
 #' @md
 #' @slot label name of the performance score. Used in printing methods.
 #'
-#' @return an \code{EstimatorScore} object.
+#' @returns an object of class \code{EstimatorScore}. This class signals that
+#' an object can be used with the \code{\link{evaluate_estimator}} function.
 #' @export
 #' @aliases EstimatorScore
 #' @seealso \code{\link{evaluate_estimator}}
@@ -132,7 +133,11 @@ setMethod("c", signature("EstimatorScoreResultList"), definition =
 #' @param early_efficacy_part include early efficacy part of integral.
 #' @param conditional_integral treat integral as a conditional integral.
 #'
-#' @return \code{EstimatorScoreResult} object containing the performance characteristics of the estimator.
+#' @return an object of class \code{EstimatorScoreResult}
+#' containing the values of the evaluated \code{\link{EstimatorScore}} and
+#' information about the setting for which they were calculated
+#' (e.g. the \code{estimator}, \code{data_distribution}, \code{design}, \code{mu}, and \code{sigma}).
+#'
 #' @seealso [EstimatorScore]
 #' @seealso [PointEstimator] [IntervalEstimator]
 #' @seealso \link[adestr:plot,EstimatorScoreResultList-method]{plot}
@@ -1021,7 +1026,7 @@ setMethod("evaluate_estimator", signature("Centrality", "PointEstimator"),
 #' @param early_efficacy_part_lists a list of lists of `early_efficacy_part_lists` parameters.
 #' @param conditional_integral_lists a list of lists of `conditional_integral_lists` parameters.
 #'
-#' @return list of data.frames containing the results for the respective scenarios.
+#' @returns a list of data.frames containing the results for the respective scenarios.
 #' @export
 #'
 #' @examples
