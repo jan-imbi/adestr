@@ -15,8 +15,8 @@ Description:
 License: GPL (>= 2)
 Copyright:
   This package contains a modified version of the monotonic spline functions from the
-  'stats' package. Specifically, the code is containted in the files R/fastmonoHFC.R,
-  src/fastmonoHFC.c, modreg.h and monoSpl.c. The R Core team and Martin Maechler 
+  'stats' package. Specifically, the code is containted in the files 'R/fastmonoHFC.R',
+  'src/fastmonoHFC.c', 'src/modreg.h' and 'src/monoSpl.c'. The R Core team and Martin Maechler 
   are the copyright holders of the original code.
   Jan Meis is the copyright holder of everything else.
 Encoding: UTF-8
