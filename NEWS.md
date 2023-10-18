@@ -1,3 +1,7 @@
+# adestr 0.5.1
+
+* Replaced raster graphics in vignettes with vector graphics.
+
 # adestr 0.5.0
 
 * First CRAN submission.

@@ -70,7 +70,7 @@ to investigate the distributional properties of an estimator.
 In the following, the MSE of the sample mean vs. a weighted sample mean with fixed weights
 will be plotted.
 
-```{r}
+```{r, fig.width=7.2, fig.height=4, dev="svg"}
 mse_mle <- evaluate_estimator(
   score = MSE(),
   estimator = SampleMean(),
