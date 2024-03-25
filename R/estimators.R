@@ -1265,8 +1265,8 @@ setMethod("get_stagewise_estimators", signature("MLEOrderingPValue", "Normal"),
                    design,
                    sigma,
                    exact) {
-            g1 <- Vectorize(\(design, smean1, n1, sigma, two_armed, ...) p1_ml(design, smean1, n1, mu = 0, sigma, two_armed, ...), c("smean1"))
-            g2 <- Vectorize(\(design, smean1, smean2, n1, n2, sigma, two_armed, ...) p2_ml(design, smean1, smean2, n1, n2, mu = 0, sigma, two_armed, ...), c("smean1", "smean2", "n2"))
+            g1 <- Vectorize(\(design, smean1, n1, mu, sigma, two_armed, ...) p1_ml(design, smean1, n1, mu = 0, sigma, two_armed, ...), c("smean1"))
+            g2 <- Vectorize(\(design, smean1, smean2, n1, n2, mu, sigma, two_armed, ...) p2_ml(design, smean1, smean2, n1, n2, mu = 0, sigma, two_armed, ...), c("smean1", "smean2", "n2"))
             list(g1 = g1,
                  g2 = g2)
           })
@@ -1282,8 +1282,8 @@ setMethod("get_stagewise_estimators", signature("LikelihoodRatioOrderingPValue",
                    design,
                    sigma,
                    exact) {
-            g1 <- Vectorize(\(design, smean1, n1, sigma, two_armed, ...) p1_lr(design, smean1, n1, mu = 0, sigma, two_armed, ...), c("smean1"))
-            g2 <- Vectorize(\(design, smean1, smean2, n1, n2, sigma, two_armed, ...) p2_lr(design, smean1, smean2, n1, n2, mu = 0, sigma, two_armed, ...), c("smean1", "smean2", "n2"))
+            g1 <- Vectorize(\(design, smean1, n1, mu, sigma, two_armed, ...) p1_lr(design, smean1, n1, mu = 0, sigma, two_armed, ...), c("smean1"))
+            g2 <- Vectorize(\(design, smean1, smean2, n1, n2, mu, sigma, two_armed, ...) p2_lr(design, smean1, smean2, n1, n2, mu = 0, sigma, two_armed, ...), c("smean1", "smean2", "n2"))
             list(g1 = g1,
                  g2 = g2)
           })
@@ -1299,8 +1299,8 @@ setMethod("get_stagewise_estimators", signature("ScoreTestOrderingPValue", "Norm
                    design,
                    sigma,
                    exact) {
-            g1 <- Vectorize(\(smean1, n1, sigma, two_armed, ...) p1_st(smean1, n1, mu = 0, sigma, two_armed, ...), c("smean1"))
-            g2 <- Vectorize(\(design, smean1, smean2, n1, n2, sigma, two_armed, ...) p2_st(design, smean1, smean2, n1, n2, mu = 0, sigma, two_armed, ...), c("smean1", "smean2", "n2"))
+            g1 <- Vectorize(\(smean1, n1, mu, sigma, two_armed, ...) p1_st(smean1, n1, mu = 0, sigma, two_armed, ...), c("smean1"))
+            g2 <- Vectorize(\(design, smean1, smean2, n1, n2, mu, sigma, two_armed, ...) p2_st(design, smean1, smean2, n1, n2, mu = 0, sigma, two_armed, ...), c("smean1", "smean2", "n2"))
             list(g1 = g1,
                  g2 = g2)
           })
@@ -1316,8 +1316,8 @@ setMethod("get_stagewise_estimators", signature("StagewiseCombinationFunctionOrd
                    design,
                    sigma,
                    exact) {
-            g1 <- Vectorize(\(smean1, n1, sigma, two_armed, ...) p1_sw(smean1, n1, mu = 0, sigma, two_armed, ...), c("smean1"))
-            g2 <- Vectorize(\(design, smean1, smean2, n1, n2, sigma, two_armed, ...) p2_sw(design, smean1, smean2, n1, n2, mu = 0, sigma, two_armed, ...), c("smean1", "smean2", "n2"))
+            g1 <- Vectorize(\(smean1, n1, mu, sigma, two_armed, ...) p1_sw(smean1, n1, mu = 0, sigma, two_armed, ...), c("smean1"))
+            g2 <- Vectorize(\(design, smean1, smean2, n1, n2, mu, sigma, two_armed, ...) p2_sw(design, smean1, smean2, n1, n2, mu = 0, sigma, two_armed, ...), c("smean1", "smean2", "n2"))
             list(g1 = g1,
                  g2 = g2)
           })
@@ -1335,8 +1335,27 @@ setMethod("get_stagewise_estimators", signature("NeymanPearsonOrderingPValue", "
                    design,
                    sigma,
                    exact) {
-            g1 <- Vectorize(\(design, smean1, n1, sigma, two_armed, ...) p1_np(design, smean1, n1, mu = 0, mu0=estimator@mu0, mu1=estimator@mu1, sigma, two_armed, ...), c("smean1"))
-            g2 <- Vectorize(\(design, smean1, smean2, n1, n2, sigma, two_armed, ...) p2_np(design, smean1, smean2, n1, n2, mu = 0, mu0=estimator@mu0, mu1=estimator@mu1, sigma, two_armed, ...), c("smean1", "smean2", "n2"))
+            g1 <- Vectorize(\(design, smean1, n1, mu, sigma, two_armed, ...) p1_np(design, smean1, n1, mu = 0, mu0=estimator@mu0, mu1=estimator@mu1, sigma, two_armed, ...), c("smean1"))
+            g2 <- Vectorize(\(design, smean1, smean2, n1, n2, mu, sigma, two_armed, ...) p2_np(design, smean1, smean2, n1, n2, mu = 0, mu0=estimator@mu0, mu1=estimator@mu1, sigma, two_armed, ...), c("smean1", "smean2", "n2"))
+            list(g1 = g1,
+                 g2 = g2)
+          })
+setClass("NaivePValue", contains = "VirtualPValue")
+#' @rdname PValue-class
+#' @export
+NaivePValue <- function() new("NaivePValue", label = "Naive p-value")
+#' @rdname get_stagewise_estimators
+setMethod("get_stagewise_estimators", signature("NaivePValue", "Normal"),
+          function(estimator,
+                   data_distribution,
+                   use_full_twoarm_sampling_distribution,
+                   design,
+                   sigma,
+                   exact) {
+            g1 <- Vectorize(\(smean1, n1, mu, sigma, two_armed, ...) pnorm(smean_to_z(smean1, n1, sigma, two_armed), lower.tail=FALSE), c("smean1"))
+            g2 <- Vectorize(\(design, smean1, smean2, n1, n2, mu, sigma, two_armed, ...) pnorm(smean_to_z(smeans_to_smean(smean1 = smean1, smean2 = smean2, n1 = n1, n2 = n2),
+                                                                                                          n = n1 + n2, sigma = sigma, two_armed = two_armed),
+                                                                                               lower.tail=FALSE), c("smean1", "smean2", "n2"))
             list(g1 = g1,
                  g2 = g2)
           })

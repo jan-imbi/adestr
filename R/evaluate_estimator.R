@@ -42,7 +42,7 @@
 setClass("EstimatorScore", slots = c(label = "character"))
 setClass("PointEstimatorScore", contains = "EstimatorScore")
 setClass("IntervalEstimatorScore", contains = "EstimatorScore")
-EstimatorScoreResult <- setClass("EstimatorScoreResult", slots = c(score = "list", estimator = "Estimator", data_distribution = "DataDistribution",
+EstimatorScoreResult <- setClass("EstimatorScoreResult", slots = c(score = "list", estimator = "Statistic", data_distribution = "DataDistribution",
                                                                    design = "TwoStageDesign", mu = "ANY", sigma = "numeric",
                                                                    results = "list", integrals = "list"))
 setClass("EstimatorScoreResultList", contains = "list")
@@ -905,6 +905,80 @@ setMethod("evaluate_estimator", signature("TestAgreement", "IntervalEstimator"),
                 z2 <- smean_to_z(smean2, n2, sigma, two_armed)
                 c2 <- c2_extrapol(design, z1)
                 !xor(c2 < z2, 0 < l2(design = design, smean1 = smean1, smean2 = smean2, n1 = n1, n2 = n2, sigma = sigma, two_armed = two_armed, ...))
+              }
+            } else {
+              stop("This data_distribution class is not supported.")
+            }
+            .evaluate_estimator(
+              score,
+              estimator,
+              data_distribution,
+              use_full_twoarm_sampling_distribution,
+              design,
+              generate_g1,
+              generate_g2,
+              true_parameter,
+              mu,
+              sigma,
+              tol,
+              maxEval,
+              absError,
+              exact,
+              early_futility_part,
+              continuation_part,
+              early_efficacy_part,
+              conditional_integral)
+          })
+
+#' @rdname evaluate_estimator-methods
+setMethod("evaluate_estimator", signature("TestAgreement", "PValue"),
+          function(score,
+                   estimator,
+                   data_distribution,
+                   use_full_twoarm_sampling_distribution,
+                   design,
+                   true_parameter,
+                   mu,
+                   sigma,
+                   tol,
+                   maxEval,
+                   absError,
+                   exact,
+                   early_futility_part,
+                   continuation_part,
+                   early_efficacy_part,
+                   conditional_integral) {
+            if (missing(true_parameter))
+              true_parameter <- 0.05
+            design <- TwoStageDesignWithCache(design)
+            stagewise_estimators <- get_stagewise_estimators(estimator = estimator,
+                                                             data_distribution =  data_distribution,
+                                                             use_full_twoarm_sampling_distribution = use_full_twoarm_sampling_distribution,
+                                                             design = design, sigma = sigma, exact = exact)
+            g1 <- stagewise_estimators[[1L]]
+            g2 <- stagewise_estimators[[2L]]
+
+            if (is(data_distribution, "Student")) {
+              generate_g1 = \(tp) \(design, smean1, svar1, n1, two_armed, ...) {
+                t1 <- smean_to_t(smean1, svar1, n1, two_armed)
+                !xor(design@c1e < t1, g1(design = design, smean1 = smean1, svar1 = svar1, n1 = n1, two_armed = two_armed, ...) < true_parameter)
+              }
+              generate_g2 <- \(tp) \(design, smean1, svar1, smean2, svar2, n1, n2, two_armed, ...) {
+                t1 <- smean_to_t(smean1, svar1, n1, two_armed)
+                t2 <- smean_to_t(smean2, svar2, n2, two_armed)
+                c2 <- c2_extrapol(design, t1)
+                !xor(c2 < t2, g2(design = design, smean1 = smean1, svar1 = svar1, smean2 = smean2, svar2 = svar2, n1 = n1, n2 = n2, two_armed = two_armed, ...) < true_parameter )
+              }
+            } else if (is(data_distribution, "Normal")) {
+              generate_g1 = \(tp) \(design, smean1, n1, sigma, two_armed, ...) {
+                z1 <- smean_to_z(smean1, n1, sigma, two_armed)
+                !xor(design@c1e < z1, g1(design = design, smean1 = smean1, n1 = n1, sigma = sigma, two_armed = two_armed, ...) < true_parameter)
+              }
+              generate_g2 <- \(tp) \(design, smean1, smean2, n1, n2, sigma, two_armed, ...) {
+                z1 <- smean_to_z(smean1, n1, sigma, two_armed)
+                z2 <- smean_to_z(smean2, n2, sigma, two_armed)
+                c2 <- c2_extrapol(design, z1)
+                !xor(c2 < z2, g2(design = design, smean1 = smean1, smean2 = smean2, n1 = n1, n2 = n2, sigma = sigma, two_armed = two_armed, ...) < true_parameter)
               }
             } else {
               stop("This data_distribution class is not supported.")
