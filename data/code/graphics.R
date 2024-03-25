@@ -51,13 +51,19 @@ sanitize_vars <- function(x) {
 ### MAIN PAPER ###
 # Design characteristics: Main paper (1-arm Normal)
 f_designs <- adestr:::plot_design(list(designad, designgs), data_distribution = Normal(two_armed = FALSE))
+Cairo::CairoTIFF("data/f_designs.tiff", width = 7*2*310, height = 4*2*310, res = 310*2)
 f_designs
-saveRDS(f_designs, "data/f_designs.rds")
+dev.off()
+ggsave("data/f_design.eps" , f_designs, device = "eps", width = 7, height = 4)
+
 
 # Sample mean: Normal (one-armed)
 f_smean <- adestr:::plot_sample_mean(Normal(two_armed = FALSE), designad, mu = seq(-.3, .8, .1), sigma = 1,
                                      combine_components = TRUE, exact = FALSE) + theme(text = element_text(size=9))
+Cairo::CairoTIFF("data/f_smean.tiff", width = 7*2*310, height = 4*2*310, res = 310*2)
 f_smean
+dev.off()
+ggsave("data/f_smean.eps" , f_smean, device = "eps", width = 7, height = 4)
 saveRDS(f_smean, "data/f_smean.rds")
 
 # Estimator characteristics
@@ -80,7 +86,10 @@ f_est_bias <- ggplot(data = tab_est_filter, aes(x = mu, y=Bias, col = Estimator)
   theme(text = element_text(size=9)) +
   guides(color=guide_legend(ncol=3))
 f_est <- ggarrange(f_est_mse, f_est_bias, common.legend = TRUE)
+Cairo::CairoTIFF("data/f_est.tiff", width = 7*2*310, height = 4*2*310, res = 310*2)
 f_est
+dev.off()
+ggsave("data/f_est.eps" , f_est, device = "eps", width = 7, height = 4)
 saveRDS(f_est, "data/f_est.rds")
 
 # Confidence interval characteristics
@@ -106,7 +115,10 @@ f_ci_test <- ggplot(data = tab_ci_filter, aes(x = mu, y=`Agreement with test dec
   scale_x_continuous(TeX("$\\mu$")) +
   theme_pubr()
 f_ci <- ggarrange(f_ci_cov, f_ci_width, f_ci_test, common.legend = TRUE, nrow=3)
+Cairo::CairoTIFF("data/f_ci.tiff", width = 5.6*2*310, height = 7.6*2*310, res = 310*2)
 f_ci
+dev.off()
+ggsave("data/f_ci.eps" , f_ci, device = "eps", width = 5.6, height = 7.6)
 saveRDS(f_ci, "data/f_ci.rds")
 
 # P-values / stage-wise ordering representation for an adaptive design
@@ -122,6 +134,7 @@ f_p <- ggarrange(f_p_sw, f_p_ml, f_p_lr, f_p_st, f_p_np, f_p_reject,  ncol = 2, 
                  legend.grob = gridExtra::gtable_rbind(get_legend(f_p_reject), get_legend(f_p_sw)))
 Cairo::CairoTIFF("data/f_p.tiff", width = 900*3.5*2, height = 700*3.5*2, res = 310*2)
 f_p
+ggsave("data/f_p.eps", f_p, width = 900*3.5/310, height = 700*3.5/310)
 dev.off()
 Cairo::CairoPNG("data/f_p.png", width = 900*3.5*2, height = 700*3.5*2, res = 310*2)
 f_p
