@@ -315,6 +315,16 @@ and one conditional on continuation to the second stage.</p>
 <span>  exact <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S4 method for NaivePValue,Normal</span></span>
+<span><span class="fu">get_stagewise_estimators</span><span class="op">(</span></span>
+<span>  <span class="va">estimator</span>,</span>
+<span>  <span class="va">data_distribution</span>,</span>
+<span>  use_full_twoarm_sampling_distribution <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">design</span>,</span>
+<span>  <span class="va">sigma</span>,</span>
+<span>  exact <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># S4 method for StagewiseCombinationFunctionOrderingCI,Normal</span></span>
 <span><span class="fu">get_stagewise_estimators</span><span class="op">(</span></span>
 <span>  <span class="va">estimator</span>,</span>
@@ -524,14 +534,14 @@ with the full sampling distribution in a two-armed trial.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $g1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (smean1, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> smean1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x563f2d227320&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x563f29cd3f88&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x564a1b63d968&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x564a180493c8&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $g2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (smean1, smean2, n1, n2, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (n1 * smean1 + n2 * smean2)/(n1 + n2)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x563f2d226fd8&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x563f29cd3f88&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x564a1b63d620&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x564a180493c8&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

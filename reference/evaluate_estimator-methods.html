@@ -318,6 +318,28 @@ or and <code><a href="IntervalEstimator-class.html">IntervalEstimator</a></code>
 <span>  conditional_integral <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S4 method for TestAgreement,PValue</span></span>
+<span><span class="fu"><a href="evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span>  <span class="va">score</span>,</span>
+<span>  <span class="va">estimator</span>,</span>
+<span>  <span class="va">data_distribution</span>,</span>
+<span>  use_full_twoarm_sampling_distribution <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">design</span>,</span>
+<span>  true_parameter <span class="op">=</span> <span class="va">mu</span>,</span>
+<span>  <span class="va">mu</span>,</span>
+<span>  <span class="va">sigma</span>,</span>
+<span>  tol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"adestr_tol_outer"</span>, default <span class="op">=</span> <span class="va">.adestr_options</span><span class="op">[[</span><span class="st">"adestr_tol_outer"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>  maxEval <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"adestr_maxEval_outer"</span>, default <span class="op">=</span></span>
+<span>    <span class="va">.adestr_options</span><span class="op">[[</span><span class="st">"adestr_maxEval_outer"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>  absError <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"adestr_absError_outer"</span>, default <span class="op">=</span></span>
+<span>    <span class="va">.adestr_options</span><span class="op">[[</span><span class="st">"adestr_absError_outer"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>  exact <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  early_futility_part <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  continuation_part <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  early_efficacy_part <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  conditional_integral <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># S4 method for Centrality,PointEstimator</span></span>
 <span><span class="fu"><a href="evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
 <span>  <span class="va">score</span>,</span>
