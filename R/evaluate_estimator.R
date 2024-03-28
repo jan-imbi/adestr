@@ -949,7 +949,7 @@ setMethod("evaluate_estimator", signature("TestAgreement", "PValue"),
                    early_efficacy_part,
                    conditional_integral) {
             if (missing(true_parameter))
-              true_parameter <- 0.05
+              true_parameter <- 0.025
             design <- TwoStageDesignWithCache(design)
             stagewise_estimators <- get_stagewise_estimators(estimator = estimator,
                                                              data_distribution =  data_distribution,
@@ -967,7 +967,7 @@ setMethod("evaluate_estimator", signature("TestAgreement", "PValue"),
                 t1 <- smean_to_t(smean1, svar1, n1, two_armed)
                 t2 <- smean_to_t(smean2, svar2, n2, two_armed)
                 c2 <- c2_extrapol(design, t1)
-                !xor(c2 < t2, g2(design = design, smean1 = smean1, svar1 = svar1, smean2 = smean2, svar2 = svar2, n1 = n1, n2 = n2, two_armed = two_armed, ...) < true_parameter )
+                !xor(c2 < t2, g2(design = design, smean1 = smean1, svar1 = svar1, smean2 = smean2, svar2 = svar2, n1 = n1, n2 = n2, two_armed = two_armed, ...) < true_parameter)
               }
             } else if (is(data_distribution, "Normal")) {
               generate_g1 = \(tp) \(design, smean1, n1, sigma, two_armed, ...) {
