@@ -14,6 +14,7 @@
 \alias{evaluate_estimator,SoftCoverage,IntervalEstimator-method}
 \alias{evaluate_estimator,Width,IntervalEstimator-method}
 \alias{evaluate_estimator,TestAgreement,IntervalEstimator-method}
+\alias{evaluate_estimator,TestAgreement,PValue-method}
 \alias{evaluate_estimator,Centrality,PointEstimator-method}
 \title{Evaluate performance characteristics of an estimator}
 \usage{
@@ -249,6 +250,27 @@
 )
 
 \S4method{evaluate_estimator}{TestAgreement,IntervalEstimator}(
+  score,
+  estimator,
+  data_distribution,
+  use_full_twoarm_sampling_distribution = FALSE,
+  design,
+  true_parameter = mu,
+  mu,
+  sigma,
+  tol = getOption("adestr_tol_outer", default = .adestr_options[["adestr_tol_outer"]]),
+  maxEval = getOption("adestr_maxEval_outer", default =
+    .adestr_options[["adestr_maxEval_outer"]]),
+  absError = getOption("adestr_absError_outer", default =
+    .adestr_options[["adestr_absError_outer"]]),
+  exact = FALSE,
+  early_futility_part = TRUE,
+  continuation_part = TRUE,
+  early_efficacy_part = TRUE,
+  conditional_integral = FALSE
+)
+
+\S4method{evaluate_estimator}{TestAgreement,PValue}(
   score,
   estimator,
   data_distribution,

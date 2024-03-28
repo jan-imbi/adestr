@@ -10,6 +10,7 @@
 \alias{ScoreTestOrderingPValue}
 \alias{StagewiseCombinationFunctionOrderingPValue}
 \alias{NeymanPearsonOrderingPValue}
+\alias{NaivePValue}
 \title{P-values}
 \usage{
 PValue(g1, g2, label)
@@ -25,6 +26,8 @@ ScoreTestOrderingPValue()
 StagewiseCombinationFunctionOrderingPValue()
 
 NeymanPearsonOrderingPValue(mu0 = 0, mu1 = 0.4)
+
+NaivePValue()
 }
 \arguments{
 \item{g1}{functional representation of the p-value in the early futility and efficacy regions.}

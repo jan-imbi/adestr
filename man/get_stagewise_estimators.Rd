@@ -26,6 +26,7 @@
 \alias{get_stagewise_estimators,ScoreTestOrderingPValue,Normal-method}
 \alias{get_stagewise_estimators,StagewiseCombinationFunctionOrderingPValue,Normal-method}
 \alias{get_stagewise_estimators,NeymanPearsonOrderingPValue,Normal-method}
+\alias{get_stagewise_estimators,NaivePValue,Normal-method}
 \alias{get_stagewise_estimators,StagewiseCombinationFunctionOrderingCI,Normal-method}
 \alias{get_stagewise_estimators,MLEOrderingCI,Normal-method}
 \alias{get_stagewise_estimators,LikelihoodRatioOrderingCI,Normal-method}
@@ -261,6 +262,15 @@ get_stagewise_estimators(
 )
 
 \S4method{get_stagewise_estimators}{NeymanPearsonOrderingPValue,Normal}(
+  estimator,
+  data_distribution,
+  use_full_twoarm_sampling_distribution = FALSE,
+  design,
+  sigma,
+  exact = FALSE
+)
+
+\S4method{get_stagewise_estimators}{NaivePValue,Normal}(
   estimator,
   data_distribution,
   use_full_twoarm_sampling_distribution = FALSE,
