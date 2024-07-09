@@ -15,3 +15,5 @@
 ^.lintr$
 ^vignettes/presentation_onearm$
 ^README\.Rmd$
+^doc$
+^Meta$

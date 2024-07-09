@@ -1,0 +1,17 @@
+citHeader("To cite OptimalGoldstandardDesigns in publications use:")
+
+bibentry(
+bibtype = "Article",
+author = as.person("Jan Meis, Maximilian Pilz, Carolin Herrmann, Björn Bokelmann, Geraldine Rauch, Meinhard Kieser"),
+title = "Point estimation, confidence intervals, and P-values for optimal adaptive two-stage designs with normal endpoints",
+journal = "Statistics in Medicine",
+volume = "43",
+number = "8",
+pages = "1577-1603",
+keywords = "bias, confidence intervals, optimal adaptive designs, P-values, point estimation",
+doi = "10.1002/sim.10020",
+year = {2024},
+  textVersion = paste(
+  "Meis, J, Pilz, M, Herrmann, C, Bokelmann, B, Rauch, G, Kieser, M. Point estimation, confidence intervals, and P-values for optimal adaptive two-stage designs with normal endpoints. Statistics in Medicine. 2024; 43(8): 1577–1603. doi:10.1002/sim.10020"
+  )
+)

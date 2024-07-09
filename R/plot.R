@@ -1,3 +1,4 @@
+#nocov start
 #' Plot performance scores for point and interval estimators
 #'
 #' This function extract the values of mu and the score values and a facet plot with
@@ -457,3 +458,4 @@ plot_design <- function(design, data_distribution = Normal(two_armed = FALSE)){
     labs(color = "Type of design")
   ggarrange(pltn, pltc2, pltcp, ncol=3, common.legend = TRUE)
 }
+#nocov end

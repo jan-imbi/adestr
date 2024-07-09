@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+[![doi](https://img.shields.io/badge/doi-10.1002%2Fsim.10020-blue?link=https%3A%2F%2Fdoi.org%2F10.1002%2Fsim.10020)](https://doi.org/10.1002/sim.10020)
 [![R-CMD-check](https://github.com/jan-imbi/adestr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jan-imbi/adestr/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/jan-imbi/adestr/branch/master/graph/badge.svg?token=ORYWTYOZPT)](https://app.codecov.io/gh/jan-imbi/adestr?branch=master)

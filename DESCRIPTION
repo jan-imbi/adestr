@@ -1,7 +1,7 @@
 Package: adestr
 Type: Package
 Title: Estimation in Optimal Adaptive Two-Stage Designs
-Version: 0.5.1
+Version: 0.5.2
 Authors@R:c(person("Jan", "Meis", role = c("aut", "cre"), email = "meis@imbi.uni-heidelberg.de", comment = c(ORCID = "0000-0001-5407-7220")),
   person("Martin", "Maechler", role = c("cph"), email = "maechler@stat.math.ethz.ch", comment = c(ORCID = "0000-0002-8685-9910", "Original author of monoSpl.c (from the 'stats' package).")))
 Description:
