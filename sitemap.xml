@@ -1,111 +1,39 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/404.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/articles/Introduction.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/index.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/EstimatorScore-class.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/IntervalEstimator-class.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/Normal.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/NormalPrior.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/PValue-class.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/PointEstimator-class.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/Statistic-class.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/Student.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/TwoStageDesign-class.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/TwoStageDesignWithCache.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/UniformPrior.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/adestr.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/analyze.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/c-EstimatorScoreResult-method.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/c-EstimatorScoreResultList-method.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/c2_extrapol.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/evaluate_estimator-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/evaluate_estimator.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/evaluate_scenarios_parallel.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/get_example_design.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/get_example_statistics.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/get_stagewise_estimators.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/get_statistics_from_paper.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/n2_extrapol.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/plot-EstimatorScoreResult-method.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/plot-EstimatorScoreResultList-method.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/plot-list-method.html</loc>
-  </url>
-  <url>
-    <loc>https://jan-imbi.github.io/adestr/reference/plot_p.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://jan-imbi.github.io/adestr/404.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/LICENSE.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/articles/Introduction.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/articles/index.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/authors.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/index.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/news/index.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/EstimatorScore-class.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/IntervalEstimator-class.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/Normal.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/NormalPrior.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/PValue-class.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/PointEstimator-class.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/Statistic-class.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/Student.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/TwoStageDesign-class.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/TwoStageDesignWithCache.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/UniformPrior.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/adestr.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/analyze.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/c-EstimatorScoreResult-method.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/c-EstimatorScoreResultList-method.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/c2_extrapol.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/evaluate_estimator-methods.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/evaluate_estimator.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/evaluate_scenarios_parallel.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/get_example_design.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/get_example_statistics.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/get_stagewise_estimators.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/get_statistics_from_paper.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/index.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/n2_extrapol.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/plot-EstimatorScoreResult-method.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/plot-EstimatorScoreResultList-method.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/plot-list-method.html</loc></url>
+<url><loc>https://jan-imbi.github.io/adestr/reference/plot_p.html</loc></url>
 </urlset>
+
