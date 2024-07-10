@@ -54,8 +54,8 @@ library(adestr)
 get_example_design(two_armed = TRUE)
 ```
 
-# Example
-## Evaluating the mean squared of an estimator
+# Evaluating point estimators
+## Evaluating the mean squared of the sample mean and the weighted sample mean
 Now that we have created an optimal adaptive design, we can investigate the performance
 characteristics of various estimators for the mean in that design.
 To this end, the `evaluate_estimator` function can be used.
@@ -98,6 +98,34 @@ mse_weighted_sample_means <- evaluate_estimator(
 )
 plot(c(mse_mle, mse_weighted_sample_means))
 ```
+
+
+## Evaluating median unbiased estimators
+Median unbiased estimators are estimators where the probability of overestimation
+is equal to the probability of underestimation. They can be derived by choosing
+a sample space ordering. In `adestr`, 5 different sample-space orderings are
+implemented: The MLE (maximum likelihood estimator) ordering,
+the LR (likelihood ratio) test ordering, the ST (score test) ordering,
+the SWCF (stage-wise combination function) ordering, and the NP (Neyman-Pearson)
+ordering. The latter (NP ordering) is only useful for the calculation of p-values,
+estimators derived from that ordering are usually nonsense.
+
+Lets look at the 'median-unbiased' property for estimators derived from the four
+orderings:
+
+```{r}
+evaluate_estimator(
+ score = OverestimationProbability(),
+ estimator = MedianUnbiasedMLEOrdering(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = 0.3,
+ sigma = 1
+)
+```
+
+
+
 
 ## Analyzing datasets
 Next, let us look at how to the package can be used to calculate estimates
