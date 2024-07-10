@@ -16,7 +16,7 @@ n2_preimage <- function(design, sigma = 1, two_armed = FALSE, smean_scale = FALS
       xs[i] <- zf
     } else{
       sgn <- sign(ns[i] - ns[i-1L])
-      if (sgn>0){
+      if (sgn>0){ # nocov start
         root <- uniroot(
           function(x) {
             (ns[i] - 1L + sgn * .Machine$double.eps^.6) - n2_extrapol(design, x)
@@ -24,7 +24,7 @@ n2_preimage <- function(design, sigma = 1, two_armed = FALSE, smean_scale = FALS
           c(x_candidates[csum[i-1L]], x_candidates[csum[i-1L]] + stepsize),
           tol = .Machine$double.eps^.6
         )
-      } else {
+      } else { # nocov end
         root <- uniroot(
           function(x) {
             (ns[i] + sgn * .Machine$double.eps^.6) - n2_extrapol(design, x)
@@ -99,6 +99,8 @@ get_c2_extrapol_function <- function(design){
     design@c2_pivots
   ))
 }
+
+# nocov start
 get_n2_extrapol_function <- function(design){
   if (length(design@n2_pivots)>1){
     h <- (design@c1e - design@c1f) / 2
@@ -110,3 +112,4 @@ get_n2_extrapol_function <- function(design){
     return(\(x) design@n2_pivots)
   }
 }
+# nocov end

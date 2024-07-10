@@ -46,6 +46,15 @@ test_that("Calculating MSE wrt. a non-degenerate-prior is roughly the same as wr
 }
 )
 
+test_that("get_pdf works.",
+{
+  expect_equal(
+    get_pdf(NormalPrior())(0), dnorm(0)
+    )
+  expect_equal(
+    get_pdf(UniformPrior())(0), dunif(0, min=-1, max=1)
+  )
+})
 
 
 

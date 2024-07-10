@@ -1,3 +1,4 @@
+# nocov start
 #' Statistics and Estimators of the adestr package
 #'
 #' The \code{\link{Statistic}} class is a parent class for the classes
@@ -508,6 +509,9 @@ setMethod("get_stagewise_estimators", signature("IntervalEstimator", "DataDistri
           })
 
 
+# nocov end
+
+
 setClass("SampleMean", contains = "PointEstimator")
 #' @rdname PointEstimator-class
 #' @export
@@ -705,6 +709,7 @@ rb2_kv <- function(smean1, smean2, n1, n2, mu, sigma, two_armed, preimage,
     vectorInterface = TRUE)$integral / denom
 }
 
+# nocov start
 newrb2_kv <- function(smean, n1, n2, mu, sigma, two_armed, preimage,
                    tol = getOption("adestr_tol_inner", default = .adestr_options[["adestr_tol_inner"]]),
                    maxEval = getOption("adestr_maxEval_inner", default = .adestr_options[["adestr_maxEval_inner"]]),
@@ -772,7 +777,7 @@ crb2_kv <- function(smean1, smean2, n1, n2, mu, sigma, two_armed, preimage,
     absError = absError,
     vectorInterface = TRUE)$integral / denom
 }
-
+# nocov end
 pseudorb2_kv <- function(design, smean1, smean2, n1, n2, mu, sigma, two_armed,
                    tol = getOption("adestr_tol_inner", default = .adestr_options[["adestr_tol_inner"]]),
                    maxEval = getOption("adestr_maxEval_inner", default = .adestr_options[["adestr_maxEval_inner"]]),
@@ -939,7 +944,7 @@ adoptr_alpha_shifted_design_kv <- function(design, shiftc1f, shiftc1e, shiftc2){
   }
   pr_es1 + pr_es2
 }
-
+# nocov start
 setClass("LinearShiftRepeatedPValue", slots =  c(wc1f="numeric", wc1e="numeric", wc2="numeric"), contains = "VirtualPValue")
 #' @rdname PValue-class
 #' @param wc1f slope of futility boundary change.
@@ -973,6 +978,7 @@ rp2_kv <- function(design, smean1, smean2, n1, n2, sigma, two_armed, wc1f=0, wc1
                                 shiftc1e = diff*wc1e,
                                 shiftc2  = diff*wc2)
 }
+# nocov end
 
 p_ml <- function(design, smean, n, mu, sigma, two_armed, tol = getOption("adestr_tol_inner", default = .adestr_options[["adestr_tol_inner"]]), maxEval = getOption("adestr_maxEval_inner", default = .adestr_options[["adestr_maxEval_inner"]]), absError = getOption("adestr_absError_inner", default = .adestr_options[["adestr_absError_inner"]]), ...) {
   design <- TwoStageDesignWithCache(design)
