@@ -1,3 +1,8 @@
+# adestr 1.0.0
+
+* Adding in all the test cases and improvements to the documentation that
+were developed collaboratively. Also preparing new CRAN release.
+
 # adestr 0.5.2
 
 * Preparing new CRAN release: adoptr back on CRAN, adding the
