@@ -106,10 +106,11 @@ function.</p>
 <span><span class="co">#&gt; TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+<h2 id="evaluating-point-estimators">Evaluating point estimators<a class="anchor" aria-label="anchor" href="#evaluating-point-estimators"></a>
 </h2>
 <div class="section level3">
-<h3 id="evaluating-the-mean-squared-of-an-estimator">Evaluating the mean squared of an estimator<a class="anchor" aria-label="anchor" href="#evaluating-the-mean-squared-of-an-estimator"></a>
+<h3 id="evaluating-the-mean-squared-of-the-sample-mean-and-the-weighted-sample-mean">Evaluating the mean squared of the sample mean and the weighted
+sample mean<a class="anchor" aria-label="anchor" href="#evaluating-the-mean-squared-of-the-sample-mean-and-the-weighted-sample-mean"></a>
 </h3>
 <p>Now that we have created an optimal adaptive design, we can
 investigate the performance characteristics of various estimators for
@@ -164,12 +165,43 @@ mean with fixed weights will be plotted.</p>
 <p><img src="Introduction_files/figure-html/unnamed-chunk-3-1.png" width="691.2"></p>
 </div>
 <div class="section level3">
+<h3 id="evaluating-median-unbiased-estimators">Evaluating median unbiased estimators<a class="anchor" aria-label="anchor" href="#evaluating-median-unbiased-estimators"></a>
+</h3>
+<p>Median unbiased estimators are estimators where the probability of
+overestimation is equal to the probability of underestimation. They can
+be derived by choosing a sample space ordering. In <code>adestr</code>,
+5 different sample-space orderings are implemented: The MLE (maximum
+likelihood estimator) ordering, the LR (likelihood ratio) test ordering,
+the ST (score test) ordering, the SWCF (stage-wise combination function)
+ordering, and the NP (Neyman-Pearson) ordering. The latter (NP ordering)
+is only useful for the calculation of p-values, estimators derived from
+that ordering are usually nonsense.</p>
+<p>Lets look at the ‘median-unbiased’ property for estimators derived
+from the four orderings:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">OverestimationProbability</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/PointEstimator-class.html">MedianUnbiasedMLEOrdering</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                        Median unbiased (MLE ordering)</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Probability of overestimation:                                        0.4983875</span></span></code></pre></div>
+</div>
+<div class="section level3">
 <h3 id="analyzing-datasets">Analyzing datasets<a class="anchor" aria-label="anchor" href="#analyzing-datasets"></a>
 </h3>
 <p>Next, let us look at how to the package can be used to calculate
 estimates after data has been collected.</p>
 <p>The first stage data of a trial might look like this:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">321</span><span class="op">)</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span> endpoint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">56</span>, <span class="fl">.3</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">56</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -185,7 +217,7 @@ estimates after data has been collected.</p>
 <span><span class="co">#&gt; 4  0.18035098   trt     1</span></span>
 <span><span class="co">#&gt; 5  0.17603938   trt     1</span></span>
 <span><span class="co">#&gt; 6  0.56818377   trt     1</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/analyze.html">analyze</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dat</span>,</span>
 <span>        statistics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>        data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
@@ -204,7 +236,7 @@ estimates after data has been collected.</p>
 <p>The results suggest recruiting 23 more patients per group for the
 second stage.</p>
 <p>We will simulate 47 more patients per group:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">dat</span>,</span>
 <span>             <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>               endpoint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">47</span>, <span class="fl">.3</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">47</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -214,7 +246,7 @@ second stage.</p>
 <span>             <span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Now, we can use the <code>analyze</code> function to evaluate a
 selection of estimators on the complete dataset:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/analyze.html">analyze</a></span><span class="op">(</span></span>
 <span> data <span class="op">=</span> <span class="va">dat</span>,</span>
 <span> statistics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
