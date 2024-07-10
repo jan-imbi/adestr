@@ -6,7 +6,8 @@ Authors@R:c(person("Jan", "Meis", role = c("aut", "cre"), email = "meis@imbi.uni
   person("Martin", "Maechler", role = c("cph"), email = "maechler@stat.math.ethz.ch", comment = c(ORCID = "0000-0002-8685-9910", "Original author of monoSpl.c (from the 'stats' package).")))
 Description:
   Methods to evaluate the performance characteristics of
-  various point and interval estimators for optimal adaptive two-stage designs.
+  various point and interval estimators for optimal adaptive two-stage designs as described
+  in Meis et al. (2024) <doi:10.1002/sim.10020>.
   Specifically, this package is written to work with trial designs created by the 'adoptr' package
   (Kunzmann et al. (2021) <doi:10.18637/jss.v098.i09>; Pilz et al. (2021) <doi:10.1002/sim.8953>)).
   Apart from the a priori evaluation of performance characteristics, this package also allows for the
@@ -24,7 +25,8 @@ LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 7.2.3
 Depends:
-    R (>= 4.0.0)
+    R (>= 4.0.0),
+    adoptr
 Imports: 
     methods,
     stats,
@@ -36,7 +38,6 @@ Imports:
     latex2exp,
     forcats,
     future.apply,
-    pracma,
     progressr,
     Rdpack
 Suggests: 

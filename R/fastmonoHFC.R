@@ -48,6 +48,9 @@ Myregularize.values <- function (x, y, ties, warn.collapsing = TRUE, na.rm = TRU
   }
   list(x = x, y = y, keptNA = keptNA, notNA = if (keptNA) ok)
 }
+
+# This is isn't used anywhere, but maybe someone needs it sometime
+#nocov start
 fastmonoH.FC_function <- function(x, y=NULL, ties = mean, extrapol = c("linear", "cubic")) {
   x <- Myregularize.values(x, y, ties, missing(ties))
   y <- x$y
@@ -104,6 +107,7 @@ fastmonoH.FC_function <- function(x, y=NULL, ties = mean, extrapol = c("linear",
     res
   }
 }
+#nocov end
 
 fastmonoH.FC_coefficients <- function(x, y=NULL, ties = mean, extrapol = c("linear", "cubic")){
   x <- Myregularize.values(x, y, ties, missing(ties))

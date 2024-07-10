@@ -11,7 +11,7 @@
 #'
 #' @docType package
 #' @name adestr
-#' @import methods
+#' @import methods adoptr
 #' @importFrom stats dnorm pnorm qnorm dt pt qt dchisq pchisq qchisq integrate uniroot var
 #' @importFrom cubature hcubature
 #' @importFrom Rdpack reprompt

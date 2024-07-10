@@ -1,3 +1,4 @@
+#nocov start
 fisher_information <- function(design, mu, sigma, two_armed) {
   sapply(mu, \(x)
     integrate_over_sample_space(
@@ -23,3 +24,4 @@ make_inverse_fisher_information_table <- function(designs, mu, sigma, two_armed)
   }
   do.call(rbind, res_list)
 }
+#nocov end

@@ -34,6 +34,12 @@ Currently, it works for designs objects which were produced by the
 R-package `adoptr`, which calculates optimal design parameters adaptive
 two-stage designs.
 
+An introductory vignette covering common usecases is given at [https://jan-imbi.github.io/adestr/articles/Introduction.html](https://jan-imbi.github.io/adestr/articles/Introduction.html).
+
+The test [https://jan-imbi.github.io/adestr/articles/Introduction.html](https://jan-imbi.github.io/adestr/articles/Introduction.html).
+
+<!-- reference implementation verlinken -->
+
 ## Installation
 
 You can install the development version of adestr by typing
@@ -43,16 +49,7 @@ remotes::install_github("https://github.com/jan-imbi/adestr")
 ```
 into your R console.
 
-## Information for reviewers
-
-The scripts to reproduce the results from the paper can be found in the
-`/data/code/` directory of this repository. The results themselves are
-located in the `/data/` directory.
-
-The easiest way to inspect the results is to [clone this repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
-
-
-## General example for usage of the package
+## Small introductory example
 
 Here is a quick example showing the capabilities of `adestr`.
 First, load `adestr`:
@@ -103,3 +100,8 @@ analyze(
  design = get_example_design()
 )
 ```
+
+Please refer to [https://jan-imbi.github.io/adestr/articles/Introduction.html](https://jan-imbi.github.io/adestr/articles/Introduction.html) for a more detailed introduction.
+
+
+

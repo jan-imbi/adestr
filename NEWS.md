@@ -1,3 +1,8 @@
+# adestr 0.5.2
+
+* Preparing new CRAN release: adoptr back on CRAN, adding the
+collaborative produced test cases and vignettes
+
 # adestr 0.5.1
 
 * Replaced raster graphics in vignettes with vector graphics.
