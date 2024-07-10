@@ -58,7 +58,10 @@
 <!-- badges: start -->
 
 <p>This package implements methods to evaluate the performance characteristics of various point and interval estimators for adaptive two-stage designs with prespecified sample-size recalculation rules. Further, it allows for evaluation of these estimators on real datasets, and it implements methods to calculate p-values.</p>
-<p>Currently, it works for designs objects which were produced by the R-package <code>adoptr</code>, which calculates optimal design parameters adaptive two-stage designs.</p>
+<p>Currently, it works for designs objects which were produced by the R-package <a href="https://github.com/optad/adoptr" class="external-link"><code>adoptr</code></a>, which calculates optimal design parameters adaptive two-stage designs.</p>
+<p>An introductory vignette covering common usecases is given at <a href="https://jan-imbi.github.io/adestr/articles/Introduction.html" class="uri">https://jan-imbi.github.io/adestr/articles/Introduction.html</a>.</p>
+<p>This package comes suite of unit tests. The code of the test cases can be viewed here: <a href="https://github.com/jan-imbi/adestr/tree/master/tests/testthat" class="external-link uri">https://github.com/jan-imbi/adestr/tree/master/tests/testthat</a>. The authors assume no responsibility for the correctness of the code or results produced by its usage. Use at your own risk.</p>
+<!-- reference implementation verlinken -->
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -68,17 +71,12 @@
 <p>into your R console.</p>
 </div>
 <div class="section level2">
-<h2 id="information-for-reviewers">Information for reviewers<a class="anchor" aria-label="anchor" href="#information-for-reviewers"></a>
-</h2>
-<p>The scripts to reproduce the results from the paper can be found in the <code>/data/code/</code> directory of this repository. The results themselves are located in the <code>/data/</code> directory.</p>
-<p>The easiest way to inspect the results is to <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository" class="external-link">clone this repository</a>.</p>
-</div>
-<div class="section level2">
-<h2 id="general-example-for-usage-of-the-package">General example for usage of the package<a class="anchor" aria-label="anchor" href="#general-example-for-usage-of-the-package"></a>
+<h2 id="small-introductory-example">Small introductory example<a class="anchor" aria-label="anchor" href="#small-introductory-example"></a>
 </h2>
 <p>Here is a quick example showing the capabilities of <code>adestr</code>. First, load <code>adestr</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jan-imbi.github.io/adestr/">adestr</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jan-imbi.github.io/adestr/">adestr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: adoptr</span></span></code></pre></div>
 <p>Then, you can evaluate the performance of an estimator like this:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
@@ -152,6 +150,7 @@
 <span><span class="co">#&gt;  LR test ordering CI:                                       [0.2509094, 0.81829]</span></span>
 <span><span class="co">#&gt;  SWCF ordering p-value:                                               0.01097483</span></span>
 <span><span class="co">#&gt;  LR test ordering p-value:                                          6.653031e-05</span></span></code></pre></div>
+<p>Please refer to <a href="https://jan-imbi.github.io/adestr/articles/Introduction.html" class="uri">https://jan-imbi.github.io/adestr/articles/Introduction.html</a> for a more detailed introduction.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

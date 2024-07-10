@@ -77,17 +77,22 @@ and it implements methods to calculate p-values.</p>
 <p>Currently, it works for designs objects which were produced by the
 R-package <code>adoptr</code>, which calculates optimal design
 parameters for adaptive two-stage designs. You can learn about adoptr
-here: <a href="https://kkmann.github.io/adoptr/" class="external-link">kkmann.github.io/adoptr/</a>.</p>
+here: <a href="https://optad.github.io/adoptr/" class="external-link">optad.github.io/adoptr/</a>.</p>
+<p>An introductory vignette covering common usecases is given at <a href="https://jan-imbi.github.io/adestr/articles/Introduction.html">https://jan-imbi.github.io/adestr/articles/Introduction.html</a>.</p>
+<p>This package comes suite of unit tests. The code of the test cases
+can be viewed here: <a href="https://github.com/jan-imbi/adestr/tree/master/tests/testthat" class="external-link">https://github.com/jan-imbi/adestr/tree/master/tests/testthat</a>.
+The authors assume no responsibility for the correctness of the code or
+results produced by its usage. Use at your own risk.</p>
 </div>
 <div class="section level2">
 <h2 id="fitting-a-design-with-adoptr">Fitting a design with adoptr<a class="anchor" aria-label="anchor" href="#fitting-a-design-with-adoptr"></a>
 </h2>
 <p>In order to showcase the capabilities of this package, we need a
-trial design first. We refer to <a href="https://kkmann.github.io/adoptr/articles/adoptr.html" class="external-link">the example
+trial design first. We refer to <a href="https://optad.github.io/adoptr/articles/adoptr.html" class="external-link">the example
 from the adoptr documentation</a> for this. You can read more about
-optimal adaptive designs fitted via the adoptr package here: <a href="https://kkmann.github.io/adoptr/articles/adoptr_jss.html" class="external-link">kkmann.github.io/adoptr/articles/adoptr_jss.html</a>.</p>
+optimal adaptive designs fitted via the adoptr package here: <a href="https://optad.github.io/adoptr/articles/adoptr_jss.htmll" class="external-link">optad.github.io/adoptr/articles/adoptr_jss.html</a>.</p>
 <p>For the sake of this introduction, a pre-computed version of the
-first example from <a href="https://kkmann.github.io/adoptr/articles/adoptr.html" class="external-link">kkmann.github.io/adoptr/articles/adoptr.html</a>
+first example from <a href="https://optad.github.io/adoptr/articles/adoptr.html" class="external-link">optad.github.io/adoptr/articles/adoptr.html</a>
 is provided with this package via the <code>get_example_design</code>
 function.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
