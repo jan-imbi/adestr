@@ -33,6 +33,7 @@ test_that("density of MLE sums up to one (normal distribution, one-armed) (exact
 
 test_that("density of MLE sums up to one (t distribution, one-armed)",
           {
+            skip_on_cran()
             expect_equal(
               dsmean(
                 Student(two_armed = FALSE),
@@ -50,6 +51,7 @@ test_that("density of MLE sums up to one (t distribution, one-armed)",
 
 test_that("density of MLE sums up to one (t distribution, one-armed) (exact=TRUE)",
           {
+            skip_on_cran()
             expect_equal(
               dsmean(
                 Student(two_armed = FALSE),
@@ -68,6 +70,7 @@ test_that("density of MLE sums up to one (t distribution, one-armed) (exact=TRUE
 
 test_that("density of MLE sums up to one (normal distribution, two-armed, treatment group)",
           {
+            skip_on_cran()
             expect_equal(dsmeanT(Normal(),
                                  designad,
                                  .x <- seq(-2, 2, .h <- .01),
@@ -80,6 +83,7 @@ test_that("density of MLE sums up to one (normal distribution, two-armed, treatm
 
 test_that("density of MLE sums up to one (normal distribution, two-armed, treatment group) (exact=TRUE)",
           {
+            skip_on_cran()
             expect_equal(dsmeanT(Normal(),
                                  designad,
                                  .x <- seq(-2, 2, .h <- .01),
@@ -92,6 +96,7 @@ test_that("density of MLE sums up to one (normal distribution, two-armed, treatm
 
 test_that("density of MLE sums up to one (t distribution, two-armed, treatment group)",
           {
+            skip_on_cran()
             expect_equal(dsmeanT(Student(),
                                  designad,
                                  .x <- seq(-2, 2, .h <- .01),
@@ -104,6 +109,7 @@ test_that("density of MLE sums up to one (t distribution, two-armed, treatment g
 
 test_that("density of MLE sums up to one (t distribution, two-armed, treatment group) (exact=TRUE)",
           {
+            skip_on_cran()
             expect_equal(dsmeanT(Student(),
                                  designad,
                                  .x <- seq(-2, 2, .h <- .1),

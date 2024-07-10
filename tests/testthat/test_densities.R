@@ -212,6 +212,7 @@ test_that("two-armed trial, full sampling distribution, unknown variance, integr
 
 test_that("two-armed trial, full sampling distribution, unknown variance, integral of second-stage density equals 1",
           {
+            skip_on_cran()
             expect_equal(
               hcubature(
                 mf2_uv_full,

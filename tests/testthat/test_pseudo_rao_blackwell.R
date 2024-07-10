@@ -1,5 +1,6 @@
 test_that("Pseudo Rao-Blackwell estimator has less variance than Rao-Blackwell estimator",
           {
+            skip_on_cran()
             prb <- evaluate_estimator(score = Variance(),
                                       estimator = PseudoRaoBlackwell(),
                                       design = designad,

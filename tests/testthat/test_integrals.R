@@ -39,6 +39,7 @@ test_that("integral over sample space is equal to 1 for case: unknown variance, 
           })
 test_that("integral over sample space is equal to 1 for case: unknown variance, one-armed (exact=TRUE)",
           {
+            skip_on_cran()
             expect_equal(
               int_uv(
                 design = designad,
@@ -89,6 +90,7 @@ test_that("integral over sample space is equal to 1 for case: unknown variance, 
           })
 test_that("integral over sample space is equal to 1 for case: unknown variance, two-armed (exact=TRUE)",
           {
+            skip_on_cran()
             expect_equal(
               int_uv(
                 design = designad,
@@ -136,6 +138,7 @@ test_that("integral over sample space is equal to 1 for case: unknown variance, 
           })
 test_that("integral over sample space is equal to 1 for case: unknown variance, two-armed, full sampling distribution, exact n2",
           {
+            skip_on_cran()
             expect_equal(
               int_uv_full(
                 design = designad,

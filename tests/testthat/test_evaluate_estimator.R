@@ -103,6 +103,7 @@ test_that("TestAgreement of NaiveCI can be calculated",
 
 test_that("TestAgreement of NaivePValue can be calculated",
           {
+            skip_on_cran()
             expect_lt(
               evaluate_estimator(
                 score = TestAgreement(),

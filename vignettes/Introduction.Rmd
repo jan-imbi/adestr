@@ -119,6 +119,96 @@ evaluate_estimator(
  estimator = MedianUnbiasedMLEOrdering(),
  data_distribution = Normal(two_armed = TRUE),
  design = get_example_design(two_armed = TRUE),
+ mu = 0.4,
+ sigma = 1
+)
+
+evaluate_estimator(
+ score = OverestimationProbability(),
+ estimator = MedianUnbiasedLikelihoodRatioOrdering(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = 0.4,
+ sigma = 1
+)
+
+evaluate_estimator(
+ score = OverestimationProbability(),
+ estimator = MedianUnbiasedScoreTestOrdering(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = 0.4,
+ sigma = 1
+)
+
+evaluate_estimator(
+ score = OverestimationProbability(),
+ estimator = MedianUnbiasedStagewiseCombinationFunctionOrdering(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = 0.4,
+ sigma = 1
+)
+```
+
+
+Compare this to the Overestimation probability of the sample mean:
+
+```{r}
+evaluate_estimator(
+ score = OverestimationProbability(),
+ estimator = SampleMean(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = 0.4,
+ sigma = 1
+)
+```
+
+## Evaluating bias-reduced unbiased estimators
+Apart from sample-space ordering based methods, there are various other ways of
+defining alternative point estimators which may have desirable properties.
+Here are a couple that are presented in [our paper](https://doi.org/10.1002/sim.10020)
+evaluated for mu=0.3 and sigma=1.
+
+```{r}
+evaluate_estimator(
+ score = MSE(),
+ estimator = SampleMean(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = 0.3,
+ sigma = 1
+)
+evaluate_estimator(
+ score = MSE(),
+ estimator = BiasReduced(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = 0.3,
+ sigma = 1
+)
+evaluate_estimator(
+ score = MSE(),
+ estimator = PseudoRaoBlackwell(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = 0.3,
+ sigma = 1
+)
+evaluate_estimator(
+ score = MSE(),
+ estimator = RaoBlackwell(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = 0.3,
+ sigma = 1
+)
+evaluate_estimator(
+ score = MSE(),
+ estimator = AdaptivelyWeightedSampleMean(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
  mu = 0.3,
  sigma = 1
 )
@@ -126,8 +216,263 @@ evaluate_estimator(
 
 
 
+# Evaluating interval estimators
+## Evaluating coverage
+The coverage of an interval estimator is the probability of that an estimator will
+cover the true value of the parameter in question. It may be evaluated like this:
 
-## Analyzing datasets
+```{r}
+evaluate_estimator(
+ score = Coverage(),
+ estimator = NaiveCI(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = .07,
+ sigma = 1
+)
+```
+
+As you can see, the naive confidence interval does not have the correct coverage of
+95%. Here is an example for an estimator that achieves the correct coverage: 
+
+```{r}
+evaluate_estimator(
+ score = Coverage(),
+ estimator = LikelihoodRatioOrderingCI(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = .07,
+ sigma = 1
+)
+```
+
+For the parameter of mu that we chose in this example, the naive confidence interval
+performs particularly bad. We can plot the coverage of the naive confidence interval
+for an array of values like this:
+
+```{r, fig.width=7.2, fig.height=4, dev="svg"}
+coverage_naive <- evaluate_estimator(
+ score = Coverage(),
+ estimator = NaiveCI(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = seq(-0.75, 1.32, .03),
+ sigma = 1
+)
+plot(coverage_naive)
+```
+
+## Evaluating the widht of an interval estimator
+Amongst the interval estimators which have the correct coverage, one might be
+interested in selecting the one with the least width. We can evaluate the
+expected width of an interval estimator for a particular set of assumptions like this:
+
+```{r}
+evaluate_estimator(
+ score = Width(),
+ estimator = MLEOrderingCI(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = .3,
+ sigma = 1
+)
+evaluate_estimator(
+ score = Width(),
+ estimator = LikelihoodRatioOrderingCI(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = .3,
+ sigma = 1
+)
+evaluate_estimator(
+ score = Width(),
+ estimator = ScoreTestOrderingCI(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = .3,
+ sigma = 1
+)
+evaluate_estimator(
+ score = Width(),
+ estimator = StagewiseCombinationFunctionOrderingCI(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = .3,
+ sigma = 1
+)
+```
+
+## Evaluating the centrality of a point estimator with respect to an interval estimator
+When choosing a combination of point and interval estimator to report at the end of a
+trial, one might want the point estimator to be more or less in the middle of the
+respective interval. To evaluate the 'centrality' of an estimator, which in this case
+is defined as the difference between the distance of the point estimator the lower end
+of an interval and the upper end of an interval, one can use the following command:
+
+```{r}
+evaluate_estimator(
+ score = Centrality(interval = StagewiseCombinationFunctionOrderingCI()),
+ estimator = SampleMean(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = .3,
+ sigma = 1
+)
+evaluate_estimator(
+ score = Centrality(interval = NaiveCI()),
+ estimator = SampleMean(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = .3,
+ sigma = 1
+)
+```
+
+
+
+## Evaluating agreement with the primary test decision of the design for an interval estimator
+In the framework of optimal adaptive designs, the rejection boundaries for the primary
+testing decision of a design are optimized directly and are not derived from a common
+test statistic. Therefore, confidence intervals derived from such statistics do not
+necessarily agree with the primary test decision. One may evaluate the chance of
+agreement like this:
+
+```{r}
+evaluate_estimator(
+ score = TestAgreement(),
+ estimator = MLEOrderingCI(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = .3,
+ sigma = 1
+)
+evaluate_estimator(
+ score = TestAgreement(),
+ estimator = LikelihoodRatioOrderingCI(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = .3,
+ sigma = 1
+)
+evaluate_estimator(
+ score = TestAgreement(),
+ estimator = ScoreTestOrderingCI(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = .3,
+ sigma = 1
+)
+evaluate_estimator(
+ score = TestAgreement(),
+ estimator = StagewiseCombinationFunctionOrderingCI(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = .3,
+ sigma = 1
+)
+```
+
+The confidence interval derived from the stage-wise combination function ordering
+(by its construction) always agrees with the primary testing decision.
+
+# Evaluating p-values
+## Evaluating agreement with the primary test decision of the design for a p-value
+Like confidence intervals, p-values always come with an associated test decision.
+However, for the same reason as described in the chapter about interval estimators,
+these test decision derived from various ways of calculating p-values may not necessarily
+agree with the primary test decision of an optimal adaptive design. One may evaluate
+the probability of agreement for a particular set of assumptions like this:
+
+```{r}
+evaluate_estimator(
+ score = TestAgreement(),
+ estimator = MLEOrderingPValue(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = .3,
+ sigma = 1
+)
+evaluate_estimator(
+ score = TestAgreement(),
+ estimator = LikelihoodRatioOrderingPValue(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = .3,
+ sigma = 1
+)
+evaluate_estimator(
+ score = TestAgreement(),
+ estimator = ScoreTestOrderingPValue(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = .3,
+ sigma = 1
+)
+evaluate_estimator(
+ score = TestAgreement(),
+ estimator = StagewiseCombinationFunctionOrderingPValue(),
+ data_distribution = Normal(two_armed = TRUE),
+ design = get_example_design(two_armed = TRUE),
+ mu = .3,
+ sigma = 1
+)
+```
+
+Again, we see that only the p-value derived from the stage-wise combination function
+ordering always agrees with the primary testing decision.
+
+
+# Conducting larger scale investigations in the performance characteristics of end-of-trial statistics
+So far we have only looked at evaluating performance characteristics for a particular
+set of assumptions, a choice of performance characteristics and a choice of a few estimators.
+However, when designing a trial, one might want to produce results for a variety of different
+scenarios, which can be time consuming. The evaluation of performance characteristics in
+`adestr` can run in parallel using the `future` framework.
+
+
+```{r}
+library(future)
+# Change to e.g. plan(multisession) for parallel computing
+plan(sequential)
+
+# Scenario 1:
+scores1 <- list(MSE(), OverestimationProbability())
+estimators1 <- list(SampleMean(), BiasReduced())
+dist1 <- list(Normal(two_armed = TRUE))
+designs1 <- list(get_example_design(two_armed = TRUE))
+mu1 <- seq(-1,1,.5)
+sigma1 <- 1
+
+# Scenario 2:
+scores2 <- list(Coverage(), Width())
+estimators2 <- list(NaiveCI(), StagewiseCombinationFunctionOrderingCI())
+dist2 <- list(Normal(two_armed = TRUE))
+designs2 <- list(get_example_design(two_armed = TRUE))
+mu2 <- seq(-1,1,.5)
+sigma2 <- 1
+
+# Evaluate in parallel
+res <- evaluate_scenarios_parallel(
+  score_lists = list(scores1, scores2),
+  estimator_lists =  list(estimators1, estimators2),
+  data_distribution_lists = list(dist1, dist2),
+  design_lists =  list(designs1, designs2),
+  mu_lists = list(mu1, mu2),
+  sigma_lists = list(sigma1, sigma2)
+)
+
+res[[1]]
+res[[2]]
+```
+
+You will get back a list of data.frames containing the results for each scenario.
+Note that within one scenario, the evaluation will take place for the cross-product
+of all arguments that are supplied! This means that within one scenario, every estimator
+is evaluated with every score at every point of mu for every sigma and every design.
+Depending on your settings, this can get very time-consuming very fast, making parallelization
+essential.
+
+# Analyzing datasets
 Next, let us look at how to the package can be used to calculate estimates
 after data has been collected.
 
@@ -189,4 +534,8 @@ Keep in mind that a difference of $\mu=0.3$ was used in the simulation.
 
 Note that while the median unbiased estimator performs well in this particular example, this
 is not universally true.
+
+
+
+
 
