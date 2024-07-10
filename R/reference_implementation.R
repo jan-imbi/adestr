@@ -348,7 +348,7 @@
       # estimator is that the (normal) Rao-Blackwell estimator uses the actual
       # n2 preimage.
       n2 <- ceiling(.n2_extrapol(design, z1))
-      lower_z1 <- uniroot(\(x) .n2_extrapol(design, x) - n2 - -2, c(c1f, c1e))$root
+      lower_z1 <- uniroot(\(x) .n2_extrapol(design, x) - n2, c(c1f, c1e))$root
       upper_z1 <- uniroot(\(x) .n2_extrapol(design, x) - n2 - -1, c(c1f, c1e))$root
       x <- .x1_x2_to_x(x1 = x1, x2 = x2, n1 = n1, n2 = n2)
       numerator <-
@@ -358,8 +358,8 @@
             x1_ * .f2(z1 = z1_[1,,drop=FALSE], z2 = (((n1 + n2) * x - n1 * x1_) / n2 - mu0) * sqrt(n2) / sigma,
                       n1 = n1,  n2 = n2, mu = mu0, mu0 = mu0, sigma = sigma)
           },
-          lowerLimit = c1f,
-          upperLimit = c1e,
+          lowerLimit = lower_z1,
+          upperLimit = upper_z1,
           vectorInterface = TRUE
         )$integral
       denominator <-
@@ -804,9 +804,9 @@
   minc2 <- .c2_extrapol(design, c1e)
   maxc2 <- .c2_extrapol(design, c1f)
   # Assumes c2 is monotonically decreasing
-  if (maxc2 < lower_z2) {
+  if (maxc2 < upper_z2) {
     ret <- upper_l
-  } else if (minc2 >upper_z2) {
+  } else if (minc2 >lower_z2) {
     ret <- lower_l
   } else{
     ret <- uniroot(\(x) .c2_extrapol(design, (x1 - x)*sqrt(n1)/sigma) - (x2 - x)*sqrt(n2)/sigma,

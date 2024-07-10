@@ -16,6 +16,44 @@ test_that("Analysis function doesn't throw an error.",
             NA)
           })
 
+test_that("Analysis function throws an error when it should.",
+          {
+            expect_warning(
+              analyze(
+                data = dat,
+                statistics = list(FirstStageSampleMean(), SampleMean(), NaiveCI()),
+                data_distribution = Student(TRUE),
+                sigma = 1,
+                design = get_example_design(TRUE)
+              ))
+            expect_warning(expect_warning(expect_warning(
+              analyze(
+                data = dat,
+                statistics = list(FirstStageSampleMean(), SampleMean(), NaiveCI()),
+                data_distribution = Normal(TRUE),
+                design = get_example_design(TRUE)
+              ))))
+            expect_error(analyze(
+              data = dat,
+              statistics = list(FirstStageSampleMean(), SampleMean(), NaiveCI()),
+              data_distribution = Student(FALSE),
+              design = get_example_design(TRUE)
+            ))
 
+          })
+
+test_that("Single-stage analyze works",
+{
+  expect_warning(
+    expect_error(analyze(
+      data = dat[dat$stage==1,],
+      statistics = list(FirstStageSampleMean(), SampleMean(), NaiveCI()),
+      data_distribution = Normal(TRUE),
+      sigma = 1,
+      design = get_example_design(TRUE)
+    ),
+    NA)
+    )
+})
 
 

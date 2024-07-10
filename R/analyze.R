@@ -64,7 +64,7 @@ setGeneric("analyze", function(data,
 setMethod("analyze", signature("data.frame"),
           function(data, statistics, data_distribution, use_full_twoarm_sampling_distribution, design, sigma, exact){
             if (missing(data))
-              stop("data argument may not be ommited.")
+              stop("data argument may not be ommited.") #nocov
             if (is(data_distribution, "Student") && !missing(sigma)){
               warning("data_distribution was set to Normal because sigma was specified.")
               data_distribution <- Normal(two_armed = data_distribution@two_armed)

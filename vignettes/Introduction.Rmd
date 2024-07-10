@@ -34,6 +34,10 @@ An introductory vignette covering common usecases is given at [https://jan-imbi.
 This package comes suite of unit tests. The code of the test cases can be viewed here: [https://github.com/jan-imbi/adestr/tree/master/tests/testthat](https://github.com/jan-imbi/adestr/tree/master/tests/testthat). The authors assume no responsibility for the correctness of the
 code or results produced by its usage. Use at your own risk.
 
+You may also be interested in the reference implementation looking at the [https://github.com/jan-imbi/adestr/blob/master/R/reference_implementation.R](https://github.com/jan-imbi/adestr/blob/master/R/reference_implementation.R).
+It uses the same notation as in our paper ([doi.org/10.1002/sim.10020](https://doi.org/10.1002/sim.10020)) and may therefore be
+easier to understand at first.
+
 # Fitting a design with adoptr
 In order to showcase the capabilities of this package, we need a trial design first.
 We refer to [the example from the adoptr documentation](https://optad.github.io/adoptr/articles/adoptr.html)

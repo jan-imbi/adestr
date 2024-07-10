@@ -31,6 +31,13 @@ be viewed here:
 authors assume no responsibility for the correctness of the code or
 results produced by its usage. Use at your own risk.
 
+You may also be interested in the reference implementation looking at
+the
+<https://github.com/jan-imbi/adestr/blob/master/R/reference_implementation.R>.
+It uses the same notation as in our paper
+([doi.org/10.1002/sim.10020](https://doi.org/10.1002/sim.10020)) and may
+therefore be easier to understand at first.
+
 <!-- reference implementation verlinken -->
 
 ## Installation
