@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">adestr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -184,24 +184,711 @@ from the four orderings:</p>
 <span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/PointEstimator-class.html">MedianUnbiasedMLEOrdering</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span> mu <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">0.4</span>,</span>
 <span> sigma <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
 <span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
 <span><span class="co">#&gt; Estimator:                                        Median unbiased (MLE ordering)</span></span>
 <span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
-<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.4</span></span>
 <span><span class="co">#&gt; Results:</span></span>
-<span><span class="co">#&gt;  Probability of overestimation:                                        0.4983875</span></span></code></pre></div>
+<span><span class="co">#&gt;  Probability of overestimation:                                        0.4988042</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">OverestimationProbability</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/PointEstimator-class.html">MedianUnbiasedLikelihoodRatioOrdering</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">0.4</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                    Median unbiased (LR test ordering)</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.4</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Probability of overestimation:                                        0.4990921</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">OverestimationProbability</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/PointEstimator-class.html">MedianUnbiasedScoreTestOrdering</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">0.4</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                 Median unbiased (Score test ordering)</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.4</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Probability of overestimation:                                        0.5037828</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">OverestimationProbability</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/PointEstimator-class.html">MedianUnbiasedStagewiseCombinationFunctionOrdering</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">0.4</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                       Median unbiased (SWCF ordering)</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.4</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Probability of overestimation:                                        0.4976513</span></span></code></pre></div>
+<p>Compare this to the Overestimation probability of the sample
+mean:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">OverestimationProbability</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/PointEstimator-class.html">SampleMean</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">0.4</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                                           Sample mean</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.4</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Probability of overestimation:                                        0.5943933</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="analyzing-datasets">Analyzing datasets<a class="anchor" aria-label="anchor" href="#analyzing-datasets"></a>
+<h3 id="evaluating-bias-reduced-unbiased-estimators">Evaluating bias-reduced unbiased estimators<a class="anchor" aria-label="anchor" href="#evaluating-bias-reduced-unbiased-estimators"></a>
 </h3>
+<p>Apart from sample-space ordering based methods, there are various
+other ways of defining alternative point estimators which may have
+desirable properties. Here are a couple that are presented in <a href="https://doi.org/10.1002/sim.10020" class="external-link">our paper</a> evaluated for
+mu=0.3 and sigma=1.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">MSE</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/PointEstimator-class.html">SampleMean</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                                           Sample mean</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Expectation:                                                          0.3056727</span></span>
+<span><span class="co">#&gt;  Bias:                                                               0.005672677</span></span>
+<span><span class="co">#&gt;  Variance:                                                            0.03777784</span></span>
+<span><span class="co">#&gt;  MSE:                                                                 0.03781002</span></span>
+<span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">MSE</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/PointEstimator-class.html">BiasReduced</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                       Bias reduced MLE (iterations=1)</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Expectation:                                                          0.3042277</span></span>
+<span><span class="co">#&gt;  Bias:                                                               0.004227723</span></span>
+<span><span class="co">#&gt;  Variance:                                                            0.03453116</span></span>
+<span><span class="co">#&gt;  MSE:                                                                 0.03454903</span></span>
+<span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">MSE</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/PointEstimator-class.html">PseudoRaoBlackwell</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                              Pseudo Rao-Blackwellized</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Expectation:                                                          0.3022287</span></span>
+<span><span class="co">#&gt;  Bias:                                                               0.002228688</span></span>
+<span><span class="co">#&gt;  Variance:                                                            0.03268444</span></span>
+<span><span class="co">#&gt;  MSE:                                                                 0.03268941</span></span>
+<span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">MSE</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/PointEstimator-class.html">RaoBlackwell</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                                     Rao-Blackwellized</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Expectation:                                                           0.300153</span></span>
+<span><span class="co">#&gt;  Bias:                                                              0.0001530249</span></span>
+<span><span class="co">#&gt;  Variance:                                                            0.03548938</span></span>
+<span><span class="co">#&gt;  MSE:                                                                 0.03548941</span></span>
+<span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">MSE</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/PointEstimator-class.html">AdaptivelyWeightedSampleMean</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                AdaptivelyWeightedSampleMean(w1^2=50%)</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Expectation:                                                          0.3039742</span></span>
+<span><span class="co">#&gt;  Bias:                                                               0.003974222</span></span>
+<span><span class="co">#&gt;  Variance:                                                            0.03817511</span></span>
+<span><span class="co">#&gt;  MSE:                                                                  0.0381909</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="evaluating-interval-estimators">Evaluating interval estimators<a class="anchor" aria-label="anchor" href="#evaluating-interval-estimators"></a>
+</h2>
+<div class="section level3">
+<h3 id="evaluating-coverage">Evaluating coverage<a class="anchor" aria-label="anchor" href="#evaluating-coverage"></a>
+</h3>
+<p>The coverage of an interval estimator is the probability of that an
+estimator will cover the true value of the parameter in question. It may
+be evaluated like this:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">Coverage</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/IntervalEstimator-class.html">NaiveCI</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">.07</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                                              Naive CI</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                 0.07</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Coverage:                                                              0.933259</span></span></code></pre></div>
+<p>As you can see, the naive confidence interval does not have the
+correct coverage of 95%. Here is an example for an estimator that
+achieves the correct coverage:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">Coverage</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/IntervalEstimator-class.html">LikelihoodRatioOrderingCI</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">.07</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                                   LR test ordering CI</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                 0.07</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Coverage:                                                             0.9500889</span></span></code></pre></div>
+<p>For the parameter of mu that we chose in this example, the naive
+confidence interval performs particularly bad. We can plot the coverage
+of the naive confidence interval for an array of values like this:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">coverage_naive</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">Coverage</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/IntervalEstimator-class.html">NaiveCI</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.75</span>, <span class="fl">1.32</span>, <span class="fl">.03</span><span class="op">)</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">coverage_naive</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Introduction_files/figure-html/unnamed-chunk-9-1.png" width="691.2"></p>
+</div>
+<div class="section level3">
+<h3 id="evaluating-the-widht-of-an-interval-estimator">Evaluating the widht of an interval estimator<a class="anchor" aria-label="anchor" href="#evaluating-the-widht-of-an-interval-estimator"></a>
+</h3>
+<p>Amongst the interval estimators which have the correct coverage, one
+might be interested in selecting the one with the least width. We can
+evaluate the expected width of an interval estimator for a particular
+set of assumptions like this:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">Width</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/IntervalEstimator-class.html">MLEOrderingCI</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                                       MLE ordering CI</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Width:                                                                0.6453952</span></span>
+<span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">Width</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/IntervalEstimator-class.html">LikelihoodRatioOrderingCI</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                                   LR test ordering CI</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Width:                                                                0.6351904</span></span>
+<span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">Width</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/IntervalEstimator-class.html">ScoreTestOrderingCI</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                                Score test ordering CI</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Width:                                                                0.6502033</span></span>
+<span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">Width</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/IntervalEstimator-class.html">StagewiseCombinationFunctionOrderingCI</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                                      SWCF ordering CI</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Width:                                                                0.6575988</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="evaluating-the-centrality-of-a-point-estimator-with-respect-to-an-interval-estimator">Evaluating the centrality of a point estimator with respect to an
+interval estimator<a class="anchor" aria-label="anchor" href="#evaluating-the-centrality-of-a-point-estimator-with-respect-to-an-interval-estimator"></a>
+</h3>
+<p>When choosing a combination of point and interval estimator to report
+at the end of a trial, one might want the point estimator to be more or
+less in the middle of the respective interval. To evaluate the
+‘centrality’ of an estimator, which in this case is defined as the
+difference between the distance of the point estimator the lower end of
+an interval and the upper end of an interval, one can use the following
+command:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">Centrality</a></span><span class="op">(</span>interval <span class="op">=</span> <span class="fu"><a href="../reference/IntervalEstimator-class.html">StagewiseCombinationFunctionOrderingCI</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/PointEstimator-class.html">SampleMean</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                                           Sample mean</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Centrality with respect to SWCF ordering CI:                         0.00715509</span></span>
+<span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">Centrality</a></span><span class="op">(</span>interval <span class="op">=</span> <span class="fu"><a href="../reference/IntervalEstimator-class.html">NaiveCI</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/PointEstimator-class.html">SampleMean</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                                           Sample mean</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Centrality with respect to Naive CI:                              -4.072497e-18</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="evaluating-agreement-with-the-primary-test-decision-of-the-design-for-an-interval-estimator">Evaluating agreement with the primary test decision of the design
+for an interval estimator<a class="anchor" aria-label="anchor" href="#evaluating-agreement-with-the-primary-test-decision-of-the-design-for-an-interval-estimator"></a>
+</h3>
+<p>In the framework of optimal adaptive designs, the rejection
+boundaries for the primary testing decision of a design are optimized
+directly and are not derived from a common test statistic. Therefore,
+confidence intervals derived from such statistics do not necessarily
+agree with the primary test decision. One may evaluate the chance of
+agreement like this:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">TestAgreement</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/IntervalEstimator-class.html">MLEOrderingCI</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                                       MLE ordering CI</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Agreement with test decision:                                         0.9867598</span></span>
+<span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">TestAgreement</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/IntervalEstimator-class.html">LikelihoodRatioOrderingCI</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                                   LR test ordering CI</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Agreement with test decision:                                         0.9859001</span></span>
+<span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">TestAgreement</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/IntervalEstimator-class.html">ScoreTestOrderingCI</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                                Score test ordering CI</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Agreement with test decision:                                         0.8269152</span></span>
+<span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">TestAgreement</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/IntervalEstimator-class.html">StagewiseCombinationFunctionOrderingCI</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                                      SWCF ordering CI</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Agreement with test decision:                                          1.000034</span></span></code></pre></div>
+<p>The confidence interval derived from the stage-wise combination
+function ordering (by its construction) always agrees with the primary
+testing decision.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="evaluating-p-values">Evaluating p-values<a class="anchor" aria-label="anchor" href="#evaluating-p-values"></a>
+</h2>
+<div class="section level3">
+<h3 id="evaluating-agreement-with-the-primary-test-decision-of-the-design-for-a-p-value">Evaluating agreement with the primary test decision of the design
+for a p-value<a class="anchor" aria-label="anchor" href="#evaluating-agreement-with-the-primary-test-decision-of-the-design-for-a-p-value"></a>
+</h3>
+<p>Like confidence intervals, p-values always come with an associated
+test decision. However, for the same reason as described in the chapter
+about interval estimators, these test decision derived from various ways
+of calculating p-values may not necessarily agree with the primary test
+decision of an optimal adaptive design. One may evaluate the probability
+of agreement for a particular set of assumptions like this:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">TestAgreement</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/PValue-class.html">MLEOrderingPValue</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                                  MLE ordering p-value</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Agreement with test decision:                                         0.9846693</span></span>
+<span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">TestAgreement</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/PValue-class.html">LikelihoodRatioOrderingPValue</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                              LR test ordering p-value</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Agreement with test decision:                                         0.9859001</span></span>
+<span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">TestAgreement</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/PValue-class.html">ScoreTestOrderingPValue</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                           Score test ordering p-value</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Agreement with test decision:                                         0.8269606</span></span>
+<span><span class="fu"><a href="../reference/evaluate_estimator.html">evaluate_estimator</a></span><span class="op">(</span></span>
+<span> score <span class="op">=</span> <span class="fu"><a href="../reference/EstimatorScore-class.html">TestAgreement</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> estimator <span class="op">=</span> <span class="fu"><a href="../reference/PValue-class.html">StagewiseCombinationFunctionOrderingPValue</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span> data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> design <span class="op">=</span> <span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span> mu <span class="op">=</span> <span class="fl">.3</span>,</span>
+<span> sigma <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Design:                              TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;</span></span>
+<span><span class="co">#&gt; Data Distribution:                                             Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; Estimator:                                                 SWCF ordering p-value</span></span>
+<span><span class="co">#&gt; Assumed sigma:                                                                 1</span></span>
+<span><span class="co">#&gt; Assumed mu:                                                                  0.3</span></span>
+<span><span class="co">#&gt; Results:</span></span>
+<span><span class="co">#&gt;  Agreement with test decision:                                          1.000034</span></span></code></pre></div>
+<p>Again, we see that only the p-value derived from the stage-wise
+combination function ordering always agrees with the primary testing
+decision.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="conducting-larger-scale-investigations-in-the-performance-characteristics-of-end-of-trial-statistics">Conducting larger scale investigations in the performance
+characteristics of end-of-trial statistics<a class="anchor" aria-label="anchor" href="#conducting-larger-scale-investigations-in-the-performance-characteristics-of-end-of-trial-statistics"></a>
+</h2>
+<p>So far we have only looked at evaluating performance characteristics
+for a particular set of assumptions, a choice of performance
+characteristics and a choice of a few estimators. However, when
+designing a trial, one might want to produce results for a variety of
+different scenarios, which can be time consuming. The evaluation of
+performance characteristics in <code>adestr</code> can run in parallel
+using the <code>future</code> framework.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org" class="external-link">future</a></span><span class="op">)</span></span>
+<span><span class="co"># Change to e.g. plan(multisession) for parallel computing</span></span>
+<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Scenario 1:</span></span>
+<span><span class="va">scores1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/EstimatorScore-class.html">MSE</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/EstimatorScore-class.html">OverestimationProbability</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">estimators1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/PointEstimator-class.html">SampleMean</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/PointEstimator-class.html">BiasReduced</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dist1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">designs1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">mu1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">.5</span><span class="op">)</span></span>
+<span><span class="va">sigma1</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span></span>
+<span><span class="co"># Scenario 2:</span></span>
+<span><span class="va">scores2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/EstimatorScore-class.html">Coverage</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/EstimatorScore-class.html">Width</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">estimators2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/IntervalEstimator-class.html">NaiveCI</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/IntervalEstimator-class.html">StagewiseCombinationFunctionOrderingCI</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dist2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">designs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_example_design.html">get_example_design</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">mu2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">.5</span><span class="op">)</span></span>
+<span><span class="va">sigma2</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span></span>
+<span><span class="co"># Evaluate in parallel</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/evaluate_scenarios_parallel.html">evaluate_scenarios_parallel</a></span><span class="op">(</span></span>
+<span>  score_lists <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">scores1</span>, <span class="va">scores2</span><span class="op">)</span>,</span>
+<span>  estimator_lists <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">estimators1</span>, <span class="va">estimators2</span><span class="op">)</span>,</span>
+<span>  data_distribution_lists <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">dist1</span>, <span class="va">dist2</span><span class="op">)</span>,</span>
+<span>  design_lists <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">designs1</span>, <span class="va">designs2</span><span class="op">)</span>,</span>
+<span>  mu_lists <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">mu1</span>, <span class="va">mu2</span><span class="op">)</span>,</span>
+<span>  sigma_lists <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">sigma1</span>, <span class="va">sigma2</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">res</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt;                          estimator data_distribution</span></span>
+<span><span class="co">#&gt; 1  Bias reduced MLE (iterations=1) Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 2  Bias reduced MLE (iterations=1) Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 3  Bias reduced MLE (iterations=1) Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 4  Bias reduced MLE (iterations=1) Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 5  Bias reduced MLE (iterations=1) Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 6                      Sample mean Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 7                      Sample mean Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 8                      Sample mean Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 9                      Sample mean Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 10                     Sample mean Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt;                                         design   mu sigma Expectation</span></span>
+<span><span class="co">#&gt; 1  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt; -0.5     1 -0.49939216</span></span>
+<span><span class="co">#&gt; 2  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt; -1.0     1 -0.99999772</span></span>
+<span><span class="co">#&gt; 3  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;  0.0     1 -0.01606505</span></span>
+<span><span class="co">#&gt; 4  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;  0.5     1  0.51833127</span></span>
+<span><span class="co">#&gt; 5  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;  1.0     1  0.99918705</span></span>
+<span><span class="co">#&gt; 6  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt; -0.5     1 -0.50010511</span></span>
+<span><span class="co">#&gt; 7  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt; -1.0     1 -0.99999807</span></span>
+<span><span class="co">#&gt; 8  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;  0.0     1 -0.02491862</span></span>
+<span><span class="co">#&gt; 9  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;  0.5     1  0.52702761</span></span>
+<span><span class="co">#&gt; 10 TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;  1.0     1  1.00028935</span></span>
+<span><span class="co">#&gt;    error_Expectation functionEvaluations_Expectation          Bias   error_Bias</span></span>
+<span><span class="co">#&gt; 1       1.960169e-05                              96  6.078357e-04 1.960169e-05</span></span>
+<span><span class="co">#&gt; 2       9.514441e-04                              62  2.284733e-06 9.514441e-04</span></span>
+<span><span class="co">#&gt; 3       1.777337e-05                             213 -1.606505e-02 1.777337e-05</span></span>
+<span><span class="co">#&gt; 4       4.691721e-04                             591  1.833127e-02 4.691721e-04</span></span>
+<span><span class="co">#&gt; 5       1.116012e-05                             383 -8.129478e-04 1.116012e-05</span></span>
+<span><span class="co">#&gt; 6       8.315412e-06                              96 -1.051082e-04 8.315412e-06</span></span>
+<span><span class="co">#&gt; 7       9.514289e-04                              62  1.932112e-06 9.514289e-04</span></span>
+<span><span class="co">#&gt; 8       1.594939e-05                             213 -2.491862e-02 1.594939e-05</span></span>
+<span><span class="co">#&gt; 9       2.894096e-04                             523  2.702761e-02 2.894096e-04</span></span>
+<span><span class="co">#&gt; 10      9.213421e-06                             383  2.893473e-04 9.213421e-06</span></span>
+<span><span class="co">#&gt;    functionEvaluations_Bias   Variance error_Variance</span></span>
+<span><span class="co">#&gt; 1                        96 0.03584328   1.763680e-05</span></span>
+<span><span class="co">#&gt; 2                        62 0.03550108   6.144227e-09</span></span>
+<span><span class="co">#&gt; 3                       213 0.02797111   7.090928e-06</span></span>
+<span><span class="co">#&gt; 4                       591 0.02881243   2.126220e-05</span></span>
+<span><span class="co">#&gt; 5                       383 0.03583686   1.865170e-05</span></span>
+<span><span class="co">#&gt; 6                        96 0.03539081   9.104316e-06</span></span>
+<span><span class="co">#&gt; 7                        62 0.03549953   4.460077e-09</span></span>
+<span><span class="co">#&gt; 8                       213 0.02779093   7.299455e-06</span></span>
+<span><span class="co">#&gt; 9                       523 0.02945197   9.840547e-06</span></span>
+<span><span class="co">#&gt; 10                      383 0.03520539   1.135277e-05</span></span>
+<span><span class="co">#&gt;    functionEvaluations_Variance        MSE    error_MSE functionEvaluations_MSE</span></span>
+<span><span class="co">#&gt; 1                            96 0.03584365 3.723849e-05                     192</span></span>
+<span><span class="co">#&gt; 2                           122 0.03550108 9.514503e-04                     184</span></span>
+<span><span class="co">#&gt; 3                           247 0.02822920 2.486430e-05                     460</span></span>
+<span><span class="co">#&gt; 4                           707 0.02914847 4.904343e-04                    1298</span></span>
+<span><span class="co">#&gt; 5                           213 0.03583752 2.981182e-05                     596</span></span>
+<span><span class="co">#&gt; 6                            96 0.03539082 1.741973e-05                     192</span></span>
+<span><span class="co">#&gt; 7                           122 0.03549953 9.514333e-04                     184</span></span>
+<span><span class="co">#&gt; 8                           247 0.02841187 2.324884e-05                     460</span></span>
+<span><span class="co">#&gt; 9                           553 0.03018246 2.992501e-04                    1076</span></span>
+<span><span class="co">#&gt; 10                          213 0.03520547 2.056619e-05                     596</span></span>
+<span><span class="co">#&gt;    Probability of overestimation error_Probability of overestimation</span></span>
+<span><span class="co">#&gt; 1                      0.5001404                        2.251825e-04</span></span>
+<span><span class="co">#&gt; 2                      0.5000217                        3.779495e-04</span></span>
+<span><span class="co">#&gt; 3                      0.5055955                        1.861311e-03</span></span>
+<span><span class="co">#&gt; 4                      0.5141305                        6.286754e-03</span></span>
+<span><span class="co">#&gt; 5                      0.4997007                        3.746175e-04</span></span>
+<span><span class="co">#&gt; 6                      0.4999989                        2.248484e-05</span></span>
+<span><span class="co">#&gt; 7                      0.5000217                        3.779495e-04</span></span>
+<span><span class="co">#&gt; 8                      0.4736938                        1.457061e-03</span></span>
+<span><span class="co">#&gt; 9                      0.5550895                        1.395147e-02</span></span>
+<span><span class="co">#&gt; 10                     0.4999743                        1.249999e-04</span></span>
+<span><span class="co">#&gt;    functionEvaluations_Probability of overestimation</span></span>
+<span><span class="co">#&gt; 1                                                528</span></span>
+<span><span class="co">#&gt; 2                                                362</span></span>
+<span><span class="co">#&gt; 3                                               1393</span></span>
+<span><span class="co">#&gt; 4                                               1333</span></span>
+<span><span class="co">#&gt; 5                                                407</span></span>
+<span><span class="co">#&gt; 6                                                528</span></span>
+<span><span class="co">#&gt; 7                                                362</span></span>
+<span><span class="co">#&gt; 8                                               1303</span></span>
+<span><span class="co">#&gt; 9                                               1363</span></span>
+<span><span class="co">#&gt; 10                                               377</span></span>
+<span><span class="co">#&gt;                                                                                                                    EstimatorScoreResult</span></span>
+<span><span class="co">#&gt; 1  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 2  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 3  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 4  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 5  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 6  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 7  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 8  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 9  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 10 &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="va">res</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt;           estimator data_distribution</span></span>
+<span><span class="co">#&gt; 1          Naive CI Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 2          Naive CI Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 3          Naive CI Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 4          Naive CI Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 5          Naive CI Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 6  SWCF ordering CI Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 7  SWCF ordering CI Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 8  SWCF ordering CI Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 9  SWCF ordering CI Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt; 10 SWCF ordering CI Normal&lt;two-armed&gt;</span></span>
+<span><span class="co">#&gt;                                         design   mu sigma  Coverage</span></span>
+<span><span class="co">#&gt; 1  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt; -0.5     1 0.9500604</span></span>
+<span><span class="co">#&gt; 2  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt; -1.0     1 0.9499647</span></span>
+<span><span class="co">#&gt; 3  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;  0.0     1 0.9449795</span></span>
+<span><span class="co">#&gt; 4  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;  0.5     1 0.9372047</span></span>
+<span><span class="co">#&gt; 5  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;  1.0     1 0.9500391</span></span>
+<span><span class="co">#&gt; 6  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt; -0.5     1 0.9499836</span></span>
+<span><span class="co">#&gt; 7  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt; -1.0     1 0.9499647</span></span>
+<span><span class="co">#&gt; 8  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;  0.0     1 0.9500699</span></span>
+<span><span class="co">#&gt; 9  TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;  0.5     1 0.9499538</span></span>
+<span><span class="co">#&gt; 10 TwoStageDesign&lt;n1=56;0.8&lt;=x1&lt;=2.3:n2=18-80&gt;  1.0     1 0.9498600</span></span>
+<span><span class="co">#&gt;    error_Coverage functionEvaluations_Coverage     Width  error_Width</span></span>
+<span><span class="co">#&gt; 1    0.0008288183                          712 0.7383716 9.444517e-06</span></span>
+<span><span class="co">#&gt; 2    0.0008820986                          482 0.7384423 3.414488e-04</span></span>
+<span><span class="co">#&gt; 3    0.0010153071                         1273 0.6918503 2.783059e-05</span></span>
+<span><span class="co">#&gt; 4    0.0034991405                         1573 0.6778015 1.804778e-04</span></span>
+<span><span class="co">#&gt; 5    0.0008299689                         1453 0.7382501 1.050093e-05</span></span>
+<span><span class="co">#&gt; 6    0.0008194698                          542 0.7384927 8.305015e-06</span></span>
+<span><span class="co">#&gt; 7    0.0008820986                          482 0.7384423 3.414488e-04</span></span>
+<span><span class="co">#&gt; 8    0.0021817246                         1273 0.7163671 1.228666e-04</span></span>
+<span><span class="co">#&gt; 9    0.0006645727                         1063 0.6996062 1.999098e-04</span></span>
+<span><span class="co">#&gt; 10   0.0008090573                          467 0.7384132 1.013179e-05</span></span>
+<span><span class="co">#&gt;    functionEvaluations_Width</span></span>
+<span><span class="co">#&gt; 1                        164</span></span>
+<span><span class="co">#&gt; 2                         62</span></span>
+<span><span class="co">#&gt; 3                        179</span></span>
+<span><span class="co">#&gt; 4                        421</span></span>
+<span><span class="co">#&gt; 5                        383</span></span>
+<span><span class="co">#&gt; 6                         62</span></span>
+<span><span class="co">#&gt; 7                         62</span></span>
+<span><span class="co">#&gt; 8                        281</span></span>
+<span><span class="co">#&gt; 9                        455</span></span>
+<span><span class="co">#&gt; 10                       383</span></span>
+<span><span class="co">#&gt;                                                                                                                    EstimatorScoreResult</span></span>
+<span><span class="co">#&gt; 1  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 2  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 3  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 4  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 5  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 6  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 7  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 8  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 9  &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span>
+<span><span class="co">#&gt; 10 &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;, &lt;S4 class 'EstimatorScoreResult' [package "adestr"] with 8 slots&gt;</span></span></code></pre></div>
+<p>You will get back a list of data.frames containing the results for
+each scenario. Note that within one scenario, the evaluation will take
+place for the cross-product of all arguments that are supplied! This
+means that within one scenario, every estimator is evaluated with every
+score at every point of mu for every sigma and every design. Depending
+on your settings, this can get very time-consuming very fast, making
+parallelization essential.</p>
+</div>
+<div class="section level2">
+<h2 id="analyzing-datasets">Analyzing datasets<a class="anchor" aria-label="anchor" href="#analyzing-datasets"></a>
+</h2>
 <p>Next, let us look at how to the package can be used to calculate
 estimates after data has been collected.</p>
 <p>The first stage data of a trial might look like this:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">321</span><span class="op">)</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span> endpoint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">56</span>, <span class="fl">.3</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">56</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -217,7 +904,7 @@ estimates after data has been collected.</p>
 <span><span class="co">#&gt; 4  0.18035098   trt     1</span></span>
 <span><span class="co">#&gt; 5  0.17603938   trt     1</span></span>
 <span><span class="co">#&gt; 6  0.56818377   trt     1</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/analyze.html">analyze</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dat</span>,</span>
 <span>        statistics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>        data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span>two_armed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
@@ -236,7 +923,7 @@ estimates after data has been collected.</p>
 <p>The results suggest recruiting 23 more patients per group for the
 second stage.</p>
 <p>We will simulate 47 more patients per group:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">dat</span>,</span>
 <span>             <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>               endpoint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">47</span>, <span class="fl">.3</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">47</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -246,7 +933,7 @@ second stage.</p>
 <span>             <span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Now, we can use the <code>analyze</code> function to evaluate a
 selection of estimators on the complete dataset:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/analyze.html">analyze</a></span><span class="op">(</span></span>
 <span> data <span class="op">=</span> <span class="va">dat</span>,</span>
 <span> statistics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
@@ -290,7 +977,6 @@ two normal distributions. Keep in mind that a difference of
 was used in the simulation.</p>
 <p>Note that while the median unbiased estimator performs well in this
 particular example, this is not universally true.</p>
-</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
