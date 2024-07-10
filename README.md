@@ -19,8 +19,19 @@ Further, it allows for evaluation of these estimators on real datasets,
 and it implements methods to calculate p-values.
 
 Currently, it works for designs objects which were produced by the
-R-package `adoptr`, which calculates optimal design parameters adaptive
-two-stage designs.
+R-package [`adoptr`](https://github.com/optad/adoptr), which calculates
+optimal design parameters adaptive two-stage designs.
+
+An introductory vignette covering common usecases is given at
+<https://jan-imbi.github.io/adestr/articles/Introduction.html>.
+
+This package comes suite of unit tests. The code of the test cases can
+be viewed here:
+<https://github.com/jan-imbi/adestr/tree/master/tests/testthat>. The
+authors assume no responsibility for the correctness of the code or
+results produced by its usage. Use at your own risk.
+
+<!-- reference implementation verlinken -->
 
 ## Installation
 
@@ -32,22 +43,14 @@ remotes::install_github("https://github.com/jan-imbi/adestr")
 
 into your R console.
 
-## Information for reviewers
-
-The scripts to reproduce the results from the paper can be found in the
-`/data/code/` directory of this repository. The results themselves are
-located in the `/data/` directory.
-
-The easiest way to inspect the results is to [clone this
-repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
-
-## General example for usage of the package
+## Small introductory example
 
 Here is a quick example showing the capabilities of `adestr`. First,
 load `adestr`:
 
 ``` r
 library(adestr)
+#> Loading required package: adoptr
 ```
 
 Then, you can evaluate the performance of an estimator like this:
@@ -129,3 +132,7 @@ analyze(
 #>  SWCF ordering p-value:                                               0.01097483
 #>  LR test ordering p-value:                                          6.653031e-05
 ```
+
+Please refer to
+<https://jan-imbi.github.io/adestr/articles/Introduction.html> for a
+more detailed introduction.

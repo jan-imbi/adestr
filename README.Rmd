@@ -23,7 +23,6 @@ knitr::opts_chunk$set(
 [![License](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://github.com/jan-imbi/adestr/blob/master/LICENSE.md)
 <!-- badges: end -->
 
-
 This package implements methods to evaluate the performance characteristics
 of various point and interval estimators for adaptive two-stage designs with 
 prespecified sample-size recalculation rules. Further, it allows for
@@ -31,12 +30,13 @@ evaluation of these estimators on real datasets, and it implements methods
 to calculate p-values.
 
 Currently, it works for designs objects which were produced by the
-R-package `adoptr`, which calculates optimal design parameters adaptive
+R-package [`adoptr`](https://github.com/optad/adoptr), which calculates optimal design parameters adaptive
 two-stage designs.
 
 An introductory vignette covering common usecases is given at [https://jan-imbi.github.io/adestr/articles/Introduction.html](https://jan-imbi.github.io/adestr/articles/Introduction.html).
 
-The test [https://jan-imbi.github.io/adestr/articles/Introduction.html](https://jan-imbi.github.io/adestr/articles/Introduction.html).
+This package comes suite of unit tests. The code of the test cases can be viewed here: [https://github.com/jan-imbi/adestr/tree/master/tests/testthat](https://github.com/jan-imbi/adestr/tree/master/tests/testthat). The authors assume no responsibility for the correctness of the
+code or results produced by its usage. Use at your own risk.
 
 <!-- reference implementation verlinken -->
 
