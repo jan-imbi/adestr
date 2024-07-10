@@ -117,7 +117,7 @@ when applied to data.</p>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Note that in <code><a href="adestr.html">adestr</a></code>, statistics are codes as functions of the
 stage-wise sample means (and stage-wise sample variances if data_distribution is
-<code><a href="Student.html">Student</a></code>). In a first-step, the data is summarized to produce these
+<code><a href="https://optad.github.io/adoptr/reference/StudentDataDistribution-class.html" class="external-link">Student</a></code>). In a first-step, the data is summarized to produce these
 parameters. Then, the list of statistics are evaluated at the values of these parameters.</p>
 <p>The output of the <code>analyze</code> function also displays information on the hypothesis
 test and the interim decision. If the <code><a href="Statistic-class.html">statistics</a></code> list is empty, this will
@@ -133,7 +133,7 @@ be the only information displayed.</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">analyze</span><span class="op">(</span>data <span class="op">=</span> <span class="va">dat</span>,</span></span>
 <span class="r-in"><span>        statistics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>        data_distribution <span class="op">=</span> <span class="fu"><a href="Normal.html">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>        design <span class="op">=</span> <span class="fu"><a href="get_example_design.html">get_example_design</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>        sigma <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Design:                               TwoStageDesign&lt;n1=28;0.8&lt;=x1&lt;=2.3:n2=9-40&gt;</span>
@@ -154,7 +154,7 @@ be the only information displayed.</p>
 <span class="r-in"><span>    stage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">32</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">analyze</span><span class="op">(</span>data <span class="op">=</span> <span class="va">dat</span>,</span></span>
 <span class="r-in"><span>        statistics <span class="op">=</span> <span class="fu"><a href="get_example_statistics.html">get_example_statistics</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>        data_distribution <span class="op">=</span> <span class="fu"><a href="Normal.html">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        data_distribution <span class="op">=</span> <span class="fu"><a href="https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html" class="external-link">Normal</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>        design <span class="op">=</span> <span class="fu"><a href="get_example_design.html">get_example_design</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>        sigma <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Design:                               TwoStageDesign&lt;n1=28;0.8&lt;=x1&lt;=2.3:n2=9-40&gt;</span>
