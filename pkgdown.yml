@@ -3,7 +3,7 @@ pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   Introduction: Introduction.html
-last_built: 2024-07-10T14:17Z
+last_built: 2024-07-11T07:08Z
 urls:
   reference: https://jan-imbi.github.io/adestr/reference
   article: https://jan-imbi.github.io/adestr/articles
