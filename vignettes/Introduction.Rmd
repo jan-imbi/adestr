@@ -43,7 +43,7 @@ In order to showcase the capabilities of this package, we need a trial design fi
 We refer to [the example from the adoptr documentation](https://optad.github.io/adoptr/articles/adoptr.html)
 for this.
 You can read more about optimal adaptive designs fitted via the adoptr package here:
-[optad.github.io/adoptr/articles/adoptr_jss.html](https://optad.github.io/adoptr/articles/adoptr_jss.htmll).
+[optad.github.io/adoptr/articles/adoptr_jss.html](https://optad.github.io/adoptr/articles/adoptr_jss.html).
 
 For the sake of this introduction, a pre-computed version of the first example from
 [optad.github.io/adoptr/articles/adoptr.html](https://optad.github.io/adoptr/articles/adoptr.html)
