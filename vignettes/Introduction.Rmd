@@ -431,7 +431,7 @@ scenarios, which can be time consuming. The evaluation of performance characteri
 
 
 ```{r}
-library(future)
+library(future.apply)
 # Change to e.g. plan(multisession) for parallel computing
 plan(sequential)
 
