@@ -393,7 +393,7 @@ on reaching any of the selected integration regions.
 
 Lastly, the paramters
 \code{tol}, \code{maxEval}, and \code{absError} control the integration accuracy.
-They are handed down to the \code{\link{hcubature}} function.
+They are handed down to the \code{\link[cubature::hcubature]{hcubature}} function.
 }
 }
 \examples{

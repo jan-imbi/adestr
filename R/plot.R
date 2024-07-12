@@ -12,7 +12,7 @@
 #' @export
 #' @importFrom ggplot2 ggplot scale_x_continuous geom_line facet_wrap
 #' @importFrom latex2exp TeX
-#' @returns a \code{\link{ggplot2}} object visualizing the score values.
+#' @returns a \code{\link[ggplot2::ggplot]{ggplot}} object visualizing the score values.
 #' @examples
 #' score_result1 <- evaluate_estimator(
 #'   MSE(),
@@ -90,7 +90,7 @@ setMethod("plot", signature = "list", definition =
 #' @param subdivisions number of subdivisions per axis for the grid of test statistic values.
 #' @param ... additional arguments handed down to ggplot
 #'
-#' @returns a \code{\link{ggplot2}} object visualizing the p-values on a grid of possible test-statistic values.
+#' @returns a \code{\link[ggplot2::ggplot]{ggplot}} object visualizing the p-values on a grid of possible test-statistic values.
 #'
 #' @export
 #' @importFrom ggplot2 ggplot geom_tile geom_line geom_segment scale_color_manual scale_fill_gradient scale_x_continuous

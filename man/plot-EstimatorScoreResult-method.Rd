@@ -15,7 +15,7 @@ of such objects (\code{EstimatorScoreResultList}).}
 \item{...}{additional arguments handed down to ggplot.}
 }
 \value{
-a \code{\link{ggplot2}} object visualizing the score values.
+a \code{\link[ggplot2::ggplot]{ggplot}} object visualizing the score values.
 }
 \description{
 This function extract the values of mu and the score values and a facet plot with

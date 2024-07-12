@@ -33,7 +33,7 @@ plot_p(
 \item{...}{additional arguments handed down to ggplot}
 }
 \value{
-a \code{\link{ggplot2}} object visualizing the p-values on a grid of possible test-statistic values.
+a \code{\link[ggplot2::ggplot]{ggplot}} object visualizing the p-values on a grid of possible test-statistic values.
 }
 \description{
 Creates a plot of the p-values and implied rejection boundaries on a grid
