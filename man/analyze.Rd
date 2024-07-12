@@ -56,7 +56,7 @@ and \link[adestr:PValue]{p-values} for a given dataset.
 \details{
 Note that in \code{\link{adestr}}, statistics are codes as functions of the
 stage-wise sample means (and stage-wise sample variances if data_distribution is
-\code{\link[adoptr::Student]{Student}}). In a first-step, the data is summarized to produce these
+\code{\link[adoptr]{Student}}). In a first-step, the data is summarized to produce these
 parameters. Then, the list of statistics are evaluated at the values of these parameters.
 
 The output of the \code{analyze} function also displays information on the hypothesis

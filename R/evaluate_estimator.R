@@ -112,7 +112,7 @@ setMethod("c", signature("EstimatorScoreResultList"), definition =
 #'
 #' Lastly, the paramters
 #' \code{tol}, \code{maxEval}, and \code{absError} control the integration accuracy.
-#' They are handed down to the \code{\link[cubature::hcubature]{hcubature}} function.
+#' They are handed down to the \code{\link[cubature]{hcubature}} function.
 #' @md
 #'
 #' @param score performance measure to evaluate.
